@@ -109,6 +109,63 @@ knitr::include_graphics(here::here('images','Rlogo.png'))
 ## hist(x, breaks = bins, col = 'darkgray', border = 'white')
 
 
+## ----echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='80%', out.height='70%', paged.print=FALSE----
+
+p1 <- ggdraw() + draw_image(here::here('images', 'dados.jpg'), scale = 1)
+p2 <- ggdraw() + draw_image(here::here('images', 'pascal.jpg'), scale = 1)
+
+plot_grid(p1, p2)
+
+
+
+## ----echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='80%', out.height='70%', paged.print=FALSE----
+
+p1 <- ggdraw() + draw_image(here::here('images', 'cartas.png'), scale = 1)
+p2 <- ggdraw() + draw_image(here::here('images', 'fermat.png'), scale = 1)
+
+plot_grid(p1, p2)
+
+
+## ----echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='80%', out.height='70%', paged.print=FALSE----
+
+p1 <- ggdraw() + draw_image(here::here('images', 'galton.jpg'), scale = 1)
+p2 <- ggdraw() + draw_image(here::here('images', 'regressao_galton.png'), scale = 1)
+
+plot_grid(p1, p2)
+
+
+## ----echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='30%', paged.print=FALSE----
+knitr::include_graphics(here::here('images','pearson.jpg'))
+
+
+## ----echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='80%', out.height='70%', paged.print=FALSE----
+
+p1 <- ggdraw() + draw_image(here::here('images', 'guiness.jpg'), scale = 1)
+p2 <- ggdraw() + draw_image(here::here('images', 'gosset.jpg'), scale = 1)
+
+plot_grid(p1, p2)
+
+
+## ----echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='30%', paged.print=FALSE----
+knitr::include_graphics(here::here('images','Fisher.jpg'))
+
+
+## ----echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='80%', out.height='70%', paged.print=FALSE----
+
+p1 <- ggdraw() + draw_image(here::here('images', 'cox.jpg'), scale = 1)
+p2 <- ggdraw() + draw_image(here::here('images', 'survival.png'), scale = 1)
+
+plot_grid(p1, p2)
+
+
+## ----echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='80%', out.height='70%', paged.print=FALSE----
+
+p1 <- ggdraw() + draw_image(here::here('images', 'nicolelis.jpg'), scale = 1)
+p2 <- ggdraw() + draw_image(here::here('images', 'walkagain.jpg'), scale = 1)
+
+plot_grid(p1, p2)
+
+
 ## ----echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', out.height='80%', paged.print=FALSE----
 
 knitr::include_graphics(here::here('images', 'Descritiva_Inferencia.png'))

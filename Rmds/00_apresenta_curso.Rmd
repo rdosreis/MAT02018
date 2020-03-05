@@ -111,7 +111,7 @@ knitr::include_graphics(here::here('images', 'happy_sad.png'))
 
 ```
 
-- __ELSA - Brasil__
+- __ELSA-Brasil__
 
 ## Pós-Doutorado
 
@@ -133,7 +133,7 @@ knitr::include_graphics(here::here('images', 'mediation.png'))
 
 ```
 
-- __++ ELSA - Brasil__
+- __++ ELSA-Brasil__
 
 ## Um caminho potencial
 
@@ -155,10 +155,10 @@ knitr::include_graphics(here::here('images', 'vio.jpg'))
 ao incio da vida adulta e diabetes tipo 2: o Estudo Longitudinal de Saúde do Adulto (Orientação de mestrado em conjunto com a \structure{Prof. Alvaro Vigo})
     + \structure{Juliana Souza.} Métodos de estimação em delineamentos duas fases: uma aplicação à subamostra de exames laboratoriais da Pesquisa Nacional de Saúde (Orientação de mestrado em conjunto com a \structure{Prof. Márcia Barbian})
     
-- __+++++++++ ELSA - Brasil__
+- __+++++++++ ELSA-Brasil__
 - __+ PNS 2013 + PNS 2019__
 
-## ELSA - Brasil
+## ELSA-Brasil
 
 ```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='90%', out.height='50%', paged.print=FALSE}
 
@@ -169,15 +169,13 @@ plot_grid(p1, p2)
 
 ```
 
-### ELSA-Brasil
-
 \footnotesize
 
 - O __Estudo Longitudinal de Saúde do Adulto__ é uma investigação multicêntrica de coorte composta por 15 mil funcionários de seis instituições públicas de ensino superior e pesquisa das regiões Nordeste, Sul e Sudeste do Brasil.
 - A pesquisa tem o propósito de investigar a __incidência__ e os __fatores de risco__ para __doenças crônicas__, em particular, as cardiovasculares e o __diabetes__.
 - Em cada centro integrante do estudo, os sujeitos da pesquisa --- com idade entre 35 e 74 anos --- fazem exames e entrevistas nas quais são avaliados aspectos como condições de vida, diferenças sociais, relação com o trabalho, gênero e especificidades da dieta da população brasileira.
 
-## ELSA - Brasil
+## ELSA-Brasil
 
 __Centro de investigação Minas Gerais (Hospital Borges da Costa)__
 
@@ -187,7 +185,7 @@ knitr::include_graphics(here::here('images', 'hospborges.jpg'))
 
 ```
 
-## ELSA - Brasil
+## ELSA-Brasil
 
 __Centro de investigação Rio Grande do Sul (Centro de Pesquisas Clínicas)__
 
@@ -197,7 +195,7 @@ knitr::include_graphics(here::here('images', 'cirs.png'))
 
 ```
 
-<!-- ## ELSA - Brasil -->
+<!-- ## ELSA-Brasil -->
 <!-- ### Uma propaganda: mural de bolsas da UFRGS -->
 
 <!-- ```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', out.height='80%', paged.print=FALSE} -->
@@ -346,20 +344,133 @@ $$
   \url{https://www.ufrgs.br/bibliotecacentral/pesquisa/acesso-ao-proxy/}
 \end{itemize}
 
-# O que é Estatística?
+# A Estatística
 
-## O papel da estatística na pesquisa
+## O que é Estatística?
 
-- No __planejamento__, auxilia na escolha de situações experimentais e na determinação da quantidade de indivíduos a serem examinados.
-- Na __análise__, indica técnicas  para resumir e apresentar as informações, bem como para comparar as situações experimentais.
-- Na __elaboração das conclusões__, os vários métodos estatísticos permitem generalizar a partir dos resultados obtidos.
-- De modo geral, não existe certeza sobre a correção das conclusões científicas; no entanto, os métodos estatísticos permitem determinar a margem de erro associada às conclusões, com base no conhecimento da variabilidade observada nos resultados.
+- Essa pergunta já vem sendo feita (e diversas vezes) há muito tempo.
+- A persistência da pergunta e a variedade das respostas durante os anos sugerem que a Estatística não se caracteriza como um objeto singular.
+- Ainda, a Estatística apresenta diferentes faces para diferentes áreas da ciência.
 
 ## Uma perspectiva histórica
 
+- A Estatística mudou drasticamente desde os primeiros dias até o presente, passando de uma profissão que reivindicou uma objetividade extrema que os estatísticos coletariam apenas dados (não os analisam) para uma profissão que busca parceria com cientistas em todas as etapas da investigação, do planejamento à análise.
+- Primeiros censos ocorrem por volta do ano zero da era cristã.
+    + Por muito tempo, o aspecto descritivo da Estatística manteve-se como a única faceta desta ciência .
+- No século XVII, ocorrem as primeiras interpretações de dados.
+    + Em 1693, foram publicados pela primeira vez, em Londres, os totais anuais de falecimentos, estratificados por sexo.
+    + Primeiros estudos formais da teoria das probabilidades.
+
+## Uma perspectiva histórica
+
+### Pascal (1623-1662)
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='80%', out.height='70%', paged.print=FALSE}
+
+p1 <- ggdraw() + draw_image(here::here('images', 'dados.jpg'), scale = 1)
+p2 <- ggdraw() + draw_image(here::here('images', 'pascal.jpg'), scale = 1)
+
+plot_grid(p1, p2)
+
+```
+
+## Uma perspectiva histórica
+
+### Fermat (1601-1665)
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='80%', out.height='70%', paged.print=FALSE}
+
+p1 <- ggdraw() + draw_image(here::here('images', 'cartas.png'), scale = 1)
+p2 <- ggdraw() + draw_image(here::here('images', 'fermat.png'), scale = 1)
+
+plot_grid(p1, p2)
+```
+
+## Uma perspectiva histórica
+
+### Galton (1822-1911)
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='80%', out.height='70%', paged.print=FALSE}
+
+p1 <- ggdraw() + draw_image(here::here('images', 'galton.jpg'), scale = 1)
+p2 <- ggdraw() + draw_image(here::here('images', 'regressao_galton.png'), scale = 1)
+
+plot_grid(p1, p2)
+```
+
+## Uma perspectiva histórica
+
+### Pearson (1857-1936)
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='30%', paged.print=FALSE}
+knitr::include_graphics(here::here('images','pearson.jpg'))
+```
+
+- $\chi^2$ de Pearson
+- Coeficiente de correlação linear
+- Laboratório de Biometrika
+
+## Uma perspectiva histórica
+
+### Gosset, o _Student_ (1876-1937)
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='80%', out.height='70%', paged.print=FALSE}
+
+p1 <- ggdraw() + draw_image(here::here('images', 'guiness.jpg'), scale = 1)
+p2 <- ggdraw() + draw_image(here::here('images', 'gosset.jpg'), scale = 1)
+
+plot_grid(p1, p2)
+```
+
+## Uma perspectiva histórica
+
+### Fisher (1890-1962)
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='30%', paged.print=FALSE}
+knitr::include_graphics(here::here('images','Fisher.jpg'))
+```
+
+- "On the mathematical foundations of theoretical statistics“
+- Princípios da experimentação
+- Planejamento de experimentos
+- Análise de variância __(ANOVA)__
+
+## Uma perspectiva histórica
+
+### Cox (1924)
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='80%', out.height='70%', paged.print=FALSE}
+
+p1 <- ggdraw() + draw_image(here::here('images', 'cox.jpg'), scale = 1)
+p2 <- ggdraw() + draw_image(here::here('images', 'survival.png'), scale = 1)
+
+plot_grid(p1, p2)
+```
+
+## Uma perspectiva histórica
+
+### Nicolelis (1961)
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='80%', out.height='70%', paged.print=FALSE}
+
+p1 <- ggdraw() + draw_image(here::here('images', 'nicolelis.jpg'), scale = 1)
+p2 <- ggdraw() + draw_image(here::here('images', 'walkagain.jpg'), scale = 1)
+
+plot_grid(p1, p2)
+```
+
+## O papel da estatística na pesquisa
+
+- No \structure{planejamento}, auxilia na escolha de situações experimentais e na determinação da quantidade de indivíduos a serem examinados.
+- Na \structure{análise}, indica técnicas  para resumir e apresentar as informações, bem como para comparar as situações experimentais.
+- Na \structure{elaboração das conclusões}, os vários métodos estatísticos permitem generalizar a partir dos resultados obtidos.
+- De modo geral, não existe certeza sobre a correção das conclusões científicas; no entanto, os métodos estatísticos permitem determinar a margem de erro associada às conclusões, com base no conhecimento da variabilidade observada nos resultados.
+
 ## Uma definição
 
-# Ciência de dados
+"__Estatística__ é a ciência de dados"\footnote{Montgomery, D., Runger, G. Estatística aplicada e probabilidade para engenheiros. LTC, 2016.}.
+
+# A Ciência de dados
 
 ## Data scientist
 
@@ -417,9 +528,9 @@ $$
 \end{enumerate}
 \end{columns}
 
-# Estatística Descritiva
+# A Estatística Descritiva
 
-## A estatística e suas divisões
+## A Estatística e suas divisões
 
 ```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', out.height='80%', paged.print=FALSE}
 
@@ -429,13 +540,13 @@ knitr::include_graphics(here::here('images', 'Descritiva_Inferencia.png'))
 
 ## Uma definição
 
-- A __Estatística Descritiva corresponde aos procedimentos relacionados com a coleta. elaboração, tabulação, análise, interpretação e apresentação dos dados.
-    + Isto é, inclui as técnicas que dizem respeito à sintetização e à descrição de dados numéricos.
-    + Tais métodos tanto podem ser gráricos como envolver análise computacional.
+- A __Estatística Descritiva__ corresponde aos procedimentos relacionados com a coleta, elaboração, tabulação, análise, interpretação e apresentação dos dados.
+- Isto é, inclui as técnicas que dizem respeito à sintetização e à descrição de dados numéricos.
+- Tais métodos tanto podem ser gráficos como envolver análise computacional.
 
 ## Próxima aula
 
-- Conceitos básicos de estatística.
+- Conceitos básicos de Estatística.
 
 ## Por hoje é só! Sejam todos bem-vindos!
 
