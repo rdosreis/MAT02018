@@ -1,0 +1,447 @@
+---
+title: "MAT02018 - Estatística Descritiva"
+subtitle: "Apresentações"
+fontsize: 10pt
+author: |
+  | Rodrigo Citton P. dos Reis
+  | `citton.padilha@ufrgs.br`
+institute: |
+  | \textsc{Universidade Federal do Rio Grande do Sul}
+  | \textsc{Instituto de Matemática e Estatística}
+  | \textsc{Departamento de Estatística}
+date: |
+  | Porto Alegre, 2020
+header-includes:
+  - \titlegraphic{\hfill\includegraphics[height=1.5cm]{logos/Logo-40-anos-estatistica.png}}
+---
+
+# O professor
+
+## Olá!
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='80%', out.height='80%', paged.print=FALSE}
+
+knitr::include_graphics(here::here('images', 'rodrigo_cartoon.jpg'))
+
+```
+
+## Olá!
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='80%', out.height='80%', paged.print=FALSE}
+
+knitr::include_graphics(here::here('images', 'hi_my_name_is.png'))
+
+```
+
+## Graduação
+
+- __Estatística - UFRGS__
+  + 2002 - 2007
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='15%', out.height='20%', paged.print=FALSE}
+
+knitr::include_graphics(here::here('images', 'AC.png'))
+
+```
+
+- __Orientador:__ Prof. Alberto Cargnelutti
+- __"Métodos de agrupamento para o estudo da divergência genética em cultivares de feijão"__
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='15%', out.height='20%', paged.print=FALSE}
+
+knitr::include_graphics(here::here('images', 'feijao.jpg'))
+
+```
+
+## Mestrado
+
+- __Estatística - UFMG__
+  + 2008 - 2010
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='40%', out.height='20%', paged.print=FALSE}
+
+library(cowplot)
+library(ggplot2)
+
+p1 <- ggdraw() + draw_image(here::here('images', 'EC.jpg'), scale = 1)
+p2 <- ggdraw() + draw_image(here::here('images', 'MCPN.jpg'), scale = 0.82)
+
+plot_grid(p1, p2)
+
+```
+
+- __Orientadores:__ Prof. Enrico A. Colosimo e Prof.ª Maria do Carmo P. Nunes
+- __"Técnicas estatísticas para avaliação de novos marcadores de risco"__
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='40%', out.height='20%', paged.print=FALSE}
+
+p1 <- ggdraw() + draw_image(here::here('images', 'barbeiro_errado.jpg'), scale = 1)
+p2 <- ggdraw() + draw_image(here::here('images', 'barbeiro_certo.jpg'), scale = 1)
+
+plot_grid(p1, p2)
+
+```
+
+- __PPG em Infectologia e Medicina Tropical__
+    + Cardiopatia em pacientes com doença de Chagas
+    
+## Doutorado
+
+- __Estatística - UFMG__
+  + 2010 - 2014
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='40%', out.height='20%', paged.print=FALSE}
+
+library(cowplot)
+library(ggplot2)
+
+p1 <- ggdraw() + draw_image(here::here('images', 'EC.jpg'), scale = 0.95)
+p2 <- ggdraw() + draw_image(here::here('images', 'GG2.jpg'), scale = 1)
+
+plot_grid(p1, p2)
+
+```
+
+- __Orientadores:__ Prof. Enrico A. Colosimo e Prof. Gustavo L. Gilardoni
+- __"Análise hierárquica de múltiplos sistemas reparáveis"__
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='90%', out.height='30%', paged.print=FALSE}
+
+knitr::include_graphics(here::here('images', 'happy_sad.png'))
+
+```
+
+- __ELSA - Brasil__
+
+## Pós-Doutorado
+
+- __Saúde Pública - UFMG__
+  + 2015 - 2017
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='20%', out.height='25%', paged.print=FALSE}
+
+knitr::include_graphics(here::here('images', 'SB.png'))
+
+```
+
+- __Supervisora:__ Prof.ª Sandhi M. Barreto
+- __"Análise de mediação causal"__
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='40%', out.height='20%', paged.print=FALSE}
+
+knitr::include_graphics(here::here('images', 'mediation.png'))
+
+```
+
+- __++ ELSA - Brasil__
+
+## Um caminho potencial
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', out.height='80%', paged.print=FALSE}
+
+knitr::include_graphics(here::here('images', 'vio.jpg'))
+
+```
+
+## Atividades atuais
+
+- __Departamento de Estatística da UFRGS__
+    + \structure{Renan Baiocco.} Modelos espaço-temporais para o mapeamento da prevalência de HIV (Orientação de trabalho de conclusão de curso)
+    + \structure{Bruna Silveira.} Testes não-paramétricos de independência condicional em DAGs (Orientação de trabalho de conclusão de curso)
+
+- __Pós-Graduação em Epidemiologia da UFRGS__
+    + \structure{Letícia Menegotto.} Análise de mediação em modelos de curva de crescimento (Orientação de mestrado em conjunto com a \structure{Prof.ª Vanessa Leotti})
+    + \structure{Luísa Back.} Associação entre trajetória de peso corporal da infância
+ao incio da vida adulta e diabetes tipo 2: o Estudo Longitudinal de Saúde do Adulto (Orientação de mestrado em conjunto com a \structure{Prof. Alvaro Vigo})
+    + \structure{Juliana Souza.} Métodos de estimação em delineamentos duas fases: uma aplicação à subamostra de exames laboratoriais da Pesquisa Nacional de Saúde (Orientação de mestrado em conjunto com a \structure{Prof. Márcia Barbian})
+    
+- __+++++++++ ELSA - Brasil__
+- __+ PNS 2013 + PNS 2019__
+
+## ELSA - Brasil
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='90%', out.height='50%', paged.print=FALSE}
+
+p1 <- ggdraw() + draw_image(here::here('images', 'elsa_errado.jpg'), scale = 0.6)
+p2 <- ggdraw() + draw_image(here::here('images', 'logo_elsa.png'), scale = 1)
+
+plot_grid(p1, p2)
+
+```
+
+### ELSA-Brasil
+
+\footnotesize
+
+- O __Estudo Longitudinal de Saúde do Adulto__ é uma investigação multicêntrica de coorte composta por 15 mil funcionários de seis instituições públicas de ensino superior e pesquisa das regiões Nordeste, Sul e Sudeste do Brasil.
+- A pesquisa tem o propósito de investigar a __incidência__ e os __fatores de risco__ para __doenças crônicas__, em particular, as cardiovasculares e o __diabetes__.
+- Em cada centro integrante do estudo, os sujeitos da pesquisa --- com idade entre 35 e 74 anos --- fazem exames e entrevistas nas quais são avaliados aspectos como condições de vida, diferenças sociais, relação com o trabalho, gênero e especificidades da dieta da população brasileira.
+
+## ELSA - Brasil
+
+__Centro de investigação Minas Gerais (Hospital Borges da Costa)__
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', out.height='80%', paged.print=FALSE}
+
+knitr::include_graphics(here::here('images', 'hospborges.jpg'))
+
+```
+
+## ELSA - Brasil
+
+__Centro de investigação Rio Grande do Sul (Centro de Pesquisas Clínicas)__
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', out.height='70%', paged.print=FALSE}
+
+knitr::include_graphics(here::here('images', 'cirs.png'))
+
+```
+
+<!-- ## ELSA - Brasil -->
+<!-- ### Uma propaganda: mural de bolsas da UFRGS -->
+
+<!-- ```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', out.height='80%', paged.print=FALSE} -->
+
+<!-- knitr::include_graphics(here::here('images', 'bolsa_elsa.png')) -->
+
+<!-- ``` -->
+
+# A disciplina
+
+## Objetivos
+
+- Trabalhar o instrumental da __Estatística Descritiva__ evidenciando sua importância como primeira abordagem na análise de dados, explorando sua potencialidade no campo da aplicação às demais ciências. 
+- Aprofundar os conceitos fundamentais da __Estatística Descritiva__, estabelecendo, via \structure{procedimentos computacionais}, o vínculo do aluno com a \structure{linguagem estatística}. 
+- Iniciar o estudante nas técnicas da construção de __indicador__ de preços e de indicador de concentração, bem como nos procedimentos clássicos de __análise de séries temporais__. 
+- Desenvolver a __análise exploratória de dados__ enfatizando sua importância como ferramenta inicial na interpretação de dados.
+
+## Organização
+
+- __Disciplina:__ Estatística Descritiva
+- __Turma:__ U
+- __Modalidade:__ Presencial com apoio online \structure{(Moodle)}
+- __Professor:__ Rodrigo Citton Padilha dos Reis
+    + e-mail: `citton.padilha@ufrgs.br` ou `rodrigocpdosreis@gmail.com` 
+    + Sala: B215 do Instituto de Matemática e Estatística
+
+- Sala F115 do Instituto de Química - Salas de Aula - Campus do Vale - 43123
+- __Horário:__ Terças e quintas, das 10hs 30min às 12hs 10min
+
+## Aulas e material didático
+
+- __Aulas__ (teóricas e práticas)
+    + Exposição e __discussão__ dos conteúdos
+        - __Faremos leituras semanais de artigos e capítulos de livros__
+    + Exemplos
+- __Notas de aula__
+- __Canais de comunicação:__
+    + Durante as aulas
+    + Moodle: aulas, materiais, listas de exercícios
+    + Sala de aula virtual: notas das avaliações
+    + e-mail do professor
+
+## Aulas e material didático
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='30%', paged.print=FALSE}
+knitr::include_graphics(here::here('images','Rlogo.png'))
+```
+
+- Exemplos e exercícios com o apoio do computador:
+    + `R` e `RStudio`
+
+```{r, echo=TRUE, eval=FALSE}
+# draw the histogram with the specified number of bins
+hist(x, breaks = bins, col = 'darkgray', border = 'white')
+```
+
+## Conteúdo programático
+
+__"Área 1"__
+
+- Semana 1 (05/03)
+    + Variáveis e medidas
+- Semanas 2 a 4 (12/03)
+    + Tabelas de distribuição de frequências
+- Semanas 5 a 6 (02/04)
+    + Análise gráfica de dados
+- Semanas 7 a 8 (16/04)
+    + Medidas de tendência central
+- Semanas 9 a 10 (30/04)
+    + Medidas de Variabilidade
+- Semana 11 (14/05)
+    + Medidas de forma
+
+## Conteúdo programático (continuação)
+
+__"Área 2"__
+
+- Semana 12 (21/05)
+    + Distribuições bidimensionais
+- Semanas 13 a 14 (28/05)
+    + Números índices
+- Semana 15 (11/06)
+    + Taxas de crescimento populacional
+- Semanas 16 a 18 (18/06)
+    + Séries temporais
+- Semana 19 (09/07)
+    + Atividades de recuperação
+
+## Avaliação
+
+- Serão realizadas trabalhos e listas de exercícios, teóricos e práticos, ($MT$ é a média dos trabalhos) e duas provas ($P_1$ e $P_2$) como atividades de avaliação
+    + Alguns trabalhos e listas de exercícios serão realizados em grupo
+    + A prova é individual e sem consulta
+- Datas das provas:
+    + Prova 1: 19/05
+    + Prova 2: 07/07
+- Cada atividade de avaliação vale 10 pontos
+- Será realizada uma prova escrita como atividade de recuperação ($P_R$) no dia 14/07
+    + Somente para os alunos que não atingirem o conceito mínimo __e__ com frequência mínima de 75%
+
+## Avaliação
+
+$$
+NF = 1/3 \times MT + 1/3 \times P_1 + 1/3 \times P_2
+$$
+
++ __A:__ $9 \leq NF \leq 10$
++ __B:__ $7,5 \leq NF < 9$
++ __C:__ $6 \leq NF < 7,5$
+
++ Se $NF < 6$ e frequência $\geq$ 75%, o aluno poderá realizar a prova recuperação e neste caso
+
+$$
+NF' = NF \times 0, 4 + P_R \times 0, 6
+$$
+
+- __C:__ $NF' \geq 6$
+- __D:__ $NF' < 6$
+
+- O aluno que não obtiver o mínimo de 75% de frequência receberá o conceito __FF__
+
+## Referências bibliográficas
+
+\begin{columns}[c]
+\column{1.3in}
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=0.9\columnwidth]{ctanlion}
+\end{center}
+\end{figure}
+\column{3.3in}
+{\footnotesize
+\begin{itemize}\setlength{\itemsep}{+2mm}
+\item \structure{Fernandez, D. W. X.} \emph{Estatística descritiva II}, Cadernos de matemática e estatística. Série B, 1994. \structure{(SABi)}
+\item \structure{Fernandez, D. W. X.} \emph{Estatística descritiva I}, Cadernos de matemática e estatística. Série B, 1994. \structure{(SABi)}
+\item \structure{Fernandez, D. W. X.} \emph{Números índices}, Cadernos de matemática e estatística. Série B, 1992. \structure{(SABi)}
+\item \structure{Morettin, P. A. e Bussab, W. O.} \emph{Estatística Básica}, Saraiva, 2010.
+\end{itemize}
+}
+\end{columns}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Tutorial para acesso fora do Campus UFRGS -- Proxy e CAFe:}
+  \url{https://www.ufrgs.br/bibliotecacentral/pesquisa/acesso-ao-proxy/}
+\end{itemize}
+
+# O que é Estatística?
+
+## O papel da estatística na pesquisa
+
+- No __planejamento__, auxilia na escolha de situações experimentais e na determinação da quantidade de indivíduos a serem examinados.
+- Na __análise__, indica técnicas  para resumir e apresentar as informações, bem como para comparar as situações experimentais.
+- Na __elaboração das conclusões__, os vários métodos estatísticos permitem generalizar a partir dos resultados obtidos.
+- De modo geral, não existe certeza sobre a correção das conclusões científicas; no entanto, os métodos estatísticos permitem determinar a margem de erro associada às conclusões, com base no conhecimento da variabilidade observada nos resultados.
+
+## Uma perspectiva histórica
+
+## Uma definição
+
+# Ciência de dados
+
+## Data scientist
+
+\begin{center}
+\includegraphics[width=0.35\columnwidth]{tobeornottobe1}
+\end{center}
+
+## Ciência dos dados
+
+\begin{center}
+\includegraphics[width=0.6\columnwidth]{data_science_diagram}
+\end{center}
+
+## Modern data scientist
+
+\begin{center}
+\includegraphics[width=0.65\columnwidth]{modern_data_scientist_female}
+\end{center}
+
+## Ciência dos dados
+
+### Fluxo de trabalho 
+
+\begin{center}
+\includegraphics[width=0.75\columnwidth]{workflow}
+\end{center}
+
+## Estatística ... \structure{(ou ciência dos dados?)}
+
+### Fases de análise
+
+\begin{columns}[c]
+\column{1.2in}
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=0.9\columnwidth]{CoxBook}
+\end{center}
+\end{figure}
+\column{3.4in}
+\begin{enumerate}
+\item {\small \structure{Manipulação inicial} dos dados.}
+\begin{itemize}
+\item {\scriptsize Limpeza dos dados.}
+\item {\scriptsize Criação, transformação e recodificação de variáveis.}
+\end{itemize}
+\item {\small \structure{Análise preliminar}.}
+\begin{itemize}
+\item {\scriptsize Conhecimento dos dados, identificação de outliers, investigação preliminar.}
+\end{itemize}
+\item {\small \structure{Análise definitiva}.}
+\begin{itemize}
+\item {\scriptsize Disponibiliza a base para as conclusões.}
+\end{itemize}
+\item {\small \structure{Apresentação das conclusões} de forma precisa, concisa e lúcida.}
+\end{enumerate}
+\end{columns}
+
+# Estatística Descritiva
+
+## A estatística e suas divisões
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', out.height='80%', paged.print=FALSE}
+
+knitr::include_graphics(here::here('images', 'Descritiva_Inferencia.png'))
+
+```
+
+## Uma definição
+
+- A __Estatística Descritiva corresponde aos procedimentos relacionados com a coleta. elaboração, tabulação, análise, interpretação e apresentação dos dados.
+    + Isto é, inclui as técnicas que dizem respeito à sintetização e à descrição de dados numéricos.
+    + Tais métodos tanto podem ser gráricos como envolver análise computacional.
+
+## Próxima aula
+
+- Conceitos básicos de estatística.
+
+## Por hoje é só! Sejam todos bem-vindos!
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', out.height='80%', paged.print=FALSE}
+
+knitr::include_graphics(here::here('images', 'EstatDesc.jpg'))
+
+```
+
