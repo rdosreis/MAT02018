@@ -2,8 +2,8 @@ library(here)
 library(rmarkdown)
 
 pasta <- "Rmds"
-# arquivo <- "02_estrutura"
-arquivo <- "00_apresenta_curso"
+# arquivo <- "00_apresenta_curso"
+arquivo <- "01_conceitos_basicos"
 
 arquivo_rmd <- paste0(arquivo, ".Rmd")
 arquivo_pdf <- paste0(arquivo, ".pdf")
