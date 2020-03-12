@@ -1,0 +1,264 @@
+---
+title: "MAT02018 - Estatística Descritiva"
+subtitle: "Fases do levantamento estatístico"
+fontsize: 10pt
+author: |
+  | Rodrigo Citton P. dos Reis
+  | `citton.padilha@ufrgs.br`
+institute: |
+  | \textsc{Universidade Federal do Rio Grande do Sul}
+  | \textsc{Instituto de Matemática e Estatística}
+  | \textsc{Departamento de Estatística}
+date: |
+  | Porto Alegre, 2020
+header-includes:
+  - \titlegraphic{\hfill\includegraphics[height=1.5cm]{logos/Logo-40-anos-estatistica.png}}
+---
+
+## Introdução
+
+O planejamento de um levantamento estatístico, em geral, abrange as seguintes fases:
+
+1. Definição do Universo
+2. Exame das informações disponíveis
+3. Decisão sobre o tipo de levantamento
+4. Obtenção das informações
+5. Elaboração do questionário
+6. Pesquisa de orientação
+7. Coleta de dados
+8. Apreciação ou crítica dos dados
+9. Apuração
+10. Análise de dados
+11. Apresentação dos dados
+12. Relatório final
+
+## Definição do Universo
+
+- O Universo (População) a ser investigado deve ser definido precisamente sob pena de comprometer o resultado do levantamento.
+- Evitar expressões vagas como: municípios importantes, cidades populosas, municípios agrícolas, etc. 
+- Precisar também a época do levantamento para evitar seleções tendenciosas de dias, semanas ou meses.
+
+## Exame das informações disponíveis
+
+- Ao planejar uma pesquisa, deve-se como medida preliminar, reunir todo o material existente (mapas, apurações) relativo a levantamentos iguais ou assemelhados.
+- Se houver algum relatório disponível, as informações obtidas podem ser valiosas para evitar dificuldades ao estudo da dinâmica do fenômeno.
+
+## Decisão sobre o tipo de levantamento
+
+- Os fatores __tempo__, __custo__ e __precisão__ determinam a realização de um levantamento censitário ou amostral.
+
+## Obtenção das informações {.allowframebreaks}
+
+Há várias maneiras de se oberem informações. Dentre elas:
+
+::: {.block}
+### Por via postal
+
+__Potenciais desvantagens:__
+
+* correios não atingem todas as localidades;
+* dificuldade de transporte no interior, levando demora para realizar o projeto;
+* extravio;
+* entrega atrasada;
+* incompreensão do informante sobre algum quesito do questionário;
+* demora no preenchimento do questionário;
+* falta de respostas;
+* inexistência de cadastros atualizados.
+:::
+
+\framebreak
+
+::: {.block}
+### Por via postal
+
+__Potenciais vantagens:__
+
+* economia: dispensa agentes e supervisores, o que significa imensa economia de tempo e dinheiro;
+* técnicas: o contato direto entre o órgão responsável pelo levantamento e o informante, evita a temível tendenciosidade de agentes mal instruídos;
+* sociais: o informante preenche o questionário no momento que lhe for mais propício.
+:::
+
+\framebreak
+
+::: {.block}
+### Por telefone
+
+- Sob o aspecto econômico e de presteza, seria o ideal para obter informações.
+- Serve apenas para questões simples, de número reduzido de respostas imediatas.
+- __Desvantagens:__ pode atingir apenas uma parcela de indivíduos não representativa da população.
+:::
+
+\framebreak
+
+::: {.block}
+### Entrevista direta
+
+Quando exercida com indispensável habilidade, é o meio mais eficiente para obter informações com as seguintes __vantagens:__
+
+* maior porcentagem de questionários preenchidos;
+* garantia de melhor preenchimento;
+* obtém úteis informações suplementares;
+* orienta o informante sobre as questões.
+
+__Desvantagens:__
+
+* maior tempo para cobertura de determinada área geográfica, pois nem sempre o informante atenderá o agente na primeira entrevista;
+* maior custo: treinamento do pessoal de campo e gasto com transporte.
+* tendenciosidade tanto do agente quanto do informante.
+:::
+
+\framebreak
+
+::: {.block}
+### Entrevista direta
+
+O êxito da entrevista depende, em grande parte, do agente, que deve:
+
+* identificar-se, com documento hábil;
+* expor os objetivos da pesquisa;
+* explicar a importância da sua cooperação;
+* explicar que as informações são confidenciais;
+* usar linguagem comum;
+* não fazer ameaças de multas, nem prometer recompensas;
+* evitar perda de tempo;
+* comprometer-se a voltar noutra oportunidade, se necessário.
+:::
+
+- __Pergunta:__ quais outras formas de obtenção de informações você conhece?
+
+## Elaboração do questionário
+
+- É obra das mais delicadas, pois é o instrumento que conterá as informações necessárias para alcançar o objetivo da pesquisa.
+- Duas condições são indispensáveis:
+    * ser especialista na matéria que vai constituir o objeto da pesquisa;
+    * possuir a necessária experiência na técnica de investigação estatística. Os aspectos material e técnico do questionário são muito importantes.
+
+- Aspectos materiais: questionário em papel ou digital?
+
+- __Pergunta:__ quais os meios digitais que você conhece para elaboração de questionários e coleta de dados?
+
+## Pesquisa de orientação
+
+Após termos os questionários prontos e os agentes habilitados, é conveniente realizar um levantamento experimental. Isto é importante, pois:
+
+* familiarizará o agente com a técnica de investigação;
+* testa o questionário; 
+* verifica a reação do informante ao questionário;
+* obtém dados sobre o custo e o tempo de operação;
+* verifica a falta de respostas.
+
+## Coleta de dados {.allowframebreaks}
+
+- A coleta de dados é aquela fase do trabalho estatístico que consiste na busca dos informes necessários à pesquisa que será desenvolvida.
+- Podemos considerar dois tipos de coleta: __direta__ e __indireta__.
+
+\framebreak
+
+::: {.block}
+### Coleta direta
+
+- Consiste no levantamento de __dados primários__ (ou __brutos__), isto é, dados que resultam da observação direta do fenômeno ou são obtidos mediante informações; não sofrem qualquer alteração.
+- O agente coletador ou investigador vai proceder à observação nas fontes originárias ou vale-se de informações relativas às mesmas.
+- Assim, os recenseamentos, os registros de nascimentos, casamentos, etc., constituem exemplos de coleta direta.
+:::
+
+\framebreak
+
+::: {.block}
+### Coleta direta
+- A coleta direta pode ser:
+    * __continua, espontânea ou automática:__ quando os dados são obtidos em virtude de determinados imperativos legais, de modo permanente. Tal tipo de coleta prescinde da presença do agente, pois os dados são fornecidos diretamente pelo informante. São exemplos: dados relativos a casamento, óbitos, etc. __Pergunta:__ nos dias de hoje quais outros exemplos temos de coleta automática?
+    * __periódica ou reflexa:__ quando realizada em determinadas épocas. São exemplos: censos (demográficos, industriais e agrícolas); declarações de imposto de renda, etc.
+    * __ocasional:__ quando os dados são coletados eventualmente, em virtude de uma circunstância especial. São exemplos: levantamento determinado por motivo de uma epidemia, de uma enchente, de uma crise econômica, etc.
+:::
+
+\framebreak
+
+::: {.block}
+### Coleta indireta
+
+- Muitas vezes os dados primários são de difícil obtenção.
+- Em tais circunstâncias, a coleta passa a ser feita por dedução, baseada em dados coletados diretamente.
+- Outras vezes os dados são conseguidos mediante informações ou através de conhecimento de fatos relacionados com o que se pretende pesquisar.
+- Os dados assim obtidos são chamados de __dados elaborados__ (__secundários__), isto é, resultam da manipulação de dados primitivos.
+- Tal modalidade de obtenção de dados é a coleta indireta.
+- Exemplos: dados de casos de uma doença por município.
+    + Através desta coleta, não sabemos quais indivíduos especificamente estão doentes, temos apenas a informação __agregada__ (__resumida__) por município.
+:::
+
+## Apreciação ou crítica dos dados
+
+- Após a coleta, os dados são submetidos a um exame chamado apreciação ou crítica, cuja a finalidade é a eliminação de possíveis erros cometidos, quer em decorrência de respostas incorretas, quer derivadas de deficiências dos próprios agentes.
+- Podemos considerar dois tipos de crítica:
+    * __Externa__ ou __preliminar__, feita pelos próprios agentes coletadores, a fim de evitar devoluções de questionários mal preenchidos ou portadores de erros grosseiros.
+    * __Interna__ ou __secundária __, executada pelo órgão responsável e corresponde a uma nova revisão mais minuciosa dos questionários. Se confirmada a existência de discrepâncias, caberá aos revisores decidir a respeito de uma possível devolução dos questionários para retificar.
+
+## Apuração
+
+- Após liberados os boletins de possíveis erros, são os mesmos separados e classificados em grupos para a __codificação__, __contagem__ e __síntese__ dos resultados.
+- A tal estágio de trabalho estatístico dá-se o nome de __Apuração__ a qual, de acordo com o volume e natureza do levantamento efetuado, pode ser realizado de forma manual ou com o uso de computador.
+
+## Análise dos dados
+
+- Um dos aspectos mais importantes é o da avaliação da precisão do levantamento, seja ele censitário ou amostral.
+    + Confiabilidade do instrumento de medida (no caso, o questionário), dos agentes de coleta de dados, e das respostas dos entrevistados.
+- A referida avaliação para censos é efetuada através de amostragem. 
+
+- Feita essa avaliação, é realizada a __análise de dados__ utilizando-se procedimentos estatísticos adequados.
+- Atualmente a maioria dos órgãos de pesquisa dispõe de equipamentos computacionais que facilitam a atuação do estatístico à medida em que pode se utilizar de _softwares_ estatísticos para efetivar a análise dos dados.
+
+## Apresentação dos dados
+
+- Analisados os resultados e convenientemente sintetizados, os dados podem ser apresentados em __tabelas__ ou __representados graficamente__, interpretados por especialistas e divulgados sob várias maneiras (anuários, boletins, revistas, meio eletrônico, etc.).
+
+## Relatório final
+
+- A cada pesquisa deve corresponder um relatório fazendo uma descrição geral da pesquisa:
+    + região geográfica
+    + natureza das informações coleadas
+    + métodos de coleta de dados de amostragem
+    + finalidade da pesquisa
+    + custo
+    + avaliação
+    + planejamento
+    + precisão
+
+## Exercício
+
+- Com base na questão de pesquisa elaborada na última aula, especifique as fases de 1 a 6 do levantamento estatístico referente à sua pesquisa, e compartilhe com os colegas no \structure{Fórum do Moodle}.
+    + Se possível, tente implementar a fase 7 __(coleta de dados)__, mesmo que com poucas unidades observacionais.
+    + Ainda, se você conseguir implementar a fase 7, tente implementar as fases 8 e 9!
+
+## Avisos
+
+\begin{columns}[c]
+\column{2.7in}
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=0.9\columnwidth]{images/census_agent.jpg}
+\end{center}
+\end{figure}
+\column{1.6in}
+\begin{itemize}\setlength{\itemsep}{+2mm}
+\item \structure{Para casa:}
+\begin{itemize}
+\item Continuação do exercício.
+\item Ler os Cap. 3 de ``Estatística Descritiva I'' de Fernandez.
+\end{itemize}
+\end{itemize}
+\end{columns}
+
+\begin{itemize}
+\item \structure{Próxima aula:}
+\begin{itemize}
+\item Organização dos dados
+\end{itemize}
+\end{itemize}
+
+## Por hoje é só! Bons estudos!
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', out.height='80%', paged.print=FALSE, purl=FALSE}
+
+knitr::include_graphics(here::here('images', 'lofi_02.jpg'))
+
+```
