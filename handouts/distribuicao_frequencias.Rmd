@@ -1,0 +1,98 @@
+---
+# title: "Estatística Descritiva"
+title: "Distribuição de Frequências"
+author: "Rodrigo Citton P. dos Reis, Dep. de Estatística - UFRGS"
+date: '`r paste(stringr::str_to_title(format(Sys.Date(), "%B")), format(Sys.Date(), "%Y"), sep = " de ")`'
+output:
+  tufte::tufte_handout:
+    citation_package: natbib
+    latex_engine: xelatex
+  tufte::tufte_html:
+    self_contained: true
+  tufte::tufte_book:
+    citation_package: natbib
+    latex_engine: xelatex
+bibliography: estatistica-descritiva.bib
+csl: associacao-brasileira-de-normas-tecnicas-ufrgs-initials.csl
+link-citations: yes
+---
+
+```{r setup, include=FALSE, purl=FALSE}
+library(tufte)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(tidy = FALSE, cache.extra = packageVersion('tufte'))
+options(htmltools.dir.version = FALSE)
+```
+
+# Introdução
+
+Uma contribuição importante da estatística no manejo das informações foi a criação de procedimentos para a organização e o resumo de grandes quantidades de dados. A descrição das variáveis é imprescindível como passo prévio para a adequada interpretação dos resultados de uma investigação, e a metodologia empregada faz parte da estatística descritiva.
+
+Os dados podem ser organizados em __tabelas__ ou __gráficos__. Nestas notas de aula, vamos conhecer como organizar a inormação em __tabelas de frequências__.
+
+# Distribuição de Frequências
+
+## Dados nominais
+
+## Dados ordinais
+
+## Dados discretos
+
+## Dados contínuos
+
+# Frequências relativa, acumulada, relativa acumula e porcentagem
+
+## Frequência relativa
+
+## Porcentagem
+
+## Frequência acumulada
+
+## Frequência relativa acumulada
+
+# Exercícios
+
+Faça uma pequena coleta de dados incluindo pelo menos uma variável de cada tipo (_qualitativa nominal_, _qualitativa ordinal_, _quantitativa discreta_ e _quantitativa contínua_).
+
+1. Organize uma planilha (física ou eletrônica) para o registro dos dados coletados.
+2. Faça a coleta e preencha a planilha para obter os dados brutos.
+3. Faça a apuração dos dados e comente brevemente sobre os resultados encontrados.
+
+# Complementa`R`
+
+Esta seção é complementar. São apresentadas algumas poucas funções em `R` relacionadas a discussão da aula. Para tal, vamos utilizar o exemplo original de [@morettin_estatistica_2017] sobre os dados dos empregados da seção de orçamentos da Companhia MB. A planilha eletrônica correspondente encontra-se no arquivo `companhia_mb.xlsx`. Vamos começar carregando os dados para o `R`. Existem várias formas de se carregar __arquivos de dados__ em diferentes  no `R`. Como arquivo de interesse encontra-se no formato do Excel (xlsx), vamos utilizar a função `read_excel` do pacote `readxl`^[Caso você não tenha o pacote, instale-o:`install.packages("readxl")`.].
+
+```{r carrega-dados0, echo=TRUE, eval=FALSE, warning=FALSE, message=FALSE}
+# install.packages("readxl")
+library(readxl)
+
+dados <- read_excel(path = "companhia_mb.xlsx")
+```
+
+```{r carrega-dados1, echo=FALSE, warning=FALSE, message=FALSE, purl=FALSE}
+# install.packages("readxl")
+library(readxl)
+
+dados <- read_excel(path = here::here("data", "companhia_mb.xlsx"))
+```
+
+```{r carrega-dados2, warning=FALSE, message=FALSE}
+class(dados) # classe do objeto dados
+dim(dados) # dimensão do objeto dados
+```
+Note que o objeto `dados` é uma tabela de dados bruto.
+
+```{r carrega-dados3, warning=FALSE, message=FALSE}
+head(dados) # apresenta as primeiras linhas do objeto dados
+```
+
+A função `table` retorna contagens dos valores de cada variável, e portanto, podemos utilizar esta função para a apuração dos dados.
+
+```{r apuracao, warning=FALSE, message=FALSE}
+table(dados$`Estado Civil`) # apura dados nominais
+table(dados$`Grau de Instrução`) # apura dados ordinais
+table(dados$`N de Filhos`) # apura dados discretos
+dados$Idade # apura dados contínuos
+```
+
+<!-- # Distribuição de frequências -->

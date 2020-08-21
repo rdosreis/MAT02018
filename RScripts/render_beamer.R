@@ -28,3 +28,8 @@ knitr::purl(input = input,
             output = here("RScripts", arquivo_r),
             documentation = 1,
             encoding = "UTF-8")
+
+knitr::purl(input = here::here("handouts", "organiza_dados.Rmd"),
+            output = here::here("RScripts", "organiza_dados.R"),
+            documentation = 1,
+            encoding = "UTF-8")

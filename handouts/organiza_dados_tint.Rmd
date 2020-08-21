@@ -1,0 +1,155 @@
+---
+title: "Estatística Descritiva"
+subtitle: "Organização dos dados"
+author: "Rodrigo Citton P. dos Reis, Dep. de Estatística - UFRGS"
+date: '`r paste(stringr::str_to_title(format(Sys.Date(), "%B")), format(Sys.Date(), "%Y"), sep = " de ")`'
+output: tint::tintHtml
+bibliography: estatistica-descritiva.bib
+csl: associacao-brasileira-de-normas-tecnicas-ufrgs-initials.csl
+link-citations: yes
+---
+
+```{r setup, include=FALSE}
+library(tint)
+# invalidate cache when the package version changes
+knitr::opts_chunk$set(tidy = FALSE, cache.extra = packageVersion('tint'))
+options(htmltools.dir.version = FALSE)
+```
+
+# Introdução
+
+Agora que já discutimos alguns __conceitos básicos__ de estatística e as etapas gerais de um __levantamento estatístico__, vamos apresentar como é feito o __registro__ e a __organização de dados__ referentes a uma certa coleta de dados. Começaremos com a __planilha__ para o registro dos dados e a __tabela de dados brutos__ resultante. Logo em seguida, discutiremos como fazer a __apuração dos dados__. 
+<!-- e o obtenção da __distribuição de frequências__. -->
+
+# Coleta de dados
+
+- __Lembrando:__ a __estatística__ é a ciência que tem por objetivo orientar a _coleta_, o _resumo_, a _apresentação_, a _análise_ e a _interpretação_ de dados.
+
+Para _coletar dados_, o pesquisador necessitará armazenar os dados coletados em algum lugar. Assim, se faz necessário organizar uma _planilha_. Com o advento da computação, grande parte dos profissionais da área de estatística registram dados em uma _planilha eletrônica_^[Softwares como _Calc_ (OpenOffice), _Microsoft Excel_ (Office) e _Google Sheets_ (Google) são exemplos de _softwares_ que trabalham com planilhas eletrônicas.]. No entanto, os dados também podem ser registrados em meio físico como, por exemplo, fichas, cadernos ou cadernetas, ou seja, a chamada _planilha física_.
+
+As planilhas eletrônicas podem ser construídas a partir de planilhas físicas ou serem alimentadas por algum __instrumento de coleta__ em meio eletrônico (formulário ou questionário)^[O _Google Forms_, por exemplo, cria e alimenta uma planilha eletrônica a partir do formulário de coleta.]. Vamos apresentar como se desenha uma planilha física para registro dos dados. Se você tiver possibilidade, pode experimentar como organizar os dados em uma planilha eletrônica.
+
+- __Planilha__ é o documento que armazena os dados coletados, distribuindo-os em linhas e colunas^[Ou seja, planilhas são "matrizes de dados".]. Em planilhas eletrônicas, geralmente, as linhas são numeradas e as colunas são indicadas por letras maiúsculas.
+
+```{r fig-plan_eletro, fig.margin = TRUE, fig.cap = "Célula D2, no cruzamento da coluna D com a linha 2.", fig.width=1.5, fig.height=1.5, cache=TRUE, message=FALSE, echo=FALSE, out.width="100%", purl=FALSE}
+knitr::include_graphics(here::here('images', 'planilha_eletro.png'))
+```
+
+__Exemplo:__ considere o exemplo adaptado de [@morettin_estatistica_2017]. Um pesquisador está interessado em fazer um levantamento sobre alguns aspectos socioeconômicos dos empregados da seção de orçamentos da Companhia MB, um grupo de 15 pessoas. Temos a seguinte planilha (Fig. 2) para registrar os dados do grupo.
+
+```{r fig-plan_fis, fig.cap = "Planilha física para o registro dos dados do grupo de 15 empregados da seção de orçamentos da Companhia MB.", cache=TRUE, echo=FALSE, out.width="100%", purl=FALSE}
+knitr::include_graphics(here::here('images', 'planilha_fisica.png'))
+```
+
+- __Dados brutos__ são os dados na forma em que foram coletados, sem qualquer tipo de tratamento.
+
+Após a coleta de dados, o pesquisador tem em sua planilha o registro dos dados brutos (Fig. 3).
+
+```{r fig-dados_brutos, fig.cap = "Planilha com o registro dos dados brutos do grupo de 15 empregados da seção de orçamentos da Companhia MB. EF, EM e S representam Ensino Fundamental, Ensino Médio e Superior, respectivamente.", cache=TRUE, echo=FALSE, out.width="100%", purl=FALSE}
+knitr::include_graphics(here::here('images', 'dados_brutos.png'))
+```
+
+- O que podemos falar sobre as variáveis coletadas?
+- Qual a informação podemos apresentar sobre os dados coletados?
+
+Para responder tais perguntadas, precisaremos __resumir__ os dados de alguma forma. Na próxima seção discutiremos a etapa de __apuração dos dados__.
+
+- __Exercício:__ construa a planilha para o registro do levantamento dos dados planejado nas aulas anteriores.
+
+# Apuração dos dados
+
+- __Apuração__ é o processo de retirar os dados da planilha e organizá-los, para apresentação.
+
+No exemplo apresentado anteriormente, foram coletadas as seguintes variáveis: estado civil, grau de instrução, número de filhos, salário, idade e região de procedência. Note que estas são variáveis de diferentes tipos^[__Exercício:__ classifique cada uma destas variáveis em _qualitativa nominal_, _qualitativa ordinal_, _quantitativa discreta_ e _quantitativa contínua_.].
+
+## Apuração de dados nominais
+
+Se quisermos saber quantos solteiros e quantos casados trabalham na seção de orçamentos da Companhia MB devemos escrever os valores possíveis da variável _estado civil_^[__Pergunta:__ a ordem de escrita dos valores possíveis da variável _estado civil_ importa? Por que?].
+
+```{r fig-apura_0, cache=TRUE, echo=FALSE, out.width="70%", purl=FALSE}
+knitr::include_graphics(here::here('images', 'apura_0.png'))
+```
+
+Logo após, precisamos inspecionar cada registro da tabela de dados brutos e marcar um traço ao lado de _solteiro_, para cada indivíduo solteiro inspecionado, e um traço ao lado de _casado_ para cada indivíduo casado inspecionado. A cada quatro traços, corta-se com um traço, e este conjunto representa uma contagem de cinco indivíduos ^[No inglês, _tally marks_ (marcas de registro).].
+
+```{r fig-apura_1, cache=TRUE, echo=FALSE, out.width="70%", purl=FALSE}
+knitr::include_graphics(here::here('images', 'apura_1.png'))
+```
+
+Desta forma, verificamos que na seção de orçamentos da Companhia MB trabalham oito solteiros e sete casados. Duas outras formas alternativas de se fazer a apuração dos dados são apresentadas a seguir^[__Comentário:__ é fácil apurar uma pequena massa de dados, como no caso do exemplo. Já uma grande massa de dados tornará a tarefa difícil e entediante. Além disso, com um grande volume de dados, a _probabilidade_ de incorrermos em erros aumenta! Necessitaremos do auxílio de _pacotes estatísticos_!].
+
+```{r fig-apura_2, cache=TRUE, echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', purl=FALSE}
+library(cowplot)
+library(ggplot2)
+
+p1 <- ggdraw() + draw_image(here::here('images', 'apura_2.png'), scale = 0.9)
+p2 <- ggdraw() + draw_image(here::here('images', 'apura_3.png'), scale = 0.9)
+plot_grid(p1, p2)
+```
+
+## Apuração de dados ordinais
+
+Para apurar dados de grau de instrução (variável qualitativa ordinal), o procedimento é similar ao adotado para apurar dados nominais. A diferença é que, para dados ordinais, __impõe-se uma ordem__. Contudo, a apuração se faz por contagem.
+
+```{r fig-apura_4, cache=TRUE, echo=FALSE, out.width="70%", purl=FALSE}
+knitr::include_graphics(here::here('images', 'apura_4.png'))
+```
+
+## Apuração de dados discretos
+
+Para apurar o número de filhos (variável quantitativa discreta), também devemos fazer uma contagem. Escrevemos os resultados respeitando a ordem numérica.
+
+```{r fig-apura_5, cache=TRUE, echo=FALSE, out.width="70%", purl=FALSE}
+knitr::include_graphics(here::here('images', 'apura_5.png'))
+```
+
+## Apuração de dados contínuos
+
+Em geral, os dados contínuos são apresentados na forma como foram coletados, porque assumem valores diferentes, mesmo em amostras pequenas. É o caso da variável idade no exemplo considerado: os empregados da seção de orçamentos da Companhia MB tinham idades diferentes. No entanto, é possível organizar as idades por faixas, como veremos nas aulas seguintes. 
+
+# Exercícios
+
+Faça uma pequena coleta de dados incluindo pelo menos uma variável de cada tipo (_qualitativa nominal_, _qualitativa ordinal_, _quantitativa discreta_ e _quantitativa contínua_).
+
+1. Organize uma planilha (física ou eletrônica) para o registro dos dados coletados.
+2. Faça a coleta e preencha a planilha para obter os dados brutos.
+3. Faça a apuração dos dados e comente brevemente sobre os resultados encontrados.
+
+# Complementa`R`
+
+Esta seção é complementar. São apresentadas algumas poucas funções em `R` relacionadas a discussão da aula. Para tal, vamos utilizar o exemplo original de [@morettin_estatistica_2017] sobre os dados dos empregados da seção de orçamentos da Companhia MB. A planilha eletrônica correspondente encontra-se no arquivo `companhia_mb.xlsx`. Vamos começar carregando os dados para o `R`. Existem várias formas de se carregar __arquivos de dados__ em diferentes  no `R`. Como arquivo de interesse encontra-se no formato do Excel (xlsx), vamos utilizar a função `read_excel` do pacote `readxl`^[Caso você não tenha o pacote, instale-o:`install.packages("readxl")`.].
+
+```{r carrega-dados0, echo=TRUE, eval=FALSE, warning=FALSE, message=FALSE}
+# install.packages("readxl")
+library(readxl)
+
+dados <- read_excel(path = "companhia_mb.xlsx")
+```
+
+```{r carrega-dados1, echo=FALSE, warning=FALSE, message=FALSE, purl=FALSE}
+# install.packages("readxl")
+library(readxl)
+
+dados <- read_excel(path = here::here("data", "companhia_mb.xlsx"))
+```
+
+```{r carrega-dados2, warning=FALSE, message=FALSE}
+class(dados) # classe do objeto dados
+dim(dados) # dimensão do objeto dados
+```
+Note que o objeto `dados` é uma tabela de dados bruto.
+
+```{r carrega-dados3, warning=FALSE, message=FALSE}
+head(dados) # apresenta as primeiras linhas do objeto dados
+```
+
+A função `table` retorna contagens dos valores de cada variável, e portanto, podemos utilizar esta função para a apuração dos dados.
+
+```{r apuracao, warning=FALSE, message=FALSE}
+table(dados$`Estado Civil`) # apura dados nominais
+table(dados$`Grau de Instrução`) # apura dados ordinais
+table(dados$`N de Filhos`) # apura dados discretos
+dados$Idade # apura dados contínuos
+```
+
+<!-- # Distribuição de frequências -->

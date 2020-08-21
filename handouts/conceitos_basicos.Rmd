@@ -1,0 +1,669 @@
+---
+title: "Estatística Descritiva"
+subtitle: "Conceitos Básicos"
+author: "Rodrigo Citton P. dos Reis, Dep. de Estatística - UFRGS"
+date: '`r paste(stringr::str_to_title(format(Sys.Date(), "%B")), format(Sys.Date(), "%Y"), sep = " de ")`'
+output:
+  tufte::tufte_book:
+    citation_package: natbib
+    latex_engine: xelatex
+  tufte::tufte_html:
+    self_contained: true
+  tufte::tufte_handout:
+    citation_package: natbib
+    latex_engine: xelatex
+bibliography: skeleton.bib
+link-citations: yes
+---
+
+```{r setup, include=FALSE}
+library(tufte)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(tidy = FALSE, cache.extra = packageVersion('tufte'))
+options(htmltools.dir.version = FALSE)
+```
+
+
+# Introdução
+
+## Dados $\leadsto$ Conhecimento
+
+Em alguma fase de seu trabalho, o pesquisador depara-se com o problema de __analisar__ e __entender__ um __conjunto de dados__ relevante ao seu particular objeto de estudos. Ele necessitará trabalhar os dados para __transformá-los em informações__, para compará-los com outros resultados, ou ainda para __julgar sua adequação__ a __alguma teoria__.
+
+Uma representação
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', out.height='80%', paged.print=FALSE, purl=FALSE}
+library(cowplot)
+library(ggplot2)
+
+p1 <- ggdraw() + draw_image(here::here('images', 'model.jpg'), scale = 0.9)
+p2 <- ggdraw() + draw_image(here::here('images', 'decisionloops2.jpg'), scale = 0.9)
+plot_grid(p1, p2)
+```
+
+Uma representação mais ousada!
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'Data-Wisdom.jpg'))
+```
+
+## O Método Científico
+
+De modo bem geral, podemos dizer que a essência da Ciência é a __observação__ e que seu objetivo básico é a __inferência__.
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='70%', out.height='70%',  paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'metodo.png'))
+```
+
+De modo bem geral, podemos dizer que a essência do Aprendizado (da Evolução).
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='50%', out.height='70%', paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'metodo_cientifico_bebes.png'))
+```
+
+# Conceitos básicos
+
+## O que é a estatística?
+
+A __estatística__^[Do grego  _statistós_, de _statízo_, __"estabelecer"__, __"verificar"__, acrescido do sufixo _ica_.] é a ciência que tem por objetivo orientar a coleta, o resumo, a apresentação, a análise e a interpretação de dados. Podem ser identificadas duas grandes áreas de atuação desta ciência:
+
++ a __estatística descritiva__, envolvida com o resumo e a apresentação dos dados.
++ a __estatística inferencial__, que ajuda a concluir sobre conjuntos maiores de dados (populações) quando apenas partes desses conjuntos (as amostras) foram estudadas.
+<!-- - Mais do que uma sequência de métodos, a estatística é uma forma de pensar ou de ver a realidade variável, já que seu conhecimento não apenas fornece um conjunto de técnicas de análise de dados, mas condiciona toda uma postura crítica sobre sua interpretação e a elaboração de conclusões sobre os dados. -->
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', out.height='80%', paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'Descritiva_Inferencia.png'))
+```
+
+## O que é a estatística descritiva?
+
+A __Estatística Descritiva__ corresponde aos procedimentos relacionados com a __coleta__, __elaboração__, __tabulação__, __análise__, __interpretação__ e __apresentação__ dos __dados__. Isto é, inclui as técnicas que dizem respeito à sintetização e à descrição de dados numéricos. Estas técnicas podem ser utilizadas em pelo menos dois contextos:
+
++ Análise da __consistência dos dados__.
++ __Análise Exploratória de Dados__ (_Exploratory Data Analysis_ - EDA)^[Tukey, J. W. _Exploratory data analysis_, Reading:Addison-Wesley, 1977.].
+
+Tais métodos tanto podem ser gráficos como envolver análise computacional.
+
+## Estatística descritiva: alguns exemplos
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE, results='asis'}
+library(summarytools)
+
+descr(tobacco, style = 'rmarkdown')
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE, results='asis'}
+freq(tobacco$gender, style = 'rmarkdown', headings = F)
+```
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='95%', paged.print=FALSE}
+# Considerações finais: exemplos
+# install.packages("jpeg")
+# install.packages("grid")
+library(jpeg)
+library(grid)
+library(gapminder)
+library(dplyr)
+
+gapminder <- gapminder %>%
+  mutate(pop_m = pop/1e6)
+
+gapminder07 <- gapminder %>%
+  filter(year == 2007)
+
+img <- readJPEG(here::here("images", "hans_rosling.jpg"))
+
+# start plotting
+p <- ggplot(data = gapminder07,
+            mapping = aes(x = gdpPercap, y = lifeExp,
+                          color = continent, size = pop_m)) + 
+  annotation_custom(rasterGrob(img, width = unit(1, "npc"),
+                               height = unit(1, "npc")),
+                    -Inf, Inf, -Inf, Inf) +
+  scale_y_continuous(expand = c(0,0), 
+                     limits = c(min(gapminder07$lifeExp) * 0.9, max(gapminder07$lifeExp) * 1.05)) +
+  geom_point() +
+  labs(x = "Renda per capita (US$)",
+       y = "Expectativa de vida (anos)",
+       color = "Continente", size = "População/1 milhão") +
+  theme_bw() +
+  theme(text = element_text(color = "gray20"),
+        legend.position = c("top"), # posição da legenda
+        legend.direction = "horizontal",
+        legend.justification = 0.1, # ponto de ancora para legend.position.
+        legend.text = element_text(size = 11, color = "gray10"),
+        axis.text = element_text(face = "italic"),
+        axis.title.x = element_text(vjust = -1),
+        axis.title.y = element_text(vjust = 2), 
+        axis.ticks.y = element_blank(), # element_blank() é como removemos elementos
+        axis.line = element_line(color = "gray40", size = 0.5),
+        axis.line.y = element_blank(),
+        panel.grid.major = element_line(color = "gray50", size = 0.5),
+        panel.grid.major.x = element_blank()
+  )
+p
+```
+
+## Unidades experimentais e observacionais
+
+__Unidade experimental__ ou __unidade de observação__ é a menor unidade a fornecer informação.
+
++ __Ex:__ alunos, pacientes, animais, plantas, carros, hospitais, escolas, cidades, universidades, países, _tweets_, etc.
+
+### Crash course de inferência causal
+
+- __Qual o melhor tratamento para o choque séptico?__
+
+Dois tipos de estudo podem ser conduzidos para responder a esta questão de pesquisa:
+
+1. Em um __experimento aleatorizado__ (_randomized trial_), uma moeda justa é lançada repetidamente para designar o tratamento de cada paciente.
+2. Um __estudo observacional__ é uma investigação empírica em que o objetivo é elucidar relações de causa e efeito, em que não é factível o uso de experimentação controlada, no sentido de ser capaz de impor procedimentos ou tratamentos cujos os efeitos se deseja descobrir.
+
+### Experimentos: exemplo
+
+- "O chá servido sobre o leite parecia ficar com gosto diferente do que apresentava ao receber o leite sobre ele"^[Salsburg, D. _Uma senhora toma chá ... como a estatística revolucionou a ciência no século XX_, Zahar, 2009.].
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='70%', out.height='60%', paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'uma_senhora_toma_cha.jpg'))
+```
+
+### Estudos observacionais: exemplo
+
+- "O __Ministério da Saúde__ adverte: __fumar pode causar câncer de pulmão__”.
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='70%', paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'smokingAndLungCancer2.jpg'))
+```
+
+```{exercise}
+1. Elabore uma questão de pesquisa de seu interesse (anote a sua questão em algum lugar).
+2. Discuta a respeito da sua questão de pesquisa com os colegas.
+```
+
+## Dados e variáveis
+
+::: {.block}
+### Dados
+São as informações obtidas de uma unidade experimental ou observacional.
+\
+
+- __Ex:__ "Vitor tem 25 anos e é fumante". Os dados são "25 anos" e "fumante".
+:::
+
+::: {.block}
+### Variável
+
+É toda característica que, observada em uma unidade (experimental ou observacional), pode variar de um indivíduo para outro.
+\
+
+- __Ex:__ idade, sexo, altura, nível de hemoglobina no sangue, espaçamento entre plantas, doses de um medicamento, tipo de medicamento, cultivares, número de caracteres, velocidade da rede, tempo gasto na rede social, nível de monóxido de carbono em emissões do escape de automóveis, etc.
+:::
+
+É importante __identificar que tipo de variável__ está sendo estudada, uma vez que são recomendados __procedimentos estatísticos diferentes__ em cada situação.
+
+## Tipos de variáveis
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='90%', paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'classe_var.png'))
+```
+
+## Variáveis quantitativas
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'var_quanti.png'))
+```
+
+## Variáveis quantitativas discretas
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'var_discreta.jpg'))
+```
+
+## Variáveis quantitativas contínuas
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='70%', paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'var_continua.jpg'))
+```
+
+## Variáveis qualitativas
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'var_quali.png'))
+```
+
+## Variáveis qualitativas ordinais
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'var_ordinal.jpg'))
+```
+
+## Variáveis qualitativas nominais
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='70%', paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'var_nominal.jpg'))
+```
+
+## Exemplos (1)
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='90%', paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'cor_predio2.jpg'))
+```
+
+## Exemplos (1)
+
+### Variáveis quantitativas
+
+- 3 andares
+- 14,85 metros de altura
+
+### Variáveis qualitativas
+
+- Multicolorido
+- Cheira "bem"
+
+## Exemplos (2)
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='90%', paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'rolling-stones.jpg'))
+```
+
+## Exemplos (2)
+
+### Variáveis quantitativas
+
+- 4 integrantes
+- 56 anos
+
+### Variáveis qualitativas
+
+- Inglaterra
+- Rock
+
+## Exercício
+
+1. Com base na questão de pesquisa elaborada no exercício anterior, liste variáveis que você teria interesse em coletar e analisar para responder a sua questão de pesquisa.
+2. Classifique as variáveis de acordo com a classificação discutida anteriormente.
+3. Discuta a respeito das suas variáveis com os colegas.
+
+## População
+
+- __População__ ou __universo__: esse termo é usado em estatística com um sentido bem mais amplo do que na linguagem coloquial.
+- É entendido aqui como o __conjunto de todos os elementos__ que apresentam uma ou mais características __em comum__.
+- __Exemplo 1:__ a população de colegiais de oito anos de Belo Horizonte.
+    + Estes colegiais têm em comum a idade e o local onde vivem.
+- __Exemplo 2:__ a população de indústrias brasileiras.
+    + Estas indústrias têm em comum o fato de que foram criadas no Brasil.
+- Este conjunto por vezes é denominado por $U$ (de __conjunto universo__).
+- O __tamanho da população__ é a sua quantidade de elementos, que anotamos por $N$.
+- Uma população pode ser __finita__ (limita em tamanho; $N < \infty$) ou __infinita__ ($N =\infty$).
+    + __Exemplo de pop. finita:__ torcedores do São Raimundo de Santarém, residentes de Porto Alegre.
+    + __Exemplo de pop. infinita:__ equipamentos (de um certo tipo) fabricados em série.
+
+## Censo e amostra
+
+- Quando o estudo é realizado com toda a população de interesse, chamemos este estudo de __censo__.
+- Por motivos de tempo, custo, logística, entre outros, geralmente não é possível realizar um censo.
+    + Nestes casos, estudamos apenas uma parcela da população, que chamamos de __amostra__.
+
+### Censo vs. amostra
+
+À primeira vista, uma coleta de dados realizada em toda a população é preferível a uma realizada apenas numa parte da população. Na prática, entretanto, o oposto é frequentemente verdadeiro porque:
+
+1. Um censo é impossível quando a população é infinita.
+2. Os ensaios (testes) podem ser destrutivos \structure{(como nos testes de segurança dos carros)}.
+3. Rapidez: estudar toda a população pode despender de muito tempo, não sendo compatível com a urgência do estudo \structure{(como quando estudamos os casos de um surto de uma nova doença)}.
+
+Para uma consideração mais completa ver Vargas (2000)\footnote{Vargas, J. B. \emph{Estatística: uma linguagem para dialogar com a incerteza}, Cadernos de matemática e estatística. Série B, 2000.}.
+
+## Amostra
+
+- __Amostra__ é qualquer fração de uma população.
+    + Como sua finalidade é representar a população, deseja-se que a amostra escolhida apresente as mesmas características da população de origem, isto é, que seja uma amostra __"representativa"__  ou __"não-tendenciosa"__.
+- Tanto o número de indivíduos selecionados para a amostra quanto a técnica de seleção são extremamente importantes para que os resultados obtidos no estudo sejam generalizados para a população.
+
+## Amostra representativa
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='65%', paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'Gato_caindo.jpg'))
+```
+
+- Ver a discussão sobre __representatividade da amostra__ na [apresentação](https://www.youtube.com/watch?v=TGGGDpb04Yc&t=592s) do __Prof. Chris Fonnesbeck__.
+
+## Amostragem
+
+- A seleção da amostra pode ser feita de várias maneiras.
+- Esta dependerá:
+    + Do grau de conhecimento que temos da população.
+    + Da quantidade de recursos disponíveis.
+- A seleção da amostra tenta fornecer um subconjunto de valores o __mais parecido possível__ com a população que lhe dá origem.
+    + __Amostra representativa__ da população.
+
+## Amostra aleatória simples
+
+- A amostragem mais usada é a __amostra casual simples__ (ou aleatória simples).
+    + Os indivíduos (unidades) da amostra são selecionados ao acaso, __com__ ou __sem reposição__.
+    
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'simpleSample.png'))
+```
+
+## Amostra estratificada
+
+- Eventualmente, se tivermos informações adicionais a respeito da população de interesse, podemos utilizar outros esquemas de amostragem mais sofisticados.
+
+    + __Amostragem estratificada__
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='95%', paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'estratificada.png'))
+```
+
+## Amostra sistemática
+
+- Em outros casos, pode existir uma relação numerada dos itens da população que nos permitiria utilizar a chamada __amostragem sistemática__ em que selecionamos os indivíduos de forma pré-determinada.
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='80%', paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'SystematicSampling.jpg'))
+```
+
+## Amostragem
+
+- Outros esquemas de amostragem poderiam ser citados e todos fazem parte da chamada __teoria da amostragem__, cujos detalhes não serão aprofundados.
+
+## Parâmetros, estatísticas e estimativas
+
+- __Parâmetro__ é um valor que resume, na população, a informação relativa a uma variável.
+    + __Ex:__ média populacional, prevalência populacional, coeficiente de variação populacional, taxa de mortalidade populacional, etc.
+- __Estatística__ (além de ser o nome da ciência/área do conhecimento) é a denominação dada a uma quantidade, calculada com base nos elementos de uma amostra, que descreve a informação contida nesse conjunto de dados. 
+    + __Ex:__ A média, a porcentagem, o desvio padrão, o coeficiente de correlação, calculados em uma amostra, são estatísticas.
+
+## Parâmetros, estatísticas e estimativas
+
+- Os parâmetros são difíceis de se obter, pois implicam o estudo de toda a população e costumam ser substituídos por valores calculados em amostras representativas da população-alvo.
+    + Se tivesse sido examinada uma amostra de 10 estudantes matriculados na disciplina MAT02218, e 40% fossem do torcedores do América Mineiro, esse valor constituiria uma estimativa do parâmetro "percentual de torcedores do América Mineiro matriculados naquela disciplina".
+
+- A __estimativa__ é um valor numérico de uma estatística, usado para realizar inferências sobre o parâmetro.
+    + Da mesma forma, o valor numérico da média para a estatura desses 10 alunos, digamos 173 cm, é uma estimativa para a média de altura populacional.
+
+- __P:__ neste exemplo, quem é a população (alvo)?
+
+## Próxima aula 
+
+- Organização dos dados
+<!-- - Distribuição de frequências -->
+
+## Para casa
+
+\begin{columns}[c]
+\column{2.3in}
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=0.9\columnwidth]{images/stats_cats.jpg}
+\end{center}
+\end{figure}
+\column{2.3in}
+\begin{itemize}\setlength{\itemsep}{+2mm}
+\item Conhecer o Moodle da disciplina.
+\item Ler os Cap. 1 e 2 de "Estatística Descritiva I" de Fernandez.
+\end{itemize}
+\end{columns}
+
+## Por hoje é só! Bons estudos!
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', out.height='80%', paged.print=FALSE, purl=FALSE}
+
+knitr::include_graphics(here::here('images', 'lofi_01.jpg'))
+
+```
+
+<!-- # Introduction -->
+
+<!-- The Tufte handout style is a style that Edward Tufte uses in his books and handouts. Tufte's style is known for its extensive use of sidenotes, tight integration of graphics with text, and well-set typography. This style has been implemented in LaTeX and HTML/CSS^[See Github repositories [tufte-latex](https://github.com/tufte-latex/tufte-latex) and [tufte-css](https://github.com/edwardtufte/tufte-css)], respectively. We have ported both implementations into the [**tufte** package](https://github.com/rstudio/tufte). If you want LaTeX/PDF output, you may use the `tufte_handout` format for handouts, and `tufte_book` for books. For HTML output, use `tufte_html`. These formats can be either specified in the YAML metadata at the beginning of an R Markdown document (see an example below), or passed to the `rmarkdown::render()` function. See @R-rmarkdown for more information about **rmarkdown**. -->
+
+<!-- ```yaml -->
+<!-- --- -->
+<!-- title: "An Example Using the Tufte Style" -->
+<!-- author: "John Smith" -->
+<!-- output: -->
+<!--   tufte::tufte_handout: default -->
+<!--   tufte::tufte_html: default -->
+<!-- --- -->
+<!-- ``` -->
+
+<!-- There are two goals of this package: -->
+
+<!-- 1. To produce both PDF and HTML output with similar styles from the same R Markdown document; -->
+<!-- 1. To provide simple syntax to write elements of the Tufte style such as side notes and margin figures, e.g. when you want a margin figure, all you need to do is the chunk option `fig.margin = TRUE`, and we will take care of the details for you, so you never need to think about `\begin{marginfigure} \end{marginfigure}` or `<span class="marginfigure"> </span>`; the LaTeX and HTML code under the hood may be complicated, but you never need to learn or write such code. -->
+
+<!-- If you have any feature requests or find bugs in **tufte**, please do not hesitate to file them to https://github.com/rstudio/tufte/issues. For general questions, you may ask them on StackOverflow: http://stackoverflow.com/tags/rmarkdown. -->
+
+<!-- # Headings -->
+
+<!-- This style provides first and second-level headings (that is, `#` and `##`), demonstrated in the next section. You may get unexpected output if you try to use `###` and smaller headings. -->
+
+<!-- `r newthought('In his later books')`^[[Beautiful Evidence](http://www.edwardtufte.com/tufte/books_be)], Tufte starts each section with a bit of vertical space, a non-indented paragraph, and sets the first few words of the sentence in small caps. To accomplish this using this style, call the `newthought()` function in **tufte** in an _inline R expression_ `` `r ` `` as demonstrated at the beginning of this paragraph.^[Note you should not assume **tufte** has been attached to your R session. You should either `library(tufte)` in your R Markdown document before you call `newthought()`, or use `tufte::newthought()`.] -->
+
+<!-- # Figures -->
+
+<!-- ## Margin Figures -->
+
+<!-- Images and graphics play an integral role in Tufte's work. To place figures in the margin you can use the **knitr** chunk option `fig.margin = TRUE`. For example: -->
+
+<!-- ```{r fig-margin, fig.margin = TRUE, fig.cap = "MPG vs horsepower, colored by transmission.", fig.width=3.5, fig.height=3.5, cache=TRUE, message=FALSE} -->
+<!-- library(ggplot2) -->
+<!-- mtcars2 <- mtcars -->
+<!-- mtcars2$am <- factor( -->
+<!--   mtcars$am, labels = c('automatic', 'manual') -->
+<!-- ) -->
+<!-- ggplot(mtcars2, aes(hp, mpg, color = am)) + -->
+<!--   geom_point() + geom_smooth() + -->
+<!--   theme(legend.position = 'bottom') -->
+<!-- ``` -->
+
+<!-- Note the use of the `fig.cap` chunk option to provide a figure caption. You can adjust the proportions of figures using the `fig.width` and `fig.height` chunk options. These are specified in inches, and will be automatically scaled down to fit within the handout margin. -->
+
+<!-- ## Arbitrary Margin Content -->
+
+<!-- In fact, you can include anything in the margin using the **knitr** engine named `marginfigure`. Unlike R code chunks ```` ```{r} ````, you write a chunk starting with ```` ```{marginfigure} ```` instead, then put the content in the chunk. See an example on the right about the first fundamental theorem of calculus. -->
+
+<!-- ```{marginfigure} -->
+<!-- We know from _the first fundamental theorem of calculus_ that for $x$ in $[a, b]$: -->
+<!-- $$\frac{d}{dx}\left( \int_{a}^{x} f(u)\,du\right)=f(x).$$ -->
+<!-- ``` -->
+
+<!-- For the sake of portability between LaTeX and HTML, you should keep the margin content as simple as possible (syntax-wise) in the `marginefigure` blocks. You may use simple Markdown syntax like `**bold**` and `_italic_` text, but please refrain from using footnotes, citations, or block-level elements (e.g. blockquotes and lists) there. -->
+
+<!-- Note: if you set `echo = FALSE` in your global chunk options, you will have to add `echo = TRUE` to the chunk to display a margin figure, for example ```` ```{marginfigure, echo = TRUE} ````. -->
+
+<!-- ## Full Width Figures -->
+
+<!-- You can arrange for figures to span across the entire page by using the chunk option `fig.fullwidth = TRUE`. -->
+
+<!-- ```{r fig-fullwidth, fig.width = 10, fig.height = 2, fig.fullwidth = TRUE, fig.cap = "A full width figure.", warning=FALSE, message=FALSE, cache=TRUE} -->
+<!-- ggplot(diamonds, aes(carat, price)) + geom_smooth() + -->
+<!--   facet_grid(~ cut) -->
+<!-- ``` -->
+
+<!-- Other chunk options related to figures can still be used, such as `fig.width`, `fig.cap`, `out.width`, and so on. For full width figures, usually `fig.width` is large and `fig.height` is small. In the above example, the plot size is $10 \times 2$. -->
+
+<!-- ## Arbitrary Full Width Content -->
+
+<!-- Any content can span to the full width of the page. This feature requires Pandoc 2.0 or above. All you need is to put your content in a fenced `Div` with the class `fullwidth`, e.g., -->
+
+<!-- ```md -->
+<!-- ::: {.fullwidth} -->
+<!-- Any _full width_ content here. -->
+<!-- ::: -->
+<!-- ``` -->
+
+<!-- Below is an example: -->
+
+<!-- ::: {.fullwidth} -->
+<!-- _R is free software and comes with ABSOLUTELY NO WARRANTY._ You are welcome to redistribute it under the terms of the GNU General Public License versions 2 or 3. For more information about these matters see http://www.gnu.org/licenses/. -->
+<!-- ::: -->
+
+<!-- ## Main Column Figures -->
+
+<!-- Besides margin and full width figures, you can of course also include figures constrained to the main column. This is the default type of figures in the LaTeX/HTML output. -->
+
+<!-- ```{r fig-main, fig.cap = "A figure in the main column.", cache=TRUE} -->
+<!-- ggplot(diamonds, aes(cut, price)) + geom_boxplot() -->
+<!-- ``` -->
+
+<!-- # Sidenotes -->
+
+<!-- One of the most prominent and distinctive features of this style is the extensive use of sidenotes. There is a wide margin to provide ample room for sidenotes and small figures. Any use of a footnote will automatically be converted to a sidenote. ^[This is a sidenote that was entered using a footnote.]  -->
+
+<!-- If you'd like to place ancillary information in the margin without the sidenote mark (the superscript number), you can use the `margin_note()` function from **tufte** in an inline R expression. `r margin_note("This is a margin note.  Notice that there is no number preceding the note.")` This function does not process the text with Pandoc, so Markdown syntax will not work here. If you need to write anything in Markdown syntax, please use the `marginfigure` block described previously. -->
+
+<!-- # References -->
+
+<!-- References can be displayed as margin notes for HTML output. For example, we can cite R here [@R-base]. To enable this feature, you must set `link-citations: yes` in the YAML metadata, and the version of `pandoc-citeproc` should be at least 0.7.2. You can always install your own version of Pandoc from http://pandoc.org/installing.html if the version is not sufficient. To check the version of `pandoc-citeproc` in your system, you may run this in R: -->
+
+<!-- ```{r eval=FALSE} -->
+<!-- system2('pandoc-citeproc', '--version') -->
+<!-- ``` -->
+
+<!-- If your version of `pandoc-citeproc` is too low, or you did not set `link-citations: yes` in YAML, references in the HTML output will be placed at the end of the output document. -->
+
+<!-- # Tables -->
+
+<!-- You can use the `kable()` function from the **knitr** package to format tables that integrate well with the rest of the Tufte handout style. The table captions are placed in the margin like figures in the HTML output. -->
+
+<!-- ```{r} -->
+<!-- knitr::kable( -->
+<!--   mtcars[1:6, 1:6], caption = 'A subset of mtcars.' -->
+<!-- ) -->
+<!-- ``` -->
+
+<!-- # Block Quotes -->
+
+<!-- We know from the Markdown syntax that paragraphs that start with `>` are converted to block quotes. If you want to add a right-aligned footer for the quote, you may use the function `quote_footer()` from **tufte** in an inline R expression. Here is an example: -->
+
+<!-- > "If it weren't for my lawyer, I'd still be in prison. It went a lot faster with two people digging." -->
+<!-- > -->
+<!-- > `r tufte::quote_footer('--- Joe Martin')` -->
+
+<!-- Without using `quote_footer()`, it looks like this (the second line is just a normal paragraph): -->
+
+<!-- > "Great people talk about ideas, average people talk about things, and small people talk about wine." -->
+<!-- > -->
+<!-- > --- Fran Lebowitz -->
+
+<!-- # Responsiveness -->
+
+<!-- The HTML page is responsive in the sense that when the page width is smaller than 760px, sidenotes and margin notes will be hidden by default. For sidenotes, you can click their numbers (the superscripts) to toggle their visibility. For margin notes, you may click the circled plus signs to toggle visibility. -->
+
+<!-- # More Examples -->
+
+<!-- The rest of this document consists of a few test cases to make sure everything still works well in slightly more complicated scenarios. First we generate two plots in one figure environment with the chunk option `fig.show = 'hold'`: -->
+
+<!-- ```{r fig-two-together, fig.cap="Two plots in one figure environment.", fig.show='hold', cache=TRUE, message=FALSE} -->
+<!-- p <- ggplot(mtcars2, aes(hp, mpg, color = am)) + -->
+<!--   geom_point() -->
+<!-- p -->
+<!-- p + geom_smooth() -->
+<!-- ``` -->
+
+<!-- Then two plots in separate figure environments (the code is identical to the previous code chunk, but the chunk option is the default `fig.show = 'asis'` now): -->
+
+<!-- ```{r fig-two-separate, ref.label='fig-two-together', fig.cap=sprintf("Two plots in separate figure environments (the %s plot).", c("first", "second")), cache=TRUE, message=FALSE} -->
+<!-- ``` -->
+
+<!-- You may have noticed that the two figures have different captions, and that is because we used a character vector of length 2 for the chunk option `fig.cap` (something like `fig.cap = c('first plot', 'second plot')`). -->
+
+<!-- Next we show multiple plots in margin figures. Similarly, two plots in the same figure environment in the margin: -->
+
+<!-- ```{r fig-margin-together, fig.margin=TRUE, fig.show='hold', fig.cap="Two plots in one figure environment in the margin.", fig.width=3.5, fig.height=2.5, cache=TRUE} -->
+<!-- p -->
+<!-- p + geom_smooth(method = 'lm') -->
+<!-- ``` -->
+
+<!-- Then two plots from the same code chunk placed in different figure environments: -->
+
+<!-- ```{r fig-margin-separate, fig.margin=TRUE, fig.cap=sprintf("Two plots in separate figure environments in the margin (the %s plot).", c("first", "second")), fig.width=3.5, fig.height=2.5, cache=TRUE} -->
+<!-- knitr::kable(head(iris, 15)) -->
+<!-- p -->
+<!-- knitr::kable(head(iris, 12)) -->
+<!-- p + geom_smooth(method = 'lm') -->
+<!-- knitr::kable(head(iris, 5)) -->
+<!-- ``` -->
+
+<!-- We blended some tables in the above code chunk only as _placeholders_ to make sure there is enough vertical space among the margin figures, otherwise they will be stacked tightly together. For a practical document, you should not insert too many margin figures consecutively and make the margin crowded.  -->
+
+<!-- You do not have to assign captions to figures. We show three figures with no captions below in the margin, in the main column, and in full width, respectively. -->
+
+<!-- ```{r fig-nocap-margin, fig.margin=TRUE, fig.width=3.5, fig.height=2, cache=TRUE} -->
+<!-- # a boxplot of weight vs transmission; this figure -->
+<!-- # will be placed in the margin -->
+<!-- ggplot(mtcars2, aes(am, wt)) + geom_boxplot() + -->
+<!--   coord_flip() -->
+<!-- ``` -->
+<!-- ```{r fig-nocap-main, cache=TRUE} -->
+<!-- # a figure in the main column -->
+<!-- p <- ggplot(mtcars, aes(wt, hp)) + geom_point() -->
+<!-- p -->
+<!-- ``` -->
+<!-- ```{r fig-nocap-fullwidth, fig.fullwidth=TRUE, fig.width=10, fig.height=3, cache=TRUE} -->
+<!-- # a fullwidth figure -->
+<!-- p + geom_smooth(method = 'lm') + facet_grid(~ gear) -->
+<!-- ``` -->
+
+<!-- # Some Notes on Tufte CSS -->
+
+<!-- There are a few other things in Tufte CSS that we have not mentioned so far. If you prefer `r sans_serif('sans-serif fonts')`, use the function `sans_serif()` in **tufte**. For epigraphs, you may use a pair of underscores to make the paragraph italic in a block quote, e.g. -->
+
+<!-- > _I can win an argument on any topic, against any opponent. People know this, and steer clear of me at parties. Often, as a sign of their great respect, they don't even invite me._ -->
+<!-- > -->
+<!-- > `r quote_footer('--- Dave Barry')` -->
+
+<!-- We hope you will enjoy the simplicity of R Markdown and this R package, and we sincerely thank the authors of the Tufte-CSS and Tufte-LaTeX projects for developing the beautiful CSS and LaTeX classes. Our **tufte** package would not have been possible without their heavy lifting. -->
+
+<!-- You can turn on/off some features of the Tufte style in HTML output. The default features enabled are: -->
+
+<!-- ```yaml -->
+<!-- output: -->
+<!--   tufte::tufte_html: -->
+<!--     tufte_features: ["fonts", "background", "italics"] -->
+<!-- ``` -->
+
+<!-- If you do not want the page background to be lightyellow, you can remove `background` from `tufte_features`. You can also customize the style of the HTML page via a CSS file. For example, if you do not want the subtitle to be italic, you can define -->
+
+<!-- ```css -->
+<!-- h3.subtitle em { -->
+<!--   font-style: normal; -->
+<!-- } -->
+<!-- ``` -->
+
+<!-- in, say, a CSS file `my_style.css` (under the same directory of your Rmd document), and apply it to your HTML output via the `css` option, e.g., -->
+
+<!-- ```yaml -->
+<!-- output: -->
+<!--   tufte::tufte_html: -->
+<!--     tufte_features: ["fonts", "background"] -->
+<!--     css: "my_style.css" -->
+<!-- ``` -->
+
+<!-- There is also a variant of the Tufte style in HTML/CSS named "[Envisoned CSS](http://nogginfuel.com/envisioned-css/)". This style can be used by specifying the argument `tufte_variant = 'envisioned'` in `tufte_html()`^[The actual Envisioned CSS was not used in the **tufte** package. We only changed the fonts, background color, and text color based on the default Tufte style.], e.g. -->
+
+<!-- ```yaml -->
+<!-- output: -->
+<!--   tufte::tufte_html: -->
+<!--     tufte_variant: "envisioned" -->
+<!-- ``` -->
+
+<!-- To see the R Markdown source of this example document, you may follow [this link to Github](https://github.com/rstudio/tufte/raw/master/inst/rmarkdown/templates/tufte_html/skeleton/skeleton.Rmd), use the wizard in RStudio IDE (`File -> New File -> R Markdown -> From Template`), or open the Rmd file in the package: -->
+
+<!-- ```{r eval=FALSE} -->
+<!-- file.edit( -->
+<!--   tufte:::template_resources( -->
+<!--     'tufte_html', '..', 'skeleton', 'skeleton.Rmd' -->
+<!--   ) -->
+<!-- ) -->
+<!-- ``` -->
+
+<!-- This document is also available in [Chinese](http://rstudio.github.io/tufte/cn/), and its `envisioned` style can be found [here](http://rstudio.github.io/tufte/envisioned/). -->
+
+<!-- ```{r bib, include=FALSE} -->
+<!-- # create a bib file for the R packages used in this document -->
+<!-- knitr::write_bib(c('base', 'rmarkdown'), file = 'skeleton.bib') -->
+<!-- ``` -->
