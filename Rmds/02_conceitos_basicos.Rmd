@@ -1,0 +1,303 @@
+---
+title: "MAT02018 - Estatística Descritiva"
+subtitle: "Conceitos Básicos"
+fontsize: 10pt
+author: |
+  | Rodrigo Citton P. dos Reis
+  | `citton.padilha@ufrgs.br`
+institute: |
+  | \textsc{Universidade Federal do Rio Grande do Sul}
+  | \textsc{Instituto de Matemática e Estatística}
+  | \textsc{Departamento de Estatística}
+date: |
+  | Porto Alegre, 2021
+header-includes:
+  - \titlegraphic{\hfill\includegraphics[height=1.5cm]{logos/Logo-40-anos-estatistica.png}}
+---
+
+# Conceitos básicos
+
+## Dados e variáveis {.allowframebreaks}
+
+::: {.block}
+### Dados
+São as informações obtidas de uma unidade experimental ou observacional.
+:::
+
+- __Ex:__ "Vitor tem 25 anos e é fumante". Os dados são "25 anos" e "fumante".
+
+\framebreak
+
+::: {.block}
+### Variável
+
+É toda característica que, observada em uma unidade (experimental ou observacional), pode variar de um indivíduo para outro.
+:::
+- __Ex:__ idade, sexo, altura, nível de hemoglobina no sangue, espaçamento entre plantas, doses de um medicamento, tipo de medicamento, cultivares, número de caracteres, velocidade da rede, tempo gasto na rede social, nível de monóxido de carbono em emissões do escape de automóveis, etc.
+
+## Tipos de variáveis
+
+\footnotesize
+
+- É importante __identificar que tipo de variável__ está sendo estudada, uma vez que são recomendados __procedimentos estatísticos diferentes__ em cada situação.
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='80%', out.height='70%', paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'classe_var.png'))
+```
+
+## Variáveis quantitativas
+
+\footnotesize
+
+- A __variável quantitativa__ é expressa por números.
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='90%', out.height='80%', paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'var_quanti.png'))
+```
+
+## Variáveis quantitativas discretas
+
+\footnotesize
+
+- A __variável discreta__ resulta do processo de contagem.
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', out.height='80%', paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'var_discreta.jpg'))
+```
+
+## Variáveis quantitativas contínuas
+
+\footnotesize
+
+- A __variável contínua__ resulta do processo de medição.
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='70%', paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'var_continua.jpg'))
+```
+
+## Variáveis qualitativas
+
+\footnotesize
+
+- A __variável quantitativa__ é expressa por palavras.
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'var_quali.png'))
+```
+
+## Variáveis qualitativas ordinais
+
+\footnotesize
+
+- A __variável ordinal__ tem duas ou mais categorias que são, necessariamente, organizadas segundo uma lógica.
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'var_ordinal.jpg'))
+```
+
+## Variáveis qualitativas nominais
+
+\footnotesize
+
+- A __variável nominal__ tem duas ou mais categorias, que podem ser apresentadas em qualquer ordem.
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='70%', paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'var_nominal.jpg'))
+```
+
+## Exemplos (1)
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='90%', paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'cor_predio2.jpg'))
+```
+
+## Exemplos (1)
+
+### Variáveis quantitativas
+
+- 3 andares
+- 14,85 metros de altura
+
+### Variáveis qualitativas
+
+- Multicolorido
+- Cheira "bem"
+
+## Exemplos (2)
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='90%', paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'rolling-stones.jpg'))
+```
+
+## Exemplos (2)
+
+### Variáveis quantitativas
+
+- 4 integrantes
+- 60 anos
+
+### Variáveis qualitativas
+
+- Inglaterra
+- Rock
+
+## População {.allowframebreaks}
+
+::: {.block}
+### População ou universo
+
+Esse termo é usado em estatística com um sentido bem mais amplo do que na linguagem coloquial.
+
+É entendido aqui como o __conjunto de todos os elementos__ que apresentam uma ou mais características __em comum__.
+:::
+
+- __Exemplo 1:__ a população de colegiais de oito anos de Belo Horizonte.
+    + Estes colegiais têm em comum a idade e o local onde vivem.
+- __Exemplo 2:__ a população de indústrias brasileiras.
+    + Estas indústrias têm em comum o fato de que foram criadas no Brasil.
+
+\framebreak
+
+- Este conjunto por vezes é denominado por $U$ (de __conjunto universo__).
+- O __tamanho da população__ é a sua quantidade de elementos, que anotamos por $N$.
+- Uma população pode ser __finita__ (limita em tamanho; $N < \infty$) ou __infinita__ ($N =\infty$).
+    + __Exemplo de pop. finita:__ torcedores do São Raimundo de Santarém, residentes de Porto Alegre.
+    + __Exemplo de pop. infinita:__ equipamentos (de um certo tipo) fabricados em série.
+
+## Censo e amostra {.allowframebreaks}
+
+- Quando o estudo é realizado com toda a população de interesse, chamemos este estudo de __censo__.
+- Por motivos de tempo, custo, logística, entre outros, geralmente não é possível realizar um censo.
+    + Nestes casos, estudamos apenas uma parcela da população, que chamamos de __amostra__.
+
+\framebreak
+
+### Censo vs. amostra
+
+À primeira vista, uma coleta de dados realizada em toda a população é preferível a uma realizada apenas numa parte da população. Na prática, entretanto, o oposto é frequentemente verdadeiro porque:
+
+1. Um censo é impossível quando a população é infinita.
+2. Os ensaios (testes) podem ser destrutivos \structure{(como nos testes de segurança dos carros)}.
+3. Rapidez: estudar toda a população pode despender de muito tempo, não sendo compatível com a urgência do estudo \structure{(como quando estudamos os casos de um surto de uma nova doença)}.
+
+Para uma consideração mais completa ver Vargas (2000)\footnote{Vargas, J. B. \emph{Estatística: uma linguagem para dialogar com a incerteza}, Cadernos de matemática e estatística. Série B, 2000.}.
+
+## Amostra
+
+::: {.block}
+### Amostra
+
+É qualquer fração de uma população.
+::: 
+
+- Como sua finalidade é representar a população, deseja-se que a amostra escolhida apresente as mesmas características da população de origem, isto é, que seja uma amostra __"representativa"__  ou __"não-tendenciosa"__.
+- Tanto o número de indivíduos selecionados para a amostra quanto a técnica de seleção são extremamente importantes para que os resultados obtidos no estudo sejam generalizados para a população.
+
+<!-- ## Amostra representativa -->
+
+<!-- ```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='65%', paged.print=FALSE, purl=FALSE} -->
+<!-- knitr::include_graphics(here::here('images', 'Gato_caindo.jpg')) -->
+<!-- ``` -->
+
+<!-- - Ver a discussão sobre __representatividade da amostra__ na [apresentação](https://www.youtube.com/watch?v=TGGGDpb04Yc&t=592s) do __Prof. Chris Fonnesbeck__. -->
+
+## Amostragem
+
+- A seleção da amostra pode ser feita de várias maneiras.
+- Esta dependerá:
+    + Do grau de conhecimento que temos da população.
+    + Da quantidade de recursos disponíveis.
+- A seleção da amostra tenta fornecer um subconjunto de valores o __mais parecido possível__ com a população que lhe dá origem.
+    + __Amostra representativa__ da população.
+
+## Amostra aleatória simples
+
+- A amostragem mais usada é a __amostra casual simples__ (ou aleatória simples).
+    + Os indivíduos (unidades) da amostra são selecionados ao acaso, __com__ ou __sem reposição__.
+    
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'simpleSample.png'))
+```
+
+## Amostra estratificada
+
+- Eventualmente, se tivermos informações adicionais a respeito da população de interesse, podemos utilizar outros esquemas de amostragem mais sofisticados.
+
+    + __Amostragem estratificada__
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='95%', paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'estratificada.png'))
+```
+
+## Amostra sistemática
+
+- Em outros casos, pode existir uma relação numerada dos itens da população que nos permitiria utilizar a chamada __amostragem sistemática__ em que selecionamos os indivíduos de forma pré-determinada.
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='80%', paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'SystematicSampling.jpg'))
+```
+
+## Amostragem
+
+- Outros esquemas de amostragem poderiam ser citados e todos fazem parte da chamada __teoria da amostragem__, cujos detalhes não serão aprofundados.
+
+## Parâmetros, estatísticas e estimativas {.allowframebreaks}
+
+::: {.block}
+### Parâmetro
+
+É um valor que resume, na população, a informação relativa a uma variável.
+:::
+
+- __Ex:__ média populacional, prevalência populacional, coeficiente de variação populacional, taxa de mortalidade populacional, etc.
+
+::: {.block}
+### Estatística
+
+(além de ser o nome da ciência/área do conhecimento) é a denominação dada a uma quantidade, calculada com base nos elementos de uma amostra, que descreve a informação contida nesse conjunto de dados. 
+:::
+
+- __Ex:__ A média, a porcentagem, o desvio padrão, o coeficiente de correlação, calculados em uma amostra, são estatísticas.
+
+## Parâmetros, estatísticas e estimativas
+
+- Os parâmetros são difíceis de se obter, pois implicam o estudo de toda a população e costumam ser substituídos por valores calculados em amostras representativas da população-alvo.
+    + Se tivesse sido examinada uma amostra de 10 estudantes matriculados na disciplina MAT02218, e 40% fossem de torcedores do América Mineiro, esse valor constituiria uma estimativa do parâmetro "percentual de torcedores do América Mineiro matriculados naquela disciplina".
+
+\framebreak
+
+::: {.block}
+### Estimativa
+
+É um valor numérico de uma estatística, usado para realizar inferências sobre o parâmetro.
+:::
+
+- Da mesma forma, o valor numérico da média para a estatura desses 10 alunos, digamos 173 cm, é uma estimativa para a média de altura populacional.
+
+- __P:__ neste exemplo, quem é a população (alvo)?
+
+## Para casa
+
+1. Com base na \structure{questão de pesquisa} elaborada no "para casa" anterior:
+    - Liste as variáveis que você teria interesse em coletar e analisar para responder a sua questão de pesquisa.
+    - Classifique as variáveis de acordo com a classificação discutida na aula de hoje.
+    - Discuta a respeito das suas variáveis com os colegas \structure{(no Fórum Geral do Moodle)}.
+2. Leia o \structure{Capítulo 3 - ``Fases do levantamento estatístico''} do livro \structure{Estatística descritiva I}\footnote{Fernandez, D. W. X. {\bf Estatística descritiva I}, Cadernos de matemática e estatística. Série B, 1994.}.
+3. Assistir o vídeo: \structure{Statistical Thinking for Data Science} (https://youtu.be/TGGGDpb04Yc; você pode configurar o vídeo para apresentar legendas traduzidas para o português).
+
+## Próxima aula 
+
+- Organização dos dados.
+
+## Por hoje é só!
+
+\begin{center}
+{\bf Bons estudos!}
+\end{center}
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='50%', out.height='50%', paged.print=FALSE}
+
+knitr::include_graphics(here::here('images', 'Statistically-Insignificant-pizza.jpg'))
+
+```
+

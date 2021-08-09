@@ -1,0 +1,212 @@
+# A Estatística
+
+## O que é Estatística?
+
+- Essa pergunta já vem sendo feita (e diversas vezes) há muito tempo.
+- A persistência da pergunta e a variedade das respostas durante os anos sugerem que a Estatística não se caracteriza como um objeto singular.
+- Ainda, a Estatística apresenta diferentes faces para diferentes áreas da ciência.
+
+## Uma perspectiva histórica
+
+- A Estatística mudou drasticamente desde os primeiros dias até o presente, passando de uma profissão que reivindicou uma objetividade extrema que os estatísticos apenas coletariam dados (e não os analisam) para uma profissão que busca parceria com cientistas em todas as etapas da investigação, do planejamento à análise.
+- Primeiros censos ocorrem por volta do ano zero da era cristã.
+    + Por muito tempo, o aspecto descritivo da Estatística manteve-se como a única faceta desta ciência .
+- No século XVII, ocorrem as primeiras interpretações de dados.
+    + Em 1693, foram publicados pela primeira vez, em Londres, os totais anuais de falecimentos, estratificados por sexo.
+    + Primeiros estudos formais da teoria das probabilidades.
+
+## Uma perspectiva histórica
+
+### Pascal (1623-1662)
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='80%', out.height='70%', paged.print=FALSE}
+
+p1 <- ggdraw() + draw_image(here::here('images', 'dados.jpg'), scale = 1)
+p2 <- ggdraw() + draw_image(here::here('images', 'pascal.jpg'), scale = 1)
+
+plot_grid(p1, p2)
+
+```
+
+## Uma perspectiva histórica
+
+### Fermat (1601-1665)
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='80%', out.height='70%', paged.print=FALSE}
+
+p1 <- ggdraw() + draw_image(here::here('images', 'cartas.png'), scale = 1)
+p2 <- ggdraw() + draw_image(here::here('images', 'fermat.png'), scale = 1)
+
+plot_grid(p1, p2)
+```
+
+## Uma perspectiva histórica
+
+### Galton (1822-1911)
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='80%', out.height='70%', paged.print=FALSE}
+
+p1 <- ggdraw() + draw_image(here::here('images', 'galton.jpg'), scale = 1)
+p2 <- ggdraw() + draw_image(here::here('images', 'regressao_galton.png'), scale = 1)
+
+plot_grid(p1, p2)
+```
+
+## Uma perspectiva histórica
+
+### Pearson (1857-1936)
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='30%', paged.print=FALSE}
+knitr::include_graphics(here::here('images','pearson.jpg'))
+```
+
+- $\chi^2$ de Pearson
+- Coeficiente de correlação linear
+- Laboratório de Biometrika
+
+## Uma perspectiva histórica
+
+### Gosset, o _Student_ (1876-1937)
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='80%', out.height='70%', paged.print=FALSE}
+
+p1 <- ggdraw() + draw_image(here::here('images', 'guiness.jpg'), scale = 1)
+p2 <- ggdraw() + draw_image(here::here('images', 'gosset.jpg'), scale = 1)
+
+plot_grid(p1, p2)
+```
+
+## Uma perspectiva histórica
+
+### Fisher (1890-1962)
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='30%', paged.print=FALSE}
+knitr::include_graphics(here::here('images','Fisher.jpg'))
+```
+
+- "On the mathematical foundations of theoretical statistics“
+- Princípios da experimentação
+- Planejamento de experimentos
+- Análise de variância __(ANOVA)__
+
+## Uma perspectiva histórica
+
+### Cox (1924)
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='80%', out.height='70%', paged.print=FALSE}
+
+p1 <- ggdraw() + draw_image(here::here('images', 'cox.jpg'), scale = 1)
+p2 <- ggdraw() + draw_image(here::here('images', 'survival.png'), scale = 1)
+
+plot_grid(p1, p2)
+```
+
+## Uma perspectiva histórica
+
+### Nicolelis (1961)
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='80%', out.height='70%', paged.print=FALSE}
+
+p1 <- ggdraw() + draw_image(here::here('images', 'nicolelis.jpg'), scale = 1)
+p2 <- ggdraw() + draw_image(here::here('images', 'walkagain.jpg'), scale = 1)
+
+plot_grid(p1, p2)
+```
+
+## O papel da estatística na pesquisa
+
+- No \structure{planejamento}, auxilia na escolha de situações experimentais e na determinação da quantidade de indivíduos a serem examinados.
+- Na \structure{análise}, indica técnicas  para resumir e apresentar as informações, bem como para comparar as situações experimentais.
+- Na \structure{elaboração das conclusões}, os vários métodos estatísticos permitem generalizar a partir dos resultados obtidos.
+- De modo geral, não existe certeza sobre a correção das conclusões científicas; no entanto, os métodos estatísticos permitem determinar a margem de erro associada às conclusões, com base no conhecimento da variabilidade observada nos resultados.
+
+## Uma definição
+
+"__Estatística__ é a ciência de dados"\footnote{Montgomery, D., Runger, G. Estatística aplicada e probabilidade para engenheiros. LTC, 2016.}.
+
+# A Ciência de dados
+
+## Data scientist
+
+\begin{center}
+\includegraphics[width=0.35\columnwidth]{tobeornottobe1}
+\end{center}
+
+## Ciência dos dados
+
+\begin{center}
+\includegraphics[width=0.6\columnwidth]{data_science_diagram}
+\end{center}
+
+## Modern data scientist
+
+\begin{center}
+\includegraphics[width=0.65\columnwidth]{modern_data_scientist_female}
+\end{center}
+
+## Ciência dos dados
+
+### Fluxo de trabalho 
+
+\begin{center}
+\includegraphics[width=0.75\columnwidth]{workflow}
+\end{center}
+
+## Estatística ... \structure{(ou ciência dos dados?)}
+
+### Fases de análise
+
+\begin{columns}[c]
+\column{1.2in}
+\begin{figure}[!h]
+\begin{center}
+\includegraphics[width=0.9\columnwidth]{CoxBook}
+\end{center}
+\end{figure}
+\column{3.4in}
+\begin{enumerate}
+\item {\small \structure{Manipulação inicial} dos dados.}
+\begin{itemize}
+\item {\scriptsize Limpeza dos dados.}
+\item {\scriptsize Criação, transformação e recodificação de variáveis.}
+\end{itemize}
+\item {\small \structure{Análise preliminar}.}
+\begin{itemize}
+\item {\scriptsize Conhecimento dos dados, identificação de outliers, investigação preliminar.}
+\end{itemize}
+\item {\small \structure{Análise definitiva}.}
+\begin{itemize}
+\item {\scriptsize Disponibiliza a base para as conclusões.}
+\end{itemize}
+\item {\small \structure{Apresentação das conclusões} de forma precisa, concisa e lúcida.}
+\end{enumerate}
+\end{columns}
+
+# A Estatística Descritiva
+
+## A Estatística e suas divisões
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', out.height='80%', paged.print=FALSE}
+
+knitr::include_graphics(here::here('images', 'Descritiva_Inferencia.png'))
+
+```
+
+## Uma definição
+
+- A __Estatística Descritiva__ corresponde aos procedimentos relacionados com a coleta, elaboração, tabulação, análise, interpretação e apresentação dos dados.
+- Isto é, inclui as técnicas que dizem respeito à sintetização e à descrição de dados numéricos.
+- Tais métodos tanto podem ser gráficos como envolver análise computacional.
+
+## Próxima aula
+
+- Conceitos básicos de Estatística.
+
+## Por hoje é só! Sejam todos bem-vindos!
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', out.height='80%', paged.print=FALSE}
+
+knitr::include_graphics(here::here('images', 'EstatDesc.jpg'))
+
+```
+

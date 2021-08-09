@@ -28,27 +28,292 @@ options(htmltools.dir.version = FALSE)
 
 Uma contribuição importante da estatística no manejo das informações foi a criação de procedimentos para a organização e o resumo de grandes quantidades de dados. A descrição das variáveis é imprescindível como passo prévio para a adequada interpretação dos resultados de uma investigação, e a metodologia empregada faz parte da estatística descritiva.
 
-Os dados podem ser organizados em __tabelas__ ou __gráficos__. Nestas notas de aula, vamos conhecer como organizar a inormação em __tabelas de frequências__.
+Os dados podem ser organizados em __tabelas__ ou __gráficos__. Nestas notas de aula, vamos apresentar como organizar a informação em __tabelas de frequências__.
 
 # Distribuição de Frequências
 
+Dados nominais, ordinais e discretos, depois de apurados, devem ser organizados em __tabelas de distribuição de frequências__.
+
+- __Frequência de uma categoria (ou valor)__ é o número de vezes que essa categoria (ou valor) ocorre no conjunto de dados (uma amostra ou população)^[__Lembrando:__ __população__ é o conjunto de todos os elementos que apresentam uma ou mais características em comum. Quando o estudo é realizado com toda a população de interesse, chamemos este estudo de __censo__. Por motivos de tempo, custo, logística, entre outros, geralmente não é possível realizar um censo. Nestes casos, estudamos apenas uma parcela da população, que chamamos de __amostra__. Amostra é qualquer fração de uma população. Como sua finalidade é representar a população, deseja-se que a amostra escolhida apresente as mesmas características da população de origem, isto é, que seja uma amostra __"representativa"__ ou __"não-tendenciosa__.].
+- __Distribuição de frequências__ é a maneira de apresentar categorias (ou intervalos, ou valores) dos dados apurados com as respectivas frequências.
+
 ## Dados nominais
+
+Para organizar os dados nominais em uma tabela de distribuição de frequências escreva, na __primeira coluna__, o __nome da variável__ em estudo e logo abaixo, na mesma coluna, as categorias (ou seja, os valores) da variável. Na __segunda coluna__, escreva __"Frequência"__, e logo abaixo as frequências das respectivas categorias.
+
+__Exemplo:__ reveja o exemplo do grupo de 15 empregados da seção de orçamentos da Companhia MB. Anotamos o número de solteiros e casados para organizar os dados em uma tabela de frequências. Para isso, devemos escrever o nome da variável (_Estado civil_) e, em coluna, as categorias (_solteiro_, _casado_). As frequências são 8 empregados solteiros e 7 empregados casados que, somadas, dão um total de 15 empregados.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE}
+civil <- c(rep("Solteiro", 8), rep("Casado", 7))
+
+library(summarytools)
+
+civil.tab <- as.data.frame(na.omit(summarytools::freq(civil, order = "freq")))["Freq"]
+civil.tab <- data.frame("estado_civil"= row.names(civil.tab), "freq" = civil.tab$Freq)
+
+knitr::kable(civil.tab, col.names = c("Estado civil", "Frequência"))
+```
+
+__Observações:__
+
+1. É comum utilizar a última linha da tabela para expressar o total. Em geral, este deve coincidir com o tamanho do conjunto de dados. Em alguns casos, a variável não foi observada/coletada (_dados ausentes_) para uma ou mais unidades, e portanto, o total deve ser menor que o tamanho do conjunto de dados.
+2. Usaremos a __notação__ $n_i$ para indicar a frequência (absoluta) cada classe, ou categoria, da variável.
+
+__Exercício:__
+
+- Construa a tabela de distribuição de frequências da variável _Região de procedência_ do exemplo do grupo de 15 empregados da seção de orçamentos da Companhia MB.
 
 ## Dados ordinais
 
+Dados ordinais devem ser organizados em tabelas de distribuição de frequências. Escreva, na primeira coluna, o nome da variável em estudo e, logo abaixo, os nomes das categorias em __ordem crescente__^[Nos referimos a ordem das categorias e não das suas frequências.]. As frequências devem estar em outra coluna, mas nas linhas das respectivas categorias.
+
+Retornando ao exemplo do grupo de 15 empregados da seção de orçamentos da Companhia MB, considere a variável _Grau de instrução_. O nome da variável e suas categorias foram escritos na primeira coluna e, na segunda coluna, as respectivas frequências.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE}
+escola <- factor(x = c(rep("Ensino fundamental", 9), rep("Ensino médio", 5), "Superior"))
+
+escola.tab <- as.data.frame(na.omit(summarytools::freq(escola)))["Freq"]
+escola.tab <- data.frame("escola"= row.names(escola.tab), "freq" = escola.tab$Freq)
+
+knitr::kable(escola.tab, col.names = c("Grau de instrução", "Frequência ($n_i$)"))
+```
+
 ## Dados discretos
 
+Dados discretos também são organizados em tabelas de distribuição de frequências. Para isso, os valores que a variável pode assumir são colocados na primeira coluna, em __ordem crescente__. O número de vezes que cada valor se repete (a frequência) é escrito em outra coluna, nas linhas respectivas aos valores.
+
+Mais uma vez, retorne ao exemplo da seção de orçamentos da Companhia MB. O número de filhos dos empregados da seção é apresentado a seguir na distribuição de frequências.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE}
+filhos <- c(rep(0, 6), rep(1, 4), rep(2, 4), 3)
+
+filhos.tab <- as.data.frame(na.omit(summarytools::freq(filhos)))["Freq"]
+filhos.tab <- data.frame("filhos"= row.names(filhos.tab), "freq" = filhos.tab$Freq)
+
+knitr::kable(filhos.tab, col.names = c("Número de filhos", "Frequência ($n_i$)"))
+```
+
 ## Dados contínuos
+
+Dados contínuos podem assumir __diversos valores diferentes__^[Aqui chamamos mais uma vez a atenção para a importância de distinguirmos os diferentes tipos de variáveis. Uma variável _quantitativa contínua_ é uma __variável__! E portanto, __pode variar__ de um indivíduo para outro! No entanto, a variável _quantitativa contínua_ possui um conjunto de valores possíveis __infinito__ (um intervalo da reta real), e assim, podemos observar um número de unidades com valores distintos para uma certa variável contínua maior que no caso de uma variável nominal. __Exercício:__ compare os valores possíveis para as variáveis __altura__ e __estado civil__.], mesmo em amostras pequenas. Por essa razão, a menos que sejam em grande número, são apresentados na forma como foram coletados.
+
+Considere, como exemplo, que o pesquisador resolveu organizar as idades dos empregados da seção de orçamentos da Companhia MB em uma tabela. Pode escrever os dados na ordem em que foram coletados, como segue:
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE}
+idade <- c(26, 32, 36, 20, 40, 28, 41, 43, 34, 23, 33, 27, 37, 44, 30)
+
+idade.tab <- matrix(data = idade, nrow = 3)
+
+knitr::kable(idade.tab)
+```
+
+Quando em grande número, os dados contínuos podem ser organizados, para apresentação, em uma tabela de distribuição de frequências. Vamos entender como isso é feito por meio de novo exemplo.
+
+Foram propostas muitas maneiras de avaliar a capacidade de uma criança para o desempenho escolar. Algumas crianças estão "prontas" para aprender a escrever aos cinco anos, outras, aos oito anos. Imagine que um professor aplicou o _Teste de Desempenho Escolar_ (TDE) a 27 alunos da 1ª série do Ensino Fundamental. Os dados obtidos pelo professor estão apresentados em seguida.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE}
+tde <- c(7, 18, 111, 25, 101, 85, 81, 75, 100, 95, 98, 108, 100, 94, 34, 99, 84, 90, 95, 102, 96, 105, 100, 107, 117, 96, 17)
+
+tde.tab <- matrix(data = tde, nrow = 3)
+
+knitr::kable(tde.tab)
+```
+
+Para __conhecer o comportamento__ do desempenho escolar desses alunos, o professor deve organizar uma __distribuição de frequências__. No entanto, para isso, é preciso __agrupar os dados em faixas__, ou __classes__^[Note que se procedermos da mesma forma que procedemos para os casos anteriores, a nossa tabela de distribuição de frequências apresentaria um grande número de valores com baixas frequências. Isso nos daria tanta informação quanto a tabela de dados brutos, e portanto, não nos ajudaria a conhecer o comportamento da variável.]. Em quantas faixas ou classes podem ser agrupados os dados?
+
+Uma __regra prática__ é a seguinte: o número de classes deve ser aproximadamente igual à raiz quadrada do tamanho da amostra.
+
+$$
+\mbox{Número de classes} = \sqrt{n}.
+$$
+
+No exemplo, são 27 alunos. O tamanho da amostra é, portanto, $n = 27$. A raiz quadrada de 27 está entre $5 (\sqrt{25})$ e $6 (\sqrt{36})$. Portanto, podem ser organizadas __cinco classes__. Mas como?
+
+Observe cuidadosamente o conjunto de dados. Ache o __valor mínimo__, o __valor máximo__ e a __amplitude__.
+
+- __Valor mínimo__ é o menor valor de um conjunto de dados.
+- __Valor máximo__ é o maior valor de um conjunto de dados.
+- __Amplitude__ é a diferença entre o valor máximo e o valor mínimo.
+
+Para os valores obtidos pelos 27 alunos no Teste de Desempenho Escolar, temos:
+
+- Valor mínimo $= 7$;
+- Valor máximo $= 117$;
+- Amplitude $= 117 - 7 = 110$.
+
+Uma vez obtida a amplitude do conjunto de dados, é preciso calcular a __amplitude das classes__.
+
+- __Amplitude de classe__ é dada pela divisão da amplitude do conjunto de dados pelo número de classes. 
+
+Para os dados do TDE, a amplitude ($110$) deve ser dividida pelo número de classes que já foi calculado ($5$):
+
+$$
+110 \div 5 = 22.
+$$
+
+A __amplitude de classe__ será, então, $22$. Isso significa que:
+
+- a primeira classe vai do valor mínimo, $7$ até $7 + 22 = 29$;
+- a segunda classe vai de $29$ a $29 + 22 = 51$;
+- a terceira classe vai de $51$ a $51 + 22 = 73$;
+- a quarta classe vai de $73$ a $73 + 22 = 95$;
+- a quinta classe vai de $95$ a $95 + 22 = 117$, inclusive.
+
+Os valores que delimitam as classes são denominados __extremos__.
+
+- __Extremos de classe__ são os valores que delimitam as classes.
+
+Uma questão importante é saber __como__ as classes devem ser escritas. Alguém pode pensar em escrever as classes como segue:
+
+\begin{eqnarray*}
+7\ &-& 28\\
+29\ &-& 51, \mbox{etc.}\\
+\end{eqnarray*}
+
+No entanto, essa notação traz dúvidas. Como saber, por exemplo, para qual classe vai o valor $28,5$? Esse tipo de dúvida é evitado indicando as classes como segue:
+
+\begin{eqnarray*}
+7\ &\vdash& 28\\
+29\ &\vdash& 51, \mbox{etc.}\\
+\end{eqnarray*}
+
+Usando essa notação, fica claro que o intervalo é __fechado__ à esquerda e __aberto__ à direita. Então, na classe $7\vdash 29$ estão __incluídos__ os valores iguais ao extremo inferior da classe, que é $7$ (o intervalo é fechado à esquerda), mas __não estão incluídos__ os valores iguais ao extremo superior da classe, que é $29$ (o intervalo é aberto à direita).
+
+A indicação de que o intervalo é fechado é dada pelo lado esquerdo do traço vertical do símbolo $\vdash$. A indicação de intervalo aberto é dada pela ausência de traço vertical no lado direito do símbolo $\vdash$. Uma alternativa a esta notação é dada por __colchetes__ e __parênteses__. Considere $ei$ e $es$ os extremos inferior e superior de uma classe qualquer, respectivamente.
+
+- "$(ei; es]$", ou "$\dashv$" é um intervalo aberto à esquerda e fechado à direita;
+- "$[ei; es)$", ou "$\vdash$" é um intervalo aberto à direita e fechado à esquerda;
+- "$(ei; es)$", ou "$]ei; es[$", ou "--" é um intervalo aberto;
+- "$[ei; es]$", ou "$\vdash\dashv$" é um intervalo fechado.
+
+Estabelecidas as classes, é preciso obter as __frequências__. Para isso, contam-se quantos alunos estão na classe de $7$ a $29$ (exclusive), quantos estão na classe de $29$ a $51$ (exclusive), e assim por diante^[Aqui uma abordagem poderia ser a criação de uma "nova variável" (transformada) de idade em classes na planilha de dados brutos, e então proceder com a apuração desta "nova variável" como no caso de uma variável qualitativa. Afinal de contas, as classes de idade são categorias. Neste caso, categorias de uma variável qualitativa nominal.]. A distribuição de frequências pode então ser organizada como segue.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE}
+tde.cat <- cut(x = tde,
+               breaks = c(7, 29, 51, 73, 95, 117),
+               labels = c("7 $\\vdash$ 29", "29 $\\vdash$ 51", 
+                          "51 $\\vdash$ 73", "73 $\\vdash$ 95",
+                          "95 $\\vdash$ 117"),
+               include.lowest = F, right = FALSE)
+
+tde.tab <- as.data.frame(na.omit(summarytools::freq(tde.cat)))["Freq"]
+tde.tab <- data.frame("tde"= row.names(tde.tab), "freq" = tde.tab$Freq)
+
+knitr::kable(tde.tab, col.names = c("Classe TDE", "Frequência ($n_i$)"))
+```
+
+__OBSERVAÇÕES__
+
+Embora a __regra prática__ apresentada aqui para a determinação do número de classes seja útil, ela não é a única forma de determinar classes em uma tabela de frequências para dados contínuos. O pesquisador pode especificar as classes de acordo com "convenções". É comum vermos as frequências da variável idade serem apresentadas em classes de amplitude 5 ou 10 anos. Ainda, podem ser especificadas classes com amplitudes distintas (Idade de 0 a 19 anos, 20 a 59 anos, 60 a 79 anos, 80 anos ou mais). 
+
+Outro ponto importante é que nem sempre existe interesse em apresentar todas as classes possíveis. Em aluns casos, a primeira classe pode incluir todos os elementos menores que determinado valor. Diz-se, então, que o extremo inferior da primeira classe não está definido. Como exemplo, veja a distribuição de frequências das pessoas conforme a altura, com as seguintes classes:
+
+\begin{eqnarray*}
+&& \mbox{Menos de } 150 \mbox{ cm}\\
+&& 150\ \vdash 160 \mbox{cm}\\
+&& 160\ \vdash 170 \mbox{cm, etc.}\\
+\end{eqnarray*}
+
+Do mesmo modo, todos os elementos iguais ou maiores que determinado valor podem ser agrupados na última classe. Diz-se, então, que o extremo superior da última classe não está definido.
+
+Muitos dados de idade publicados pelo __Instituto Brasileiro de Geografia e Estatística__ (__IBGE__) estão em tabelas de distribuição de frequências com intervalos de classes diferentes (em relação a amplitude) e não possuem extremo superior definido. Veja o exemplo a seguir.
+
+```{r fig-censo, fig.align='center', fig.cap = "Distribuição da população residente, segundo grupos de idade no Brasil (Censo 2010). Disponível em https://censo2010.ibge.gov.br/sinopse/index.php?dados=12.", cache=TRUE, echo=FALSE, out.width="30%", purl=FALSE}
+knitr::include_graphics(here::here('images', 'ibge_idade_censo2010.png'))
+```
 
 # Frequências relativa, acumulada, relativa acumula e porcentagem
 
 ## Frequência relativa
 
+É fácil entender as informações apresentadas em distribuições de frequências [A distribuição de frequências nos apresenta quantos indivíduos apresentaram determinada característica (valor da variável) no conjunto de dados que estamos observando.]. Entretanto, as frequências dependem do __tamanho da amostra:__ um em dez, é mais importante que um em um milhão. Para ter visão do tamanho de uma categoria __em relação__ ao tamanho da amostra, calculamos a frequência relativa.
+
+- __Frequência relativa__ de uma categoria é o resultado da divisão da frequência dessa categoria pelo número de dados (tamanho) da amostra.
+
+$$
+\mbox{Frequência relativa} = \frac{\mbox{Frequência da categoria}}{\mbox{Tamanho da amostra}}.
+$$
+
+__Observações:__
+
+1. Usaremos a __notação__ $f_i = \frac{n_i}{n}$ para indicar a frequência relativa de cada classe, ou categoria, da variável.
+2. A soma das frequências relativas em uma distribuição de frequências é, obrigatoriamente, igual a 1^[É fácil ver que $\sum_i{f_i} = \sum_i{\frac{n_i}{n}} = \frac{1}{n}\sum_i{n_i} = \frac{1}{n}n = 1$, em que $\sum_i{}$ representa a soma (somatório).].
+3. Se a tabela de frequências absolutas estiver em uma planilha eletrônica é possível utilizar o recurso da fórmula para dividir os valores de uma coluna (as frequências) por uma constante (o tamanho da amostra) para obter as frequências relativas. No `R` a ideia é semelhante (veja a Seção Complementa`R`).
+
 ## Porcentagem
+
+- __Porcentagem da categoria__ é a frequência relativa dessa categoria multiplicada por 100.
+
+$$
+\mbox{Porcentagem} = \mbox{Frequência relativa} \times 100.
+$$
+
+Porcentagem é a razão expressa como fração de 100. Você não deve confundir __porcentagem__ com __por cento__. __Porcentagem__ significa uma parcela ou uma porção; não é, portanto, acompanhada de número. Por exemplo: a porcentagem de alunos reprovados em matemática foi pequena. __Por cento__ é a expressão que acompanha um número específico e é indicado com o símbolo %. Por exemplo: só 2% dos alunos foram reprovados em matemática.
+
+Vamos ver como calcular as frequências relativas e a porcentagem para o exemplo dos empregados da seção de orçamentos da Companhia MB.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE}
+civil <- c(rep("Solteiro", 8), rep("Casado", 7))
+
+civil.tab <- as.data.frame(na.omit(summarytools::freq(civil, order = "freq")))["Freq"]
+civil.tab <- data.frame("estado_civil"= row.names(civil.tab), "freq" = civil.tab$Freq)
+civil.tab$freqrel <- c("$\\frac{8}{15} = 0,533$", "$\\frac{7}{15} = 0,467$", "1,000")
+civil.tab$porc <- c("$0,533 \\times 100 = 53,3\\%$", "$0,467 \\times 100 = 46,7\\%$", "100,0\\%")
+
+knitr::kable(civil.tab,
+             col.names = c("Estado civil", "Frequência ($n_i$)", "Frequência relativa ($f_i$)", "Porcentagem"),
+             align = c('l', 'c', 'c', 'c'))
+```
+
+
+__Observação:__  as frequências relativas, e as porcentagens, de forma mais convencional, nos permitem fazer comparações entre grupos.Por exemplo, 30% dos alunos da Turma A preferem consultar o arquivo das notas de aula no formato PDF, enquanto que 50% dos alunos da Turma B preferem consultar o as notas de aula no formato PDF. 
 
 ## Frequência acumulada
 
+- __Frequência acumulada__ da categoria é a frequência dessa categoria somada às frequências de todas as anteriores.
+
+Mais uma vez retomamos o exemplo da Companhia MB para apresentarmos como é calculada a frequência acumulada.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE}
+filhos <- c(rep(0, 6), rep(1, 4), rep(2, 4), 3)
+
+filhos.tab <- as.data.frame(na.omit(summarytools::freq(filhos)))["Freq"]
+filhos.tab <- data.frame("filhos"= row.names(filhos.tab), "freq" = filhos.tab$Freq)
+filhos.tab$freqcum <- c("6", "$6 + 4 = 10$", "$6 + 4 + 4 = 14$", "$6 + 4 + 4 + 1= 15$", "-")
+knitr::kable(filhos.tab,
+             col.names = c("Nº de filhos", "Frequência ($n_i$)", "Frequência acumulada"),
+             align = c('l', 'c', 'c'))
+```
+
+Assim, é possível concluir que 14 empregados da seção de orçamento tem __2 filhos ou menos__ (até dois filhos).
+
+__Observações:__
+
+1. A frequência acumulada é apropriada para variáveis qualitativas ordinais, quantitativas discretas e contínuas. No entanto, não faz sentido apresentar a frequência acumulada de uma variável qualitativa nominal.
+2. A frequência acumulada da primeira classe é sempre igual à frequência dessa classe, por não existem classes anteriores à primeira.
+3. A última classe tem frequência acumulada igual ao total porque, para obter a frequência acumulada da última classe, somam-se as frequências de todas as outras classes.
+4. Se a tabela de frequências absolutas estiver em uma planilha eletrônica é possível utilizar o recurso da fórmula para somar recursivamente os valores de uma coluna (as frequências) para obter as frequências acumuladas. No `R` a ideia é semelhante (veja a Seção Complementa`R`).
+
 ## Frequência relativa acumulada
+
+- __Frequência relativa acumulada__ da categoria é a frequência relativa dessa categoria somada às frequências relativas de todas as anteriores.
+
+No exemplo da Companhia MB, temos:
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE}
+options(knitr.kable.NA = '-')
+filhos <- c(rep(0, 6), rep(1, 4), rep(2, 4), 3)
+
+filhos.tab <- as.data.frame(na.omit(summarytools::freq(filhos)))["Freq"]
+filhos.tab <- data.frame("filhos"= row.names(filhos.tab), "freq" = filhos.tab$Freq)
+filhos.tab$freqrel <- filhos.tab$freq/15
+filhos.tab$freqrelcum <- c(cumsum(filhos.tab$freqrel[-length(filhos.tab$freqrel)]), NA)
+knitr::kable(filhos.tab,
+             col.names = c("Nº de filhos", "Frequência ($n_i$)", "Freq. relativa ($f_i$)", "Freq. relativa acumulada"),
+             align = c('l', 'c', 'c', 'c'), digits = 3, )
+```
+
+E assim, é possível concluir que 93% dos empregados da seção de orçamento tem __2 filhos ou menos__ (até dois filhos)^[__Exercício:__ qual a porcentagem de empregados da seção de orçamentos com mais de um filho?].
 
 # Exercícios
 
@@ -56,7 +321,9 @@ Faça uma pequena coleta de dados incluindo pelo menos uma variável de cada tip
 
 1. Organize uma planilha (física ou eletrônica) para o registro dos dados coletados.
 2. Faça a coleta e preencha a planilha para obter os dados brutos.
-3. Faça a apuração dos dados e comente brevemente sobre os resultados encontrados.
+3. Faça a apuração dos dados.
+4. Construa tabelas de frequências para cada uma das variáveis e comente brevemente sobre os resultados encontrados.
+5. Faça os exercícios da Lista de Exercícios I (disponível no Moodle).
 
 # Complementa`R`
 
@@ -80,19 +347,84 @@ dados <- read_excel(path = here::here("data", "companhia_mb.xlsx"))
 class(dados) # classe do objeto dados
 dim(dados) # dimensão do objeto dados
 ```
+
 Note que o objeto `dados` é uma tabela de dados bruto.
 
 ```{r carrega-dados3, warning=FALSE, message=FALSE}
 head(dados) # apresenta as primeiras linhas do objeto dados
 ```
 
-A função `table` retorna contagens dos valores de cada variável, e portanto, podemos utilizar esta função para a apuração dos dados.
+A função `table` retorna contagens dos valores de cada variável, e portanto, podemos utilizar esta função para a apuração dos dados, bem como para computar as frequências.
 
-```{r apuracao, warning=FALSE, message=FALSE}
-table(dados$`Estado Civil`) # apura dados nominais
-table(dados$`Grau de Instrução`) # apura dados ordinais
-table(dados$`N de Filhos`) # apura dados discretos
-dados$Idade # apura dados contínuos
+```{r freqs, warning=FALSE, message=FALSE}
+table(dados$`Estado Civil`)
+table(dados$`Grau de Instrução`)
+table(dados$`N de Filhos`)
 ```
 
-<!-- # Distribuição de frequências -->
+A função `cut` pode ser utilizada para criar uma nova variável que expressa a antiga variável em classes.
+
+```{r freqs2, warning=FALSE, message=FALSE}
+dados$Idade.classes <- cut(x = dados$Idade,
+                           breaks = c(20, 29, 39, 49),
+                           include.lowest = TRUE,
+                           right = FALSE)
+
+table(dados$Idade.classes)
+```
+
+Uma forma de calcular as frequência relativas é dividindo o `vetor` de frequências pelo tamanho da amostra (ou conjunto de dados). 
+
+```{r freqs3, warning=FALSE, message=FALSE}
+table(dados$`Estado Civil`) / 36
+table(dados$`Grau de Instrução`) / length(dados$`Grau de Instrução`)
+```
+
+Uma outra forma de se obter as frequências relativas é utilizando a função `prop.table`.
+
+```{r freqs4, warning=FALSE, message=FALSE}
+prop.table(x = table(dados$`N de Filhos`))
+```
+
+Para obter as porcentagens, basta multiplicar as frequências relativas por 100.
+
+```{r porcentagem, warning=FALSE, message=FALSE}
+prop.table(x = table(dados$Idade.classes)) * 100
+```
+
+Se você quiser, pode arredondar os resultados com a função `round`.
+
+```{r porcentagem2, warning=FALSE, message=FALSE}
+round(x = prop.table(x = table(dados$Idade.classes)) * 100, digits = 2)
+```
+
+As frequências acumuladas podem ser obtidas com uma função de somas cumulativas, a função `cumsum`.
+
+```{r freqcum, warning=FALSE, message=FALSE}
+cumsum(x = table(dados$`Grau de Instrução`))
+cumsum(x = prop.table(x = table(dados$`Grau de Instrução`)))
+cumsum(x = prop.table(x = table(dados$`N de Filhos`)) * 100)
+cumsum(round(x = prop.table(x = table(dados$Idade.classes)) * 100, digits = 2))
+```
+
+Você pode juntar as frequências absolutas, relativas, acumuladas e porcentagens em `data.frame` para apresentar em forma de tabela.
+
+```{r freqtab, warning=FALSE, message=FALSE}
+df.freq <- data.frame(Idade = unique(dados$Idade.classes),
+                      Freq = as.numeric(table(dados$Idade.classes)),
+                      FreqRel = as.numeric(prop.table(table(dados$Idade.classes))),
+                      Porcentagem = as.numeric(prop.table(table(dados$Idade.classes)) * 100),
+                      FreqAcumulada = as.numeric(cumsum(table(dados$Idade.classes))),
+                      FreqRelAcumulada = as.numeric(cumsum(prop.table(table(dados$Idade.classes)))))
+
+df.freq
+```
+
+Existem outras formas de construir uma tabela de frequências. Uma delas é utilizando a função `freq` do pacote `summarytools`.
+
+```{r freqtab2, warning=FALSE, message=FALSE}
+# install.packages("summarytools")
+
+summarytools::freq(dados$`Grau de Instrução`)
+
+```
