@@ -1,0 +1,186 @@
+---
+title: "MAT02018 - Estatística Descritiva"
+subtitle: "Distribuição de Frequências: frequências relativa, acumulada, relativa acumulada e porcentagem"
+fontsize: 10pt
+author: |
+  | Rodrigo Citton P. dos Reis
+  | `citton.padilha@ufrgs.br`
+institute: |
+  | \textsc{Universidade Federal do Rio Grande do Sul}
+  | \textsc{Instituto de Matemática e Estatística}
+  | \textsc{Departamento de Estatística}
+date: |
+  | Porto Alegre, 2021
+header-includes:
+  - \titlegraphic{\hfill\includegraphics[height=1.5cm]{logos/Logo-40-anos-estatistica.png}}
+---
+
+# Frequências relativa, acumulada, relativa acumulada e porcentagem
+
+## Frequência relativa {.allowframebreaks}
+
+- É fácil entender as informações apresentadas em distribuições de frequências\footnote{A distribuição de frequências nos apresenta quantos indivíduos apresentaram determinada característica (valor da variável) no conjunto de dados que estamos observando.}.
+- Entretanto, as frequências dependem do \structure{tamanho da amostra}:
+    + um em dez, é mais importante que um em um milhão.
+- Para ter a visão do tamanho de uma categoria \structure{em relação} ao tamanho da amostra, calculamos a frequência relativa.
+
+## Frequência relativa {.allowframebreaks}
+
+- A \structure{frequência relativa} de uma categoria é o resultado da divisão da frequência dessa categoria pelo número de dados __(tamanho)__ da amostra.
+
+$$
+\mbox{Frequência relativa} = \frac{\mbox{Frequência da categoria}}{\mbox{Tamanho da amostra}}.
+$$
+
+## Frequência relativa {.allowframebreaks}
+
+### Observações
+
+1. Usaremos a \structure{notação $f_i = \frac{n_i}{n}$} para indicar a __frequência relativa__ de cada classe, ou categoria, da variável.
+2. A soma das frequências relativas em uma distribuição de frequências é, obrigatoriamente, igual a 1.
+    + É fácil ver que $\sum_i{f_i} = \sum_i{\frac{n_i}{n}} = \frac{1}{n}\sum_i{n_i} = \frac{1}{n}n = 1$, em que $\sum_i{}$ representa a soma (somatório).
+3. Se a tabela de frequências absolutas estiver em uma planilha eletrônica é possível utilizar o recurso da fórmula para dividir os valores de uma coluna (as frequências) por uma constante (o tamanho da amostra) para obter as frequências relativas. No `R` a ideia é semelhante (veremos na próxima aula).
+
+## Porcentagem {.allowframebreaks}
+
+- A \structure{porcentagem} da categoria é a frequência relativa dessa categoria multiplicada por 100.
+
+$$
+\mbox{Porcentagem} = \mbox{Frequência relativa} \times 100.
+$$
+
+- Ou seja, \structure{$\mbox{Porcentagem}_i = f_i \times 100$} é a porcentagem da $i$-ésima categoria.
+
+\framebreak
+
+### Observações
+
+- A __porcentagem__ é a razão expressa como fração de 100.
+- Você não deve confundir __porcentagem__ com __por cento__.
+- __Porcentagem__ significa uma parcela ou uma porção; não é, portanto, acompanhada de número.
+    - Por exemplo: a porcentagem de alunos reprovados em matemática foi pequena.
+__Por cento__ é a expressão que acompanha um número específico e é indicado com o símbolo \structure{\%}.
+    - Por exemplo: só 2% dos alunos foram reprovados em matemática.
+
+## Exemplo {.allowframebreaks}
+
+- Vamos ver como calcular as frequências relativas e a porcentagem para o exemplo dos empregados da seção de orçamentos da Companhia MB.
+
+\footnotesize
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE}
+civil <- c(rep("Solteiro", 8), rep("Casado", 7))
+
+civil.tab <- as.data.frame(na.omit(summarytools::freq(civil, order = "freq")))["Freq"]
+civil.tab <- data.frame("estado_civil"= row.names(civil.tab), "freq" = civil.tab$Freq)
+civil.tab$freqrel <- c("$\\frac{8}{15} = 0,533$", "$\\frac{7}{15} = 0,467$", "1,000")
+civil.tab$porc <- c("$0,533 \\times 100 = 53,3\\%$", "$0,467 \\times 100 = 46,7\\%$", "100,0\\%")
+
+knitr::kable(civil.tab,
+             col.names = c("Estado civil", "Frequência ($n_i$)", "Frequência relativa ($f_i$)", "Porcentagem"),
+             align = c('l', 'c', 'c', 'c'))
+```
+
+\framebreak
+
+### Observação
+
+- As frequências relativas, e as porcentagens, de forma mais convencional, nos permitem fazer comparações entre grupos.
+- Por exemplo, 30% dos alunos da Turma A preferem consultar o arquivo das notas de aula no formato PDF, enquanto que 50% dos alunos da Turma B preferem consultar o as notas de aula no formato PDF. 
+    - Ou seja, não foi necessário expressarmos o tamanho de cada turma.
+    
+## Frequência acumulada {.allowframebreaks}
+
+- A \structure{frequência acumulada} da categoria é a frequência dessa categoria somada às frequências de todas as anteriores.
+- Assim, temos que
+
+$$
+n_{AC_i} = \sum_{k=1}^i{n_k},
+$$
+
+em que \structure{$n_{AC_i}$} é a frequência acumulada até a $i$-ésima categoria.
+
+\framebreak
+
+- Mais uma vez retomamos o exemplo da Companhia MB para apresentarmos como é calculada a frequência acumulada.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE}
+filhos <- c(rep(0, 6), rep(1, 4), rep(2, 4), 3)
+
+filhos.tab <- as.data.frame(na.omit(summarytools::freq(filhos)))["Freq"]
+filhos.tab <- data.frame("filhos"= row.names(filhos.tab), "freq" = filhos.tab$Freq)
+filhos.tab$freqcum <- c("6", "$6 + 4 = 10$", "$6 + 4 + 4 = 14$", "$6 + 4 + 4 + 1= 15$", "-")
+knitr::kable(filhos.tab,
+             col.names = c("Nº de filhos", "Frequência ($n_i$)", "Frequência acumulada"),
+             align = c('l', 'c', 'c'))
+```
+
+- Assim, é possível concluir que 14 empregados da seção de orçamento tem __2 filhos ou menos__ (até dois filhos).
+
+\framebreak
+
+### Observações
+
+1. A __frequência acumulada__ é __apropriada__ para __variáveis__ qualitativas __ordinais__, quantitativas __discretas__ e __contínuas__.
+    + No entanto, __não faz sentido__ apresentar a frequência acumulada de uma __variável__ qualitativa __nominal__.
+2. A frequência acumulada da primeira classe é sempre igual à frequência dessa classe, por não existirem classes anteriores à primeira.
+3. A última classe tem frequência acumulada igual ao total porque, para obter a frequência acumulada da última classe, somam-se as frequências de todas as outras classes.
+4. Se a tabela de frequências absolutas estiver em uma planilha eletrônica é possível utilizar o recurso da fórmula para somar recursivamente os valores de uma coluna (as frequências) para obter as frequências acumuladas. No `R` a ideia é semelhante (como veremos na próxima aula).
+
+## Frequência relativa acumulada {.allowframebreaks}
+
+- A \structure{frequência relativa acumulada} da categoria é a frequência relativa dessa categoria somada às frequências relativas de todas as anteriores.
+
+- Assim, temos que
+
+$$
+f_{AC_i} = \sum_{k=1}^i{f_k} = \sum_{k=1}^i{n_k/n} = \frac{\sum_{k=1}^i{n_k}}{n} = \frac{n_{AC_i}}{n},
+$$
+
+em que \structure{$f_{AC_i}$} é a frequência relativa acumulada até a $i$-ésima categoria.
+
+\framebreak
+
+- No exemplo da Companhia MB, temos:
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE}
+options(knitr.kable.NA = '-')
+filhos <- c(rep(0, 6), rep(1, 4), rep(2, 4), 3)
+
+filhos.tab <- as.data.frame(na.omit(summarytools::freq(filhos)))["Freq"]
+filhos.tab <- data.frame("filhos"= row.names(filhos.tab), "freq" = filhos.tab$Freq)
+filhos.tab$freqrel <- filhos.tab$freq/15
+filhos.tab$freqrelcum <- c(cumsum(filhos.tab$freqrel[-length(filhos.tab$freqrel)]), NA)
+knitr::kable(filhos.tab,
+             col.names = c("Nº de filhos", "Frequência ($n_i$)",
+                           "Freq. relativa ($f_i$)", "Freq. relativa acumulada"),
+             align = c('l', 'c', 'c', 'c'), digits = 3, format.args = list(decimal.mark = ','))
+```
+
+- E assim, é possível concluir que 93% dos empregados da seção de orçamento tem __2 filhos ou menos__ (até dois filhos)\footnote{{\bf Exercício:} qual a porcentagem de empregados da seção de orçamentos com mais de um filho?}.
+
+## Para casa
+
+1. Resolver os exercícios 7, 8 e 9 do Capítulo 3.5 do livro __Fundamentos de Estatística__\footnote{Vieira, S. {\bf Fundamentos de Estatística}, Atlas, 2019, pg. 39-40.} (disponível no Sabi+). Utilize frequências relativas, acumuladas e percentuais, quando considerar adequado.
+2. Para as variáveis do seu levantamento estatístico, construa tabelas de frequências (agora com frequências relativas, acumuladas e percentuais, quando considerar adequado) e compartilhe no Fórum Geral do Moodle. Discuta como você definiu as classes e suas amplitudes.
+
+## Próxima aula 
+
+- Complementa`R`:
+    + Distribuição de frequências no `R`
+    + Construção de tabelas (para publicação e apresentação)
+    + Um minuto de história (da estatística)
+- Atividade de Avaliação I (apresentação e instruções)
+
+## Por hoje é só!
+
+\begin{center}
+{\bf Bons estudos!}
+\end{center}
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='50%', out.height='50%', paged.print=FALSE}
+
+knitr::include_graphics(here::here('images', 'Statistically-Insignificant-corda-bamba.jpg'))
+
+```
+
