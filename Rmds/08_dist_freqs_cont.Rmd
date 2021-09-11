@@ -59,7 +59,7 @@ $$
 - Você não deve confundir __porcentagem__ com __por cento__.
 - __Porcentagem__ significa uma parcela ou uma porção; não é, portanto, acompanhada de número.
     - Por exemplo: a porcentagem de alunos reprovados em matemática foi pequena.
-__Por cento__ é a expressão que acompanha um número específico e é indicado com o símbolo \structure{\%}.
+- __Por cento__ é a expressão que acompanha um número específico e é indicado com o símbolo \structure{\%}.
     - Por exemplo: só 2% dos alunos foram reprovados em matemática.
 
 ## Exemplo {.allowframebreaks}

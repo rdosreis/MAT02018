@@ -1,10 +1,8 @@
 ## ----carrega-dados0, echo=TRUE, eval=FALSE, warning=FALSE, message=FALSE--------------------------------------------
 ## # install.packages("readxl")
-## library(readxl)
-## 
-## dados <- read_excel(path = "companhia_mb.xlsx")
+library(readxl)
 
-
+dados <- read_excel(path = "data/companhia_mb.xlsx")
 
 
 ## ----carrega-dados2, warning=FALSE, message=FALSE-------------------------------------------------------------------
@@ -15,8 +13,21 @@ dim(dados) # dimensão do objeto dados
 ## ----carrega-dados3, warning=FALSE, message=FALSE-------------------------------------------------------------------
 head(dados) # apresenta as primeiras linhas do objeto dados
 
+library(readxl)
+companhia_mb <- read_excel("data/companhia_mb.xlsx")
+View(companhia_mb)
 
 ## ----freqs, warning=FALSE, message=FALSE----------------------------------------------------------------------------
+
+dados$`Grau de Instrução`
+
+# dados's
+
+# dados$escolaridade <- dados$`Grau de Instrução`
+# names(dados)[3] <- "escola"
+
+dados$Idade
+
 table(dados$`Estado Civil`)
 table(dados$`Grau de Instrução`)
 table(dados$`N de Filhos`)
@@ -25,10 +36,12 @@ table(dados$`N de Filhos`)
 ## ----freqs2, warning=FALSE, message=FALSE---------------------------------------------------------------------------
 dados$Idade.classes <- cut(x = dados$Idade,
                            breaks = c(20, 29, 39, 49),
+                           labels = c("20 a 28 anos", "29 a 38 anos", "39 a 49 anos"),
                            include.lowest = TRUE,
                            right = FALSE)
 
 table(dados$Idade.classes)
+
 
 
 ## ----freqs3, warning=FALSE, message=FALSE---------------------------------------------------------------------------

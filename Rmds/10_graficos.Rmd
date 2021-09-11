@@ -1,0 +1,448 @@
+---
+title: "MAT02018 - Estatística Descritiva"
+subtitle: "Construção de gráficos"
+fontsize: 10pt
+author: |
+  | Rodrigo Citton P. dos Reis
+  | `citton.padilha@ufrgs.br`
+institute: |
+  | \textsc{Universidade Federal do Rio Grande do Sul}
+  | \textsc{Instituto de Matemática e Estatística}
+  | \textsc{Departamento de Estatística}
+date: |
+  | Porto Alegre, 2021
+bibliography: estatistica-descritiva.bib
+csl: associacao-brasileira-de-normas-tecnicas-ufrgs-initials.csl
+link-citations: yes
+header-includes:
+  - \titlegraphic{\hfill\includegraphics[height=1.5cm]{logos/Logo-40-anos-estatistica.png}}
+---
+
+# Introdução
+
+## Introdução
+
+Nestas notas são apresentados, por meio de exemplos, os conceitos e métodos que devem ser utilizados na construção de gráficos. Serão apresentados:
+
+- os aspectos básicos na construção de gráficos;
+- os gráficos mais utilizados para apresentar \structure{distribuições univariadas};
+- e uma discussão do apropriado uso de tais gráficos na descrição de dados qualitativos e quantitativos.
+
+# Gráficos
+
+## Gráficos {.allowframebreaks}
+
+- Os dados apresentados em tabelas trazem informações sobre o assunto em estudo.
+- No entanto, figuras sempre \structure{causam maior impacto}.
+- Para chamar a atenção do leitor, os estatísticos expõem dados em gráficos bem editados e, em geral, \textcolor{red}{co}\textcolor{blue}{lo}\textcolor{green}{ri}\textcolor{orange}{dos}.
+- Além disso, os gráficos possuem uma __capacidade de síntese__ que nem sempre uma tabela pode alcançar.
+
+\framebreak
+
+Os gráficos estatísticos devem ter:
+
+- \structure{título}, escrito logo acima do gráfico;
+- \structure{fonte} e \structure{notas}, se houver, escritas abaixo do gráfico.
+
+# Apresentação gráfica de dados qualitativos
+
+## Gráfico de barras {.allowframebreaks}
+
+- Podemos construir um \structure{gráficos de barras}\footnote{Algumas referências fazem a distinção entre {\bf gráfico de barra} e {\bf gráfico de colunas}, em que o gráfico de barras refere-se a posição horizontal das barras e gráfico de colunas refere-se ao gráfico com barras verticais. Aqui trataremos os ``dois'' gráficos como {\bf gráfico de barras}.} para apresentar \structure{dados qualitativos} que estão em uma \structure{tabela de distribuição de frequências}. 
+- Cada categoria da variável é representada na forma de uma \structure{barra} __(um retângulo)__.
+
+## Gráfico de barras {.allowframebreaks}
+
+- Para exemplificarmos o uso do gráfico de barras, vamos utilizar o exemplo adaptado de [@bussab_estatistica_2017] sobre os dados dos empregados da seção de orçamentos da Companhia MB\footnote{Neste caso estamos considerando os 36 empregados, porém alterando as observações de algumas variáveis apenas para fins didáticos.}.
+- Considere a variável \structure{``Grau de Instrução''}.
+
+```{r carrega-dados1, echo=FALSE, warning=FALSE, message=FALSE}
+
+# install.packages("readxl")
+library(readxl)
+library(stringr)
+
+dados <- read_excel(path = here::here("data", "companhia_mb.xlsx"))
+
+set.seed(123)
+
+dados$`Grau de Instrução`[dados$`Grau de Instrução` == "ensino fundamental"] <- sample(x = c("fundamental incompleto", "fundamental completo"), size = length(dados$`Grau de Instrução`[dados$`Grau de Instrução` == "ensino fundamental"]), replace = T)
+
+dados$`Grau de Instrução`[dados$`Grau de Instrução` == "ensino médio"] <- sample(x = c("médio incompleto", "médio completo"), size = length(dados$`Grau de Instrução`[dados$`Grau de Instrução` == "ensino médio"]), replace = T)
+
+dados$`Grau de Instrução`[dados$`Grau de Instrução` == "superior"] <- sample(x = c("superior incompleto", "superior completo"), size = length(dados$`Grau de Instrução`[dados$`Grau de Instrução` == "superior"]), replace = T)
+
+dados$`Estado Civil` <- str_to_title(dados$`Estado Civil`)
+dados$`Grau de Instrução` <- str_to_title(dados$`Grau de Instrução`)
+dados$`Região de Procedência` <- str_to_title(dados$`Região de Procedência`)
+
+dados$`Grau de Instrução` <- factor(dados$`Grau de Instrução`,
+                                    levels = c("Fundamental Incompleto", "Fundamental Completo", "Médio Incompleto", "Médio Completo", "Superior Incompleto", "Superior Completo"))
+
+```
+
+```{r fig-barras1, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width='75%'}
+
+library(ggplot2)
+
+p.barras <- ggplot(data = dados, mapping = aes(x = `Grau de Instrução`)) +
+  geom_bar(stat = "count", width = 0.5, aes(fill = I("steelblue"))) +
+  labs(x = "Grau de Instrução",
+       y = "Frequência",
+       title = "Escolaridade dos empregados da seção de orçamentos.",
+       caption = "Fonte: Companhia MB.") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
+
+p.barras
+
+```
+
+## Gráfico de barras {.allowframebreaks}
+
+Passos para construir o gráfico de barras da distribuição da variável __Grau de Instrução__:
+
+1. Trace o sistema de eixos cartesianos.
+
+```{r fig-plano-cart, message=FALSE, echo=FALSE, out.width="80%", out.height='80%', purl=FALSE, fig.align='center'}
+
+knitr::include_graphics(here::here('images', 'plano-cartesiano.jpg'))
+
+```
+
+\framebreak
+
+2. No eixo das abscissas (eixo horizontal), apresente os níveis da variável Grau de Instrução.
+3. No eixo das ordenadas (eixo vertical), apresente as frequências dos níveis de Grau de Instrução\footnote{Observe que aqui é necessário ter sido realizada a apuração dos dados, e se possível a tabela de frequências. Os \emph{softwares} estatísticos acabam realizando estas tarefas conjuntamente, mas aqui estamos apresentando os passos para a construção sem que seja necessário o conhecimento de recursos computacionais.}.
+4. Faça marcas no eixo das abscissas, de mesma largura e igualmente espaçadas, que serão as bases das barras (retângulos) que irão representar o número de empregados de cada nível da variável Grau de Instrução.
+5. Desenhe as barras (retângulos) com bases nas abscissas e alturas dadas pelas frequências de cada categoria da variável Grau de Instrução.
+6. Coloque legendas nos eixos, título no gráfico e fonte, quando houver.
+
+- É possível desenhar linhas auxiliares (grades) no interior do gráfico para facilitar a leitura das alturas das barras.
+
+## Gráfico de barras {.allowframebreaks}
+
+- __Exercício:__ construa o gráfico de barras da variável __Grau de Instrução__ do exemplo __adaptado__ de [@bussab_estatistica_2017] (15 empregados da seção de orçamentos) que encontra-se na planilha física das __notas de aula "Organização dos dados"__.
+
+```{r, message=FALSE, echo=FALSE, out.width="100%", purl=FALSE, fig.align='center'}
+
+knitr::include_graphics(here::here('images', 'quadro_preto.jpg'))
+
+```
+
+\framebreak
+
+- O gráfico de barras também pode ser utilizado para apresentar as frequências relativas (ou porcentagens) de um conjunto de dados referentes a uma variável.
+
+```{r fig-barras2, echo=FALSE, warning=FALSE, message=FALSE, out.width="80%", fig.align='center'}
+
+p.barras <- ggplot(data = dados, mapping = aes(x = `Grau de Instrução`)) +
+  geom_bar(stat = "count",
+           width = 0.5,
+           aes(y = (..count..)/sum(..count..),
+               fill = I("lightsalmon"))) +
+  labs(x = "Grau de Instrução",
+       y = "Frequência relativa",
+       title = "Escolaridade dos empregados da seção de orçamentos.",
+       caption = "Fonte: Companhia MB.") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
+
+p.barras
+
+```
+
+\framebreak
+
+- Uma forma de auxiliar o leitor na identificação das frequências é apresentar os valores destas no topo das barras\footnote{Em alguns casos, os valores das frequências são apresentados dentro das barras.}.
+
+```{r fig-barras3, echo=FALSE, warning=FALSE, message=FALSE, out.width="80%", fig.align='center'}
+
+p.barras <- ggplot(data = dados, mapping = aes(x = `Grau de Instrução`)) +
+  geom_bar(stat = "count",
+           width = 0.5,
+           aes(y =  (..count..)/sum(..count..),
+               fill = I("#77DD77"))) +
+  geom_text(aes(label = scales::percent( (..count..)/sum(..count..)),
+                y =  (..count..)/sum(..count..) ), stat = "count", vjust = -.5) +
+  scale_y_continuous(limits = c(0, 0.35), labels = scales::percent) +
+  labs(x = "Grau de Instrução",
+       y = "Porcentagem",
+       title = "Escolaridade dos empregados da seção de orçamentos.",
+       caption = "Fonte: Companhia MB.") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
+
+p.barras
+
+```
+
+## Gráfico de barras {.allowframebreaks}
+
+- Quando as categorias da variável tiverem nomes extensos, ou a variável apresentar muitas categorias, é conveniente apresentar o gráfico de barras na posição horizontal.
+
+```{r fig-barras4, echo=FALSE, warning=FALSE, message=FALSE, out.width="65%", out.height='65%', fig.align='center'}
+
+p.barras <- ggplot(data = dados, mapping = aes(x = `Grau de Instrução`)) +
+  geom_bar(stat = "count",
+           width = 0.5,
+           aes(y =  (..count..)/sum(..count..),
+               fill = I("#DA70D6"))) +
+  geom_text(aes(label = scales::percent( (..count..)/sum(..count..)),
+                y =  (..count..)/sum(..count..) ), stat = "count", hjust = -.5) +
+  scale_y_continuous(limits = c(0, 0.35), labels = scales::percent) +
+  labs(x = "Grau de Instrução",
+       y = "Porcentagem",
+       title = "Escolaridade dos empregados da seção de orçamentos.",
+       caption = "Fonte: Companhia MB.") +
+  coord_flip() + 
+  theme_bw()
+
+p.barras
+
+```
+
+\framebreak
+
+Os passos para a construção do gráfico de barras na posição horizontal são semelhantes aos da construção do gráfico de barras na vertical:
+
+1. Trace o sistema de eixos cartesianos.
+2. Represente as categorias da variável em estudo na ordenada (eixo vertical).
+3. Represente as frequências (absolutas, relativas ou porcentagens) da variável em estudo no eixo das abscissas (eixo horizontal).
+4. Construa as barras: as bases ficam no eixo das ordenadas e os comprimentos devem ser iguais às frequências das categorias que elas representam.
+5. Escreva legendas, título e a fonte, se houver.
+
+- Outra possibilidade é representar as frequências por bastões (segmentos de reta), ou ainda por outras formas. Uma forma bastante utilizada é conhecida com \structure{gráfico pirulito}.
+
+\framebreak
+
+```{r fig-barras5, echo=FALSE, warning=FALSE, message=FALSE, out.width="100%", fig.align='center'}
+
+library(dplyr)
+
+df_barras <- dados %>% 
+  group_by(`Grau de Instrução`) %>% 
+  summarise(n = n()) %>% 
+  mutate(freq = 100 * (n / sum(n)))
+
+p.barras <- ggplot(data = df_barras,
+                   mapping = aes(y = `Grau de Instrução`,
+                                 x = freq,
+                                 label = paste0(round(freq, 0), "%"))) +
+  geom_segment(aes(x = 0, y = `Grau de Instrução`, xend = freq, yend = `Grau de Instrução`), color = "grey50") +
+        geom_point(size = 7, color = "#FF5349") +
+        geom_text(color = "white", size = 2) +
+  labs(y = "Grau de Instrução",
+       x = "Porcentagem",
+       title = "Escolaridade dos empregados da seção de orçamentos.",
+       caption = "Fonte: Companhia MB.") +
+  theme_bw()
+
+p.barras
+
+```
+
+\framebreak
+
+### Observações
+
+- O gráfico de barras é indicado para representar as frequências de variáveis qualitativas nominais, ordinais e variáveis quantitativas discretas.
+- O gráfico de barras também pode ser utilizado para representar médias de grupos. No entanto, esta representação fará mais sentido após a discussão sobre medidas resumo (de tendência central e dispersão) e distribuições bivariadas.
+
+## Gráfico de setores {.allowframebreaks}
+
+- O \structure{gráfico de setores}\footnote{Este gráfico é popularmente conhecido como {\bf gráfico de pizza}, pois lembra a forma de uma pizza redonda cortada em fatias.} é usado para apresentar frequências ou frequências relativas de categorias que constituem partes de um todo (a soma das frequências relativas deve ser obrigatoriamente 100%).
+- Como exemplo, considere mais uma vez os dados dos 36 empregados da seção de orçamento da Companhia MB. Veja a seguir a tabela de frequências da variável \structure{``Região de Procedência''}.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+library(janitor)
+
+df_regiao <- dados %>% 
+  group_by(`Região de Procedência`) %>% 
+  summarise(n = n()) %>% 
+  mutate(freq = round(100 * (n / sum(n)), 0)) %>%
+  adorn_totals("row") 
+
+knitr::kable(df_regiao,
+             col.names = c("Região de Procedência", "Frequência ($n_i$)", "Porcentagem"),
+             align = c('l', 'c', 'c'), digits = c(0,0,1))
+```
+
+## Gráfico de setores {.allowframebreaks}
+
+- O gráfico de setores correspondente aos dados da tabela é apresentado a seguir.
+
+```{r fig-setores, echo=FALSE, warning=FALSE, message=FALSE, purl=FALSE, out.width="80%", fig.align='center'}
+# 
+# p.setores <- ggplot(data = df_regiao, aes(x = "", y = freq, fill = `Região de Procedência`)) +
+#   geom_bar(stat = "identity", width = 1) +
+#   coord_polar("y", start = 0) +
+#   theme_void() # remove background, grid, numeric labels
+
+
+p.setores <- ggplot(df_regiao[1:3, ], aes("", freq, fill = `Região de Procedência`)) +
+    geom_bar(width = 1, size = 1, color = "white", stat = "identity") +
+    coord_polar("y") +
+    geom_text(aes(label = paste0(round(freq), "%")), 
+              position = position_stack(vjust = 0.5)) +
+    labs(x = NULL, y = NULL, fill = NULL, 
+         title = "Região de Procedência") +
+    guides(fill = guide_legend(reverse = TRUE)) +
+    scale_fill_manual(values = c("#ffd700", "#254290", "#bcbcbc")) +
+  labs(caption = "Fonte: Companhia MB.") +
+    theme_classic() +
+    theme(axis.line = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          plot.title = element_text(hjust = 0.5, color = "#666666"))
+p.setores
+
+```
+
+\framebreak
+
+Para a construção do gráfico de setores devemos seguir os seguintes passos:
+
+1. Trace uma circunferência\footnote{Lembrando: uma circunferência possui 360º.}.
+2. A área do círculo representará o total, ou seja, 100%.
+3. Use a \structure{``regra de três''}: se 100% correspondem a 360º, 31% de empregados com origem na \structure{Capital} correspondem a um setor cujo ângulo central $g$ é dado por:
+
+\begin{eqnarray*}
+&& 100\% \longrightarrow 360^{\text{o}}\\
+&& 31\% \longrightarrow g\\
+&&\Rightarrow g = \frac{31 \times 360}{100} = 111,6^{\text{o}}
+\end{eqnarray*}
+
+## Gráfico de setores {.allowframebreaks}
+
+4. Proceda da mesma forma para calcular os outros ângulos.
+    + Para \structure{Interior}: 
+\begin{eqnarray*}
+&& 100\% \longrightarrow 360^{\text{o}}\\
+&& 33\% \longrightarrow g\\
+&&\Rightarrow g = \frac{33 \times 360}{100} = 118,8^{\text{o}}
+\end{eqnarray*}
+    + Para \structure{Outra} região:
+\begin{eqnarray*}
+&& 100\% \longrightarrow 360^{\text{o}}\\
+&& 36\% \longrightarrow g\\
+&&\Rightarrow g = \frac{36 \times 360}{100} = 129,6^{\text{o}}
+\end{eqnarray*}
+
+\framebreak
+
+5. Marque os valores dos ângulos calculados na circunferência e trace os raios, separando os setores. Um \structure{transferidor} pode auxiliar bastante neste processo.
+
+```{r fig-transferidor, echo=FALSE, out.width="85%", purl=FALSE, fig.align='center'}
+
+knitr::include_graphics(here::here('images', 'transferidor.png'))
+
+```
+
+\framebreak
+
+6. Para facilitar a distinção dos setores, use padrões de preenchimento ou cores diferentes.
+7. Coloque legenda e título na figura.
+
+\framebreak
+
+### Observações
+
+- O gráfico de setores é adequado para representar frequências de variáveis qualitativas nominais. Quando o número de categorias for muito grande é recomendado o uso de um gráfico de barras no lugar de gráfico de setores, pois a visualização das frequências fica prejudicada.
+
+```{r fig-pizza-ruim, message=FALSE, echo=FALSE, out.width="60%", purl=FALSE, fig.align='center'}
+
+knitr::include_graphics(here::here('images', 'pizza-ruim.png'))
+
+```
+
+## Gráfico de setores {.allowframebreaks}
+
+### Observações
+
+- Assim como o gráfico de barras, o gráfico de setores apresenta variações na forma (veja a seguir). No entanto, todas estas versões apresentam a mesma informação. 
+
+## Gráfico de setores {.allowframebreaks}
+
+```{r fig-variacoes-setores, echo=FALSE, warning=FALSE, message=FALSE, out.width="90%", fig.align='center'}
+# 
+# p.setores <- ggplot(data = df_regiao, aes(x = "", y = freq, fill = `Região de Procedência`)) +
+#   geom_bar(stat = "identity", width = 1) +
+#   coord_polar("y", start = 0) +
+#   theme_void() # remove background, grid, numeric labels
+
+
+p1 <- ggplot(df_regiao[1:3, ], aes(x = 2, freq, fill = `Região de Procedência`)) +
+    geom_bar(width = 1, size = 1, color = "white", stat = "identity") +
+    coord_polar("y") +
+    geom_text(aes(label = paste0(round(freq), "%")), 
+              position = position_stack(vjust = 0.5)) +
+    labs(x = NULL, y = NULL, fill = NULL, 
+         title = "Região de Procedência") +
+    guides(fill = guide_legend(reverse = TRUE)) +
+    scale_fill_manual(values = c("#ffd700", "#254290", "#bcbcbc")) +
+    theme_classic() +
+    theme(axis.line = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          plot.title = element_text(hjust = 0.5, color = "#666666")) +
+  xlim(0.5, 2.5)
+
+p2 <- ggplot(dados, aes(y = "", fill = factor(`Região de Procedência`))) +
+    geom_bar(width = 1, size = 0.1, color = "white", position = "fill") +
+  scale_fill_manual(values = c("#ffd700", "#254290", "#bcbcbc")) +
+  # geom_text(data = NULL, aes(label = paste(df_regiao$freq[1:3], "%"),
+  #               x =  df_regiao$freq[1:3]), hjust = -.5) +
+  scale_x_continuous(labels = scales::percent) +
+  labs(fill = "Procedência", x = "") +
+  theme_classic() +
+  theme(legend.position = 'bottom',
+        legend.text = element_text(size = 8),
+        axis.title.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.line.y = element_blank(),
+        axis.text.y = element_blank()) 
+
+library(waffle)
+library(hrbrthemes)
+
+p3 <- ggplot(data = df_regiao[1:3,], aes(fill = `Região de Procedência`, values = n)) +
+  geom_waffle(n_rows = 10, size = 0.33, colour = "white", flip = TRUE) +
+  scale_fill_manual(
+    name = "Região de Procedência",
+    values = c("#ffd700", "#254290", "#bcbcbc"),
+    labels = c("Capital", "Interior", "Outra")
+  ) +
+  coord_equal() +
+  # theme_ipsum_rc(grid = "") +
+  theme_enhance_waffle()
+
+library(cowplot)
+
+grid1 <- plot_grid(p1, p2, labels = c('A', 'B'), label_size = 10)
+plot_grid(grid1, p3, labels = c('', 'C'), label_size = 10, ncol = 1)
+
+```
+
+## Para casa
+
+1. Resolver os exercícios 1 e 2 do Capítulo 5.4 do livro __Fundamentos de Estatística__\footnote{Vieira, S. {\bf Fundamentos de Estatística}, Atlas, 2019, p. 75.} (disponível no Sabi+).
+2. Para o seu levantamento estatístico, construa gráficos para os dados qualitativos. Compartilhe no Fórum Geral do Moodle.
+
+## Próxima aula 
+
+- Construção de gráficos para dados quantitativos.
+
+## Por hoje é só!
+
+\begin{center}
+{\bf Bons estudos!}
+\end{center}
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='50%', out.height='50%', paged.print=FALSE}
+
+knitr::include_graphics(here::here('images', 'Statistically-Insignificant-capediem.jpg'))
+
+```
+
