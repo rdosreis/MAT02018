@@ -27,7 +27,7 @@ header-includes:
 
 \framebreak
 
-```{r, cache=TRUE, message=FALSE, echo=FALSE, out.width="25%", purl=FALSE, fig.align='right'}
+```{r, cache=TRUE, message=FALSE, echo=FALSE, out.width="20%", purl=FALSE, fig.align='right'}
 
 knitr::include_graphics(here::here('images', 'Revisao-de-Prova.jpg'))
 
@@ -39,6 +39,7 @@ $$
 (14, 19, 16, 17)
 $$
 o professor poderá querer registrar o desempenho do aluno por um valor "central", a \structure{média aritmética}, por exemplo.
+
 - A média aritmética de tais valores é \structure{$16,5$}.
 - Embora seja uma quantidade de acertos que __não pode ocorrer na realidade__, ela está mostrando que o aluno __apresentou em geral um bom desempenho__.
 
@@ -64,7 +65,7 @@ o professor poderá querer registrar o desempenho do aluno por um valor "central
 - Note que conforme estes valores estão posicionados (distribuídos), a média \textcolor{red}{(triângulo em vermelho)}, se desloca, de tal forma que este valor mantém o equilíbrio da distribuição \textcolor{yellow}{(representada pela barra amarela)}.
 
 ```{r fig-media, fig.align='center', cache=TRUE, echo=FALSE, out.width="50%", purl=FALSE, out.height='50%'}
-
+options(knitr.kable.NA = '-')
 knitr::include_graphics(here::here('images', 'media_centro_gravidade2.png'))
 
 ```

@@ -1,0 +1,193 @@
+---
+title: "MAT02018 - Estatística Descritiva"
+subtitle: "Medidas de tendência central (continuação)"
+fontsize: 10pt
+author: |
+  | Rodrigo Citton P. dos Reis
+  | `citton.padilha@ufrgs.br`
+institute: |
+  | \textsc{Universidade Federal do Rio Grande do Sul}
+  | \textsc{Instituto de Matemática e Estatística}
+  | \textsc{Departamento de Estatística}
+date: |
+  | Porto Alegre, 2021
+bibliography: estatistica-descritiva.bib
+csl: associacao-brasileira-de-normas-tecnicas-ufrgs-initials.csl
+link-citations: yes
+header-includes:
+  - \titlegraphic{\hfill\includegraphics[height=1.5cm]{logos/Logo-40-anos-estatistica.png}}
+---
+
+```{r setup, include=FALSE, purl=FALSE}
+options(knitr.kable.NA = '-')
+library(dplyr)
+library(knitr)
+```
+
+# Introdução
+
+- Nestas notas de aula, vamos apresentar outros tipos de \structure{médias}:
+    - A \structure{média ponderada};
+    - A \structure{média Geométrica};
+    - A \structure{média harmônica}.
+
+- Tais conceitos/métodos serão apresentados em um contexto muito simples e pouco realista.
+- Estes métodos serão retomados em um contexto mais apropriado quando discutirmos as questões associadas ao tópico de __Números Índices__.
+
+# Média ponderada
+
+## Média ponderada {.allowframebreaks}
+
+- A \structure{média (aritmética) ponderada} é a soma dos produtos dos dados (\structure{$x$}) pelos respectivos \structure{pesos} (\structure{$p$}), dividida pela soma dos pesos.
+
+- A \structure{média ponderada} é muito usada para notas escolares e de concursos quando se dá maior peso (o que corresponde maior importância) a determinada(s) prova(s).
+
+\framebreak
+
+- Para entender como se calcula a média ponderada, imagine que a avaliação referente a uma disciplina de Estatística será realizada de acordo com o nível de exigência de cada atividade (tabela a seguir).
+
+```{r fig.align='center', echo=FALSE, out.width="70%", purl=FALSE}
+
+knitr::include_graphics(here::here('images', 'media_ponderada1.png'))
+
+```
+
+- De certa forma, uma boa nota na prova é mais importante do que participar das discussões fórum do Moodle desta disciplina.
+
+\framebreak
+
+- Assim, um aluno qualquer tem o seguinte desempenho no semestre.
+
+```{r fig.align='center', echo=FALSE, out.width="50%", purl=FALSE}
+
+knitr::include_graphics(here::here('images', 'media_ponderada3.png'))
+
+```
+
+- O desempenho deste aluno na prova não foi tão bom.
+    + O que poderíamos falar a respeito da sua aprovação?
+- Como vimos anteriormente, a média aritmética nos fornece uma medida resumo do desempenho deste aluno.
+- Porém, neste caso a soma simples das notas das avaliações não é possível, pois a prova vale três vezes a nota da discussão no fórum.
+- É preciso pesar (ponderar) os valores das notas.
+
+\framebreak
+
+- Utilizando \structure{$p_i$} para denotar o peso referente a cada valor \structure{$x_i$}, a média aritmética é definida por 
+
+$$
+\bar{x}_p = \frac{\sum_i{x_ip_i}}{\sum_i{p_i}}.
+$$
+
+\framebreak
+
+- Retomando o nosso exemplo, teríamos que a média ponderada das atividades de avaliação seria
+
+\begin{eqnarray*}
+\bar{x}_p &=& \frac{(\mbox{Nota}_1)\times(\mbox{Peso}_1) + (\mbox{Nota}_2)\times(\mbox{Peso}_2) + (\mbox{Nota}_3)\times(\mbox{Peso}_3)}{(\mbox{Peso}_1) + (\mbox{Peso}_2) + (\mbox{Peso}_3)}\\
+&=& \frac{(10)\times(1) + (8)\times(2) + (6)\times(3)}{(1) + (2) + (3)}\\
+&=& \frac{44}{6} = 7,33.
+\end{eqnarray*}
+
+::: {.block}
+### Observação
+
+- Se consideramos o __mesmo peso__ para cada dado observado, percebemos que a média aritmética é um caso particular da média ponderada quando $p_i = p$.
+
+:::
+
+\framebreak
+
+- __Sua vez:__ imagine que a avaliação no semestre de "Estatística Descritiva" é feita considerando que as "Avaliações da Área 1" têm peso 1 (cada uma) e as "Avaliações da Área 2 e 3" tem peso 2.
+- Digamos que um aluno apresentou notas 8 e 5 para as duas avaliações da área 1, e 5 e 6 para as atividades das áreas 2 e 3.
+    + Calcule a média ponderada das notas.
+    + Se para atingir a aprovação é necessária uma média 6, este aluno seria aprovado?
+    + Calcule a média aritmética simples (considerando o mesmo peso para as três avaliações).
+    + Compare os resultados.
+
+# Média geométrica {.allowframebreaks}
+
+- A \structure{média geométrica} é dada pela raiz \structure{$n$}-ésima do produtório^[O produtório será denotado pela letra grega $\Pi$ e indica que os elementos do conjunto devem ser multiplicados: $\prod_{i=1}^n{x_i} = x_1\times x_2\times \ldots \times x_n$.] de um conjunto de \structure{$n$} elementos^[Em nosso contexto, estes elementos podem ser observações de uma variável.].
+
+- Representando o conjunto de elementos por \structure{$x_1, x_2, \ldots, x_n$}, a média geométrica é dada por
+
+$$
+G = \sqrt[n]{\prod_{i=1}^{n}{x_i}} = \sqrt[n]{x_1\cdot x_2\cdot \ldots \cdot x_n}.
+$$
+
+## Média geométrica {.allowframebreaks}
+
+- A média geométrica é utilizada, basicamente, quando há variações percentuais em sequência.
+
+- \structure{Exemplo:} suponha que uma certa loja teve aumento de 20% nas vendas em um mês, 12% no mês seguinte, e 7% no terceiro mês.
+    + A média geométrica nos fornece o aumento médio nos três meses observados.
+    + Assim, se representamos por $x$ a variação nas vendas mensais desta loja, temos \structure{$x_1 = 1,2$ (20\%)}, \structure{$x_2 = 1,12$ (12\%)} e \structure{$x_3 = 1,07$ (7\%)}.
+
+\framebreak
+
+- A média geométrica deste conjunto de observações é dada por
+
+$$
+G = \sqrt[3]{1,2\times 1,12\times 1,07} = \sqrt[3]{1,43808} \approx 1,13.
+$$
+
+- Assim, a média percentual de aumento de vendas da loja nos três meses observados foi de aproximadamente 13%.
+
+\framebreak
+
+- Note que a raiz \structure{$n$}-ésima de um valor \structure{$\sqrt[n]{a}$} pode ser escrita como uma potência fracionária \structure{$a^{1/n}$}.
+    + Assim, a média geométrica pode ser reescrita da seguinte forma
+
+$$
+G = \left(\prod_{i=1}^{n}{x_i}\right)^{1/n}.
+$$
+
+\framebreak
+
+- Tomando o logaritmo^[Logaritmo natural.] nos dois lados da expressão acima, temos
+
+$$
+\log{G} = \frac{1}{n}\sum_{i=1}^n{\log{x_i}}.
+$$
+
+- Ou seja, o __logaritmo da média geométrica__ é igual a __média aritmética da log-transformada__ da variável \structure{$x$}.
+    + Consequentemente, temos que \structure{$G = \exp{[\bar{x}_{(\log)}]}$}, em que \structure{$\bar{x}_{(\log)}$} é a __média aritmética da log-transformada__ de \structure{$x$}.
+
+# Média harmônica {.allowframebreaks}
+
+- A \structure{média harmônica} de um conjunto de \structure{$n$} elementos é o __inverso da média aritmética dos inversos__ desses elementos.
+- Representando o conjunto de elementos por \structure{$x_1, x_2, \ldots, x_n$}, a média harmônica é dada por
+
+$$
+H = \frac{n}{\sum_{i=1}^n{\frac{1}{x_i}}} = \frac{n}{\frac{1}{x_1} + \frac{1}{x_2} + \ldots + \frac{1}{x_n}}.
+$$
+\framebreak
+
+- Como exemplo, considere as notas das três avaliações apresentadas da __Seção da Média ponderada__. A média harmônica das três avaliações é dada por
+
+$$
+H = \frac{3}{\frac{1}{10} + \frac{1}{8} + \frac{1}{6}} = \frac{3}{0,3916667} \approx 7,65.
+$$
+
+- Note que a média aritmética simples é 8. Se substituíssemos a nota 10 por uma nota 9, e a nota 6 por uma nota 7, a média aritmética simples continuaria 8, porém a média harmônica seria 7,92.
+    + Ou seja, a média harmônica tende a aumentar quando os valores são mais próximos.
+
+## Para casa
+
+- Resolver os exercícios 4 a 11 do Capítulo 8.5 do livro __Fundamentos de Estatística__\footnote{Vieira, S. {\bf Fundamentos de Estatística}, Atlas, 2019, p. 136-138.} (disponível no Sabi+).
+
+## Próxima aula 
+
+- Médias ponderada, geométrica e harmônica.
+
+## Por hoje é só!
+
+\begin{center}
+{\bf Bons estudos!}
+\end{center}
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='50%', out.height='50%', paged.print=FALSE, purl=FALSE}
+
+knitr::include_graphics(here::here('images', 'Statistically-Insignificant-barras03.jpg'))
+
+```
+
