@@ -1,0 +1,323 @@
+---
+title: "MAT02018 - Estatística Descritiva"
+subtitle: "Medidas de variabilidade"
+fontsize: 10pt
+author: |
+  | Rodrigo Citton P. dos Reis
+  | `citton.padilha@ufrgs.br`
+institute: |
+  | \textsc{Universidade Federal do Rio Grande do Sul}
+  | \textsc{Instituto de Matemática e Estatística}
+  | \textsc{Departamento de Estatística}
+date: |
+  | Porto Alegre, 2021
+bibliography: estatistica-descritiva.bib
+csl: associacao-brasileira-de-normas-tecnicas-ufrgs-initials.csl
+link-citations: yes
+header-includes:
+  - \titlegraphic{\hfill\includegraphics[height=1.5cm]{logos/Logo-40-anos-estatistica.png}}
+---
+
+```{r setup, include=FALSE, purl=FALSE}
+options(knitr.kable.NA = '-')
+library(dplyr)
+library(knitr)
+```
+
+# Introdução
+
+## Introdução {.allowframebreaks}
+
+- As medidas de tendência central são insuficientes para representar adequadamente conjuntos de dados, pois nada revelam sobre sua \structure{variabilidade}.
+- Tome como exemplo as notas de 5 avaliações realizadas por 2 alunos.
+    + \structure{Aluno A:} 6, 6, 6, 6, 6.
+        - __Total de pontos:__ 30; __Média:__ 6.
+    + \alert{Aluno B:} 7, 5, 6, 4, 8.
+        - __Total de pontos:__ 30; __Média:__ 6.
+
+\framebreak
+
+- Para mostrar a diversidade de desempenho de ambos, necessita-se de um valor que meça a \structure{dispersão} ou a \structure{variabilidade} dos valores nos dois casos.
+- Nestas notas de aula vamos apresentar algumas das medidas mais utilizadas para descrever a variabilidade de um conjunto de dados.
+
+# Amplitude de variação
+
+## Amplitude de variação {.allowframebreaks}
+
+- A medida mais simples de dispersão é a \structure{amplitude de variação ($a$)}, que é a diferença entre os valores extremos do conjunto de dados.
+
++ \structure{$a = Max(x) - Min(x)$}, em que \structure{$Min(x)$} e \structure{$Max(x)$} representam os valores de \structure{mínimo} e \structure{máximo} de um conjunto de dados, respectivamente.
+
+\framebreak
+
+- \structure{Exemplo:} suponha que observamos a __largura da pétala__ (em centímetros) de 10 flores
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE}
+
+set.seed(1309)
+petal.width.sample <- sample(iris$Petal.Width, 10, replace = F)
+
+knitr::kable(matrix(petal.width.sample,
+                    ncol = 5), format = "pandoc")
+
+```
+
+- Note que,
+    + $Min(x) =$ `r min(petal.width.sample)`;
+    + $Max(x) =$ `r max(petal.width.sample)`;
+- Logo, a amplitude é $a =$ `r max(petal.width.sample)` - `r min(petal.width.sample)` $=$ `r max(petal.width.sample) -  min(petal.width.sample)`
+
+\framebreak
+
+::: {.block}
+
+### Comentário
+
+- Os valores de mínimo e máximo de um conjunto de dados podem ser utilizados para a verificação de inconsistências nos dados com respeito a variável de interesse. 
+    - \alert{Exemplos:}
+        + $Max({\rm idade}) = 170$ (anos).
+        + $Min({\rm temperatura}) = -20^{\circ}$ (na série histórica de temperaturas na cidade de Porto Alegre).
+
+:::
+
+\framebreak
+
+
+::: {.block}
+
+### Duas limitações
+
+1. A amplitude de variação só utiliza os valores extremos do conjunto de dados.
+2. Quando avaliada em amostras, frequentemente _subestima_ a amplitude populacional.
+
+:::
+
+# Variância
+
+## Variância {.allowframebreaks}
+
+- As principais medidas de dispersão envolvem os \structure{desvios em relação a média}, \structure{$x_1 - \bar{x}, x_2 - \bar{x}, \ldots, x_n - \bar{x}$}.
+- Ou seja, os desvios da média são obtidos pela subtração de \structure{$\bar{x}$} de cada uma das \structure{$n$} observações da amostra, conforme mostra a figura a seguir.
+
+```{r fig.align='center', cache=TRUE, echo=FALSE, out.width="60%", purl=FALSE}
+
+knitr::include_graphics(here::here('images', 'media_centro_gravidade.png'))
+
+```
+
+\framebreak
+
+- Um desvio será positivo se a observação for maior que a média (à direita da média no eixo das medidas) e negativo se a observação for menor que a média.
+- Se todos os desvios forem pequenos em magnitude, todos os \structure{$x_i$} estarão próximos à média e haverá pouca dispersão.
+- Por outro lado, se alguns desvios forem grandes, alguns \structure{$x_i$} estarão distantes de \structure{$\bar{x}$}, indicando maior dispersão.
+
+\framebreak
+
+- Uma forma simples de combinar os desvios em uma única quantidade é calcular a sua média.
+    - No entanto, temos que a soma dos desvios é igual a zero, conforme mostramos a seguir 
+
+\begin{align*}
+\sum_{i=1}^n{(x_i - \bar{x})} &= \sum_{i=1}^n{x_i} - \sum_{i=1}^n{\bar{x}}\\
+ &= \sum_{i=1}^n{x_i} - n\bar{x} \\
+ &= \sum_{i=1}^n{x_i} - n\left(\frac{1}{n}\sum_{i=1}^n{x_i}\right) = 0.
+\end{align*}
+
+\framebreak
+
+- Como podemos evitar desvios negativos e positivos ao neutralizar um ao outro quando eles são combinados?
+- Uma possibilidade é trabalhar com os \alert{valores absolutos} e calcular o \structure{desvio médio absoluto $\frac{1}{n}\sum_{i=1}^n{|x_i - \bar{x}|}$}.
+    - Porém, a operação em valor absoluto conduz a dificuldades teóricas, e uma alternativa é considerar o \structure{quadrado dos desvios $(x_i - \bar{x})^2$} (também conhecidos como desvios quadráticos).
+    - E dessa forma temos a definição da \structure{variância}.
+
+\framebreak
+
+- A \structure{variância} é a média dos desvios quadráticos com respeito a média.
+- É representada pelo símbolo \structure{$\sigma^2$} __na população__ e por \structure{$s^2$} __na amostra__.
+
+::: {.block}
+
+###
+Note que, por definição \alert{(a média de dos quadrados dos desvios)}, \structure{a variância é uma medida não negativa}.
+
+:::
+
+\framebreak
+
+- Na população calculamos a variância da seguinte forma:
+
+$$
+\sigma^2 = \frac{\sum_{i=1}^n{(x_i - \mu)^2}}{n}.
+$$
+
+- Na amostra, calculamos a variância da seguinte forma:
+
+$$
+s^2 = \frac{\sum_{i=1}^n{(x_i - \bar{x})^2}}{n - 1}.
+$$
+
+\framebreak
+
+- \structure{Exemplo:} considere mais uma vez valores observados da largura da pétala em centímetros (de 4 flores)
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE}
+set.seed(1309)
+petal.width.sample <- sample(iris$Petal.Width, 4, replace = F)
+knitr::kable(x = matrix(petal.width.sample,
+                        ncol = 4, byrow = T),
+             escape = FALSE,
+             align = "c", format = "pandoc")
+```
+
+\framebreak
+
+- Note que $\bar{x} = 1.15$, e assim a variância da largura da pétala é
+
+\begin{eqnarray*}
+s^2 &=& \frac{(1.3 - 1.15)^2 + (1.3 - 1.15)^2 + (0.2 - 1.15)^2 + (1.8 - 1.15)^2}{4-1}\\
+&=& \frac{(0.15)^2 + (0.15)^2 + (-0.95)^2 + (0.65)^2}{3}\\
+&=& \frac{1.37}{3}\approx 0.46 cm^2.
+\end{eqnarray*}
+
+\framebreak
+
+::: {.block}
+
+### Observações
+
+1. Note que unidade de medida da variável em questão fica expressa ao quadrado na variância.
+2. A variância é uma medida de variabilidade em torno da média.
+    + Se todas as observações são iguais, não há variabilidade nos dados e \structure{$s^2 = 0$}.
+    + Se os dados são muito dispersos com respeito a média, então a variabilidade é grande e \structure{$s^2$} assume um valor alto.
+    + Se os dados são pouco dispersos em torno da média, então a variabilidade é pequena e \structure{$s^2$} assume um valor baixo.
+
+:::
+
+\framebreak
+
+- Uma forma alternativa de calcularmos a variância é dada pela expressão^[__Sua vez:__ demonstre o resultado da expressão alternativa. Dica: desenvolva o quadrado da soma, reescreva o somatório e perceba que $\sum_{i=1}^n{x_i} = n\bar{x}$ e $n\bar{x}^2 = (\sum_{i=1}^n{x_i})^2/n$].
+
+$$
+s^2 = \frac{\sum_{i=1}^n{x_i^2} - \frac{\left(\sum_{i=1}^n{x_i}\right)^2}{n}}{n - 1}.
+$$
+
+## Variância {.allowframebreaks}
+
+- Esta expressão nos auxilia no cálculo de $s^2$ quando estamos usando uma planilha eletrônica que comporta fórmulas, ou um software como `R` que realiza operações vetoriais.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE}
+
+mat <- as.data.frame(c(7, 5, 6, 4, 8))
+names(mat) <- c("$x_i$")
+mat$"$(x_i-\\bar{x})$" <- mat$"$x_i$" - mean(mat$"$x_i$")
+mat$"$(x_i-\\bar{x})^2$" <- mat$"$(x_i-\\bar{x})$"^2
+mat$"$x_i^2$" <- mat$"$x_i$"^2
+aux <- colSums(mat)
+mat <- rbind(mat, aux)
+aux <- c(rep(NA, 5), "Soma")
+mat <- cbind(aux, mat)
+names(mat)[1] <- "-"
+options(knitr.kable.NA = '')
+knitr::kable(mat, escape = FALSE,
+        align = 'c')
+  # kable_styling(font_size = 9) %>%
+  # row_spec(6, bold = T)
+
+```
+
+\framebreak
+
+- Assim, temos
+    + $\bar{x} = 30/5 = 6$;
+    + $s^2 = \frac{\sum_{i=1}^n{(x_i - \bar{x})^2}}{n-1} = \frac{10}{4} = 2,5$.
+- Ou, pela fórmula alternativa,
+    + $s^2 = \frac{\sum_{i=1}^n{x_i^2} - \frac{\left(\sum_{i=1}^n{x_i}\right)^2}{n}}{n-1} = \frac{190 - \frac{30^2}{5}}{4} = 2,5$.
+
+# Desvio padrão
+
+## Desvio padrão {.allowframebreaks}
+
+- Uma dificuldade com a variância, como medida descritiva da dispersão, é o fato de não poder ser apresentada com a __mesma unidade__ com que a variável foi medida.
+- A solução é extrair a raiz quadrada positiva da variância, já que, com isso, se volta à unidade original da variável.
+- Essa nova medida de variabilidade é denominada \structure{desvio padrão}.
+
+\framebreak
+
+- O desvio padrão populacional é definido como
+
+$$
+\sigma= \sqrt{\sigma^2}.
+$$
+
+- E o desvio padrão amostral^[Também é denotado por $DP$ (de desvio padrão) ou $SD$ (do inglês _standard deviation_).] é definido como
+
+$$
+s = \sqrt{s^2}.
+$$
+
+- \structure{Sua vez:} calcule o desvio padrão para os exemplos anteriores.
+
+# Coeficiente de variação
+
+## Coeficiente de variação {.allowframebreaks}
+
+- Quando se analisa a mesma variável em duas amostras, pode-se comparar os desvios padrão observados e verificar onde a variação (variabilidade) é maior.
+
+::: {.block}
+
+### Exemplo (espessura das sementes)
+
++ Amostra 1 apresenta desvio padrão igual 1,29mm;
++ Amostra 2 apresenta desvio padrão igual 0,51mm;
+    - logo a Amostra 2 apresenta uma menor variabilidade da espessura das sementes em relação a Amostra 1.
+:::
+
+\framebreak
+
+- No entanto, o mesmo não pode ser feito em se tratando de variáveis diferentes (mensuradas em diferentes unidades).
+- Se as sementes do exemplo anterior foram também pesadas, e o desvio padrão foi 0,009g para a Amostra 1, __não se pode afirmar__ que o peso das sementes é uma característica com __menor dispersão__ ("menos variável") do que a sua espessura.
+
+\framebreak
+
+- Para comparar variabilidades, neste caso, deve-se usar o \structure{coeficiente de variação ($CV$)}, que é uma medida de dispersão __independente da unidade de mensuração__ da variável.
+- O coeficiente de variação é definido como a razão entre o desvio padrão e a média da variável
+
+$$
+CV = \frac{s}{\bar{x}}\quad \mbox{ou}\quad CV = 100\%\times \frac{s}{\bar{x}}.
+$$
+\framebreak
+
+::: {.block}
+
+### Exemplo (continuação)
+
+- Suponha que a média da espessura das sementes tenha sido observada em 5 e a média do peso das sementes tenha sido 0,05.
+- Para a espessura, temos que $CV_{esp} = \frac{1,29}{5} = 0,258$, e para o peso, temos que $CV_{peso} = \frac{0,009}{0,05} = 0,18$.
+- Concluímos que o peso possui menor variabilidade que a espessura neste conjunto de dados.
+
+:::
+
+## Para casa
+
+1. Resolver os exercícios 1 a 4, 6 a 8 do Capítulo 9.7 do livro __Fundamentos de Estatística__\footnote{Vieira, S. {\bf Fundamentos de Estatística}, Atlas, 2019, p. 135-136.} (disponível no Sabi+).
+2. Para o seu levantamento estatístico, calcule a amplitude de variação, a variância, o desvio padrão e coeficiente de variação, de acordo com a classificação das variáveis. Compartilhe no Fórum Geral do Moodle.
+
+## Próxima aula 
+
+- Medidas de variabilidade (continuação):
+    + Amplitude entre quartis;
+        - Separatrizes: quantis, quartis, decis, percentis;
+    + Gráfico de _boxplot_.
+    + Complementa`R`.
+
+## Por hoje é só!
+
+\begin{center}
+{\bf Bons estudos!}
+\end{center}
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='50%', out.height='50%', paged.print=FALSE, purl=FALSE}
+
+knitr::include_graphics(here::here('images', 'Statistically-Insignificant-barras02.jpg'))
+
+```
+

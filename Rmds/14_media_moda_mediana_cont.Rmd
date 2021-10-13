@@ -153,7 +153,7 @@ freq_table_carb %>%
 
 \normalsize
 
-- Na tabela acima, `r round(freq_table_carb$"$F$"[1]*100)`% são iguais ou menores que 1 e `r round(freq_table_carb$"$F$"[2]*100)`% são iguais ou menores do que 2; logo, a mediana é 2.
+- Na tabela acima, `r round(freq_table_carb$"$f_{ac}$"[1]*100)`% são iguais ou menores que 1 e `r round(freq_table_carb$"$f_{ac}$"[2]*100)`% são iguais ou menores do que 2; logo, a mediana é 2.
 
 ## Mediana em tabelas de frequências com dados agrupados por intervalos {.allowframebreaks}
 

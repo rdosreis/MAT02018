@@ -1,0 +1,537 @@
+---
+title: "MAT02018 - Estatística Descritiva"
+subtitle: "Medidas de variabilidade"
+fontsize: 10pt
+author: |
+  | Rodrigo Citton P. dos Reis
+  | `citton.padilha@ufrgs.br`
+institute: |
+  | \textsc{Universidade Federal do Rio Grande do Sul}
+  | \textsc{Instituto de Matemática e Estatística}
+  | \textsc{Departamento de Estatística}
+date: |
+  | Porto Alegre, 2021
+bibliography: estatistica-descritiva.bib
+csl: associacao-brasileira-de-normas-tecnicas-ufrgs-initials.csl
+link-citations: yes
+header-includes:
+  - \titlegraphic{\hfill\includegraphics[height=1.5cm]{logos/Logo-40-anos-estatistica.png}}
+---
+
+```{r setup, include=FALSE, purl=FALSE}
+options(knitr.kable.NA = '-')
+library(dplyr)
+library(knitr)
+```
+
+# Introdução
+
+## Introdução {.allowframebreaks}
+
+- As medidas de tendência central são insuficientes para representar adequadamente conjuntos de dados, pois nada revelam sobre sua \structure{variabilidade}.
+- Tome como exemplo as notas de 5 avaliações realizadas por 2 alunos.
+    + \structure{Aluno A:} 6, 6, 6, 6, 6.
+        - __Total de pontos:__ 30; __Média:__ 6.
+    + \alert{Aluno B:} 7, 5, 6, 4, 8.
+        - __Total de pontos:__ 30; __Média:__ 6.
+
+\framebreak
+
+- Para mostrar a diversidade de desempenho de ambos, necessita-se de um valor que meça a \structure{dispersão} ou a \structure{variabilidade} dos valores nos dois casos.
+- Nestas notas de aula vamos apresentar algumas das medidas mais utilizadas para descrever a variabilidade de um conjunto de dados.
+
+# Amplitude de variação
+
+## Amplitude de variação {.allowframebreaks}
+
+- A medida mais simples de dispersão é a \structure{amplitude de variação ($a$)}, que é a diferença entre os valores extremos do conjunto de dados.
+
++ \structure{$a = Max(x) - Min(x)$}, em que \structure{$Min(x)$} e \structure{$Max(x)$} representam os valores de \structure{mínimo} e \structure{máximo} de um conjunto de dados, respectivamente.
+
+\framebreak
+
+- \structure{Exemplo:} suponha que observamos a __largura da pétala__ (em centímetros) de 10 flores
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE}
+
+set.seed(1309)
+petal.width.sample <- sample(iris$Petal.Width, 10, replace = F)
+
+knitr::kable(matrix(petal.width.sample,
+                    ncol = 5), format = "pandoc")
+
+```
+
+- Note que,
+    + $Min(x) =$ `r min(petal.width.sample)`;
+    + $Max(x) =$ `r max(petal.width.sample)`;
+- Logo, a amplitude é $a =$ `r max(petal.width.sample)` - `r min(petal.width.sample)` $=$ `r max(petal.width.sample) -  min(petal.width.sample)`
+
+\framebreak
+
+::: {.block}
+
+### Comentário
+
+- Os valores de mínimo e máximo de um conjunto de dados podem ser utilizados para a verificação de inconsistências nos dados com respeito a variável de interesse. 
+    - \alert{Exemplos:}
+        + $Max({\rm idade}) = 170$ (anos).
+        + $Min({\rm temperatura}) = -20^{\circ}$ (na série histórica de temperaturas na cidade de Porto Alegre).
+
+:::
+
+\framebreak
+
+
+::: {.block}
+
+### Duas limitações
+
+1. A amplitude de variação só utiliza os valores extremos do conjunto de dados.
+2. Quando avaliada em amostras, frequentemente _subestima_ a amplitude populacional.
+
+:::
+
+# Variância
+
+## Variância {.allowframebreaks}
+
+- As principais medidas de dispersão envolvem os \structure{desvios em relação a média}, \structure{$x_1 - \bar{x}, x_2 - \bar{x}, \ldots, x_n - \bar{x}$}.
+- Ou seja, os desvios da média são obtidos pela subtração de \structure{$\bar{x}$} de cada uma das \structure{$n$} observações da amostra, conforme mostra a figura a seguir.
+
+```{r fig.align='center', cache=TRUE, echo=FALSE, out.width="60%", purl=FALSE}
+
+knitr::include_graphics(here::here('images', 'media_centro_gravidade.png'))
+
+```
+
+\framebreak
+
+- Um desvio será positivo se a observação for maior que a média (à direita da média no eixo das medidas) e negativo se a observação for menor que a média.
+- Se todos os desvios forem pequenos em magnitude, todos os \structure{$x_i$} estarão próximos à média e haverá pouca dispersão.
+- Por outro lado, se alguns desvios forem grandes, alguns \structure{$x_i$} estarão distantes de \structure{$\bar{x}$}, indicando maior dispersão.
+
+\framebreak
+
+- Uma forma simples de combinar os desvios em uma única quantidade é calcular a sua média.
+    - No entanto, temos que a soma dos desvios é igual a zero, conforme mostramos a seguir 
+
+\begin{align*}
+\sum_{i=1}^n{(x_i - \bar{x})} &= \sum_{i=1}^n{x_i} - \sum_{i=1}^n{\bar{x}}\\
+ &= \sum_{i=1}^n{x_i} - n\bar{x} \\
+ &= \sum_{i=1}^n{x_i} - n\left(\frac{1}{n}\sum_{i=1}^n{x_i}\right) = 0.
+\end{align*}
+
+\framebreak
+
+- Como podemos evitar desvios negativos e positivos ao neutralizar um ao outro quando eles são combinados?
+- Uma possibilidade é trabalhar com os \alert{valores absolutos} e calcular o \structure{desvio médio absoluto $\frac{1}{n}\sum_{i=1}^n{|x_i - \bar{x}|}$}.
+    - Porém, a operação em valor absoluto conduz a dificuldades teóricas, e uma alternativa é considerar o \structure{quadrado dos desvios $(x_i - \bar{x})^2$} (também conhecidos como desvios quadráticos).
+    - E dessa forma temos a definição da \structure{variância}.
+
+\framebreak
+
+- A \structure{variância} é a média dos desvios quadráticos com respeito a média.
+- É representada pelo símbolo \structure{$\sigma^2$} __na população__ e por \structure{$s^2$} __na amostra__.
+
+::: {.block}
+
+###
+Note que, por definição \alert{(a média de dos quadrados dos desvios)}, \structure{a variância é uma medida não negativa}.
+
+:::
+
+\framebreak
+
+- Na população calculamos a variância da seguinte forma:
+
+$$
+\sigma^2 = \frac{\sum_{i=1}^n{(x_i - \mu)^2}}{n}.
+$$
+
+- Na amostra, calculamos a variância da seguinte forma:
+
+$$
+s^2 = \frac{\sum_{i=1}^n{(x_i - \bar{x})^2}}{n - 1}.
+$$
+
+\framebreak
+
+- \structure{Exemplo:} considere mais uma vez valores observados da largura da pétala em centímetros (de 4 flores)
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE}
+set.seed(1309)
+petal.width.sample <- sample(iris$Petal.Width, 4, replace = F)
+knitr::kable(x = matrix(petal.width.sample,
+                        ncol = 4, byrow = T),
+             escape = FALSE,
+             align = "c", format = "pandoc")
+```
+
+\framebreak
+
+- Note que $\bar{x} = 1.15$, e assim a variância da largura da pétala é
+
+\begin{eqnarray*}
+s^2 &=& \frac{(1.3 - 1.15)^2 + (1.3 - 1.15)^2 + (0.2 - 1.15)^2 + (1.8 - 1.15)^2}{4-1}\\
+&=& \frac{(0.15)^2 + (0.15)^2 + (-0.95)^2 + (0.65)^2}{3}\\
+&=& \frac{1.37}{3}\approx 0.46 cm^2.
+\end{eqnarray*}
+
+\framebreak
+
+::: {.block}
+
+### Observações
+
+1. Note que unidade de medida da variável em questão fica expressa ao quadrado na variância.
+2. A variância é uma medida de variabilidade em torno da média.
+    + Se todas as observações são iguais, não há variabilidade nos dados e \structure{$s^2 = 0$}.
+    + Se os dados são muito dispersos com respeito a média, então a variabilidade é grande e \structure{$s^2$} assume um valor alto.
+    + Se os dados são pouco dispersos em torno da média, então a variabilidade é pequena e \structure{$s^2$} assume um valor baixo.
+
+:::
+
+<!-- \framebreak -->
+
+<!-- - Uma forma alternativa de calcularmos a variância é dada pela expressão -->
+<!-- - __Sua vez:__ demonstre o resultado da expressão alternativa. Dica: desenvolva o quadrado da soma, reescreva o somatório e perceba que $\sum_{i=1}^n{x_i} = n\bar{x}$ e $n\bar{x}^2 = (\sum_{i=1}^n{x_i})^2/n$. -->
+
+<!-- $$ -->
+<!-- s^2 = \frac{\sum_{i=1}^n{x_i^2} - \frac{\left(\sum_{i=1}^n{x_i}\right)^2}{n}}{n - 1}. -->
+<!-- $$ -->
+
+<!-- Esta expressão nos auxilia no calculo de $s^2$ quando estamos usando uma planilha eletrônica que comporta fórmulas, ou um software como `R` que realiza operações vetoriais. -->
+
+<!-- ```{r echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE} -->
+<!-- mat <- as.data.frame(c(7, 5, 6, 4, 8)) -->
+<!-- names(mat) <- c("$x_i$") -->
+<!-- mat$"$(x_i-\\bar{x})$" <- mat$"$x_i$" - mean(mat$"$x_i$") -->
+<!-- mat$"$(x_i-\\bar{x})^2$" <- mat$"$(x_i-\\bar{x})$"^2 -->
+<!-- mat$"$x_i^2$" <- mat$"$x_i$"^2 -->
+<!-- aux <- colSums(mat) -->
+<!-- mat <- rbind(mat, aux) -->
+<!-- aux <- c(rep(NA, 5), "Soma") -->
+<!-- mat <- cbind(aux, mat) -->
+<!-- names(mat)[1] <- "-" -->
+<!-- options(knitr.kable.NA = '') -->
+<!-- knitr::kable(mat, escape = FALSE, -->
+<!--         align = 'c') -->
+<!--   # kable_styling(font_size = 9) %>% -->
+<!--   # row_spec(6, bold = T) -->
+<!-- ``` -->
+
+<!-- Assim, temos -->
+
+<!-- + $\bar{x} = 30/5 = 6$; -->
+<!-- + $s^2 = \frac{\sum_{i=1}^n{(x_i - \bar{x})^2}}{n-1} = \frac{10}{4} = 2,5$. -->
+
+<!-- Ou, pela fórmula alternativa, -->
+<!-- + $s^2 = \frac{\sum_{i=1}^n{x_i^2} - \frac{\left(\sum_{i=1}^n{x_i}\right)^2}{n}}{n-1} = \frac{190 - \frac{30^2}{5}}{4} = 2,5$. -->
+
+<!-- # Desvio padrão -->
+
+<!-- Uma dificuldade com a variância, como medida descritiva da dispersão, é o fato de não poder ser apresentada com a __mesma unidade__ com que a variável foi medida. A solução é extrair a raiz quadrada positiva da variância, já que, com isso, se volta à unidade original da variável. Essa nova medida de variabilidade é denominada __desvio padrão__. -->
+
+<!-- O desvio padrão populacional é definido como -->
+
+<!-- $$ -->
+<!-- \sigma= \sqrt{\sigma^2}. -->
+<!-- $$ -->
+
+<!-- E o desvio padrão amostral^[Também é denotado por $DP$ (de desvio padrão) ou $SD$ (do inglês _standard deviation_).] é definido como -->
+
+<!-- $$ -->
+<!-- s = \sqrt{s^2}. -->
+<!-- $$ -->
+
+<!-- - __Sua vez:__ calcule o desvio padrão para os exemplos anteriores. -->
+
+<!-- # Coeficiente de variação -->
+
+<!-- Quando se analisa a mesma variável em duas amostras, pode-se comparar os desvios padrão observados e verificar onde a variação (variabilidade) é maior. -->
+
+<!-- __Exemplo (espessura das sementes):__  -->
+
+<!-- + Amostra 1 apresenta desvio padrão igual 1,29mm; -->
+<!-- + Amostra 2 apresenta desvio padrão igual 0,51mm; logo a Amostra 2 apresenta uma menor variabilidade da espessura das sementes em relação a Amostra 1. -->
+
+<!-- No entanto, o mesmo não pode ser feito em se tratando de variáveis diferentes (mensuradas em diferentes unidades).  Se as sementes do exemplo anterior foram também pesadas, e o desvio padrão foi 0,009g para a Amostra 1, __não se pode afirmar__ que o peso das sementes é uma característica __menos variável__ do que a sua espessura. -->
+
+<!-- Para comparar variabilidades, neste caso, deve-se usar o __coeficiente de variação__ ($CV$), que é uma medida de dispersão __independente da unidade de mensuração__ da variável. O coeficiente de variação é definido como a razão entre o desvio padrão e a média da variável -->
+
+<!-- $$ -->
+<!-- CV = \frac{s}{\bar{x}}\quad \mbox{ou}\quad CV = 100\%\times \frac{s}{\bar{x}}. -->
+<!-- $$ -->
+
+<!-- __Exemplo (continuação):__  -->
+
+<!-- - Suponha que a média da espessura das sementes tenha sido observada em 5 e a média do peso das sementes tenha sido 0,05. Para a espessura, temos que $CV_{esp} = \frac{1,29}{5} = 0,258$, e para o peso, temos que $CV_{peso} = \frac{0,009}{0,05} = 0,18$. Concluímos que o peso possui menor variabilidade que a espessura neste conjunto de dados. -->
+
+<!-- # Amplitude entre quartis -->
+
+<!-- Antes de definirmos a amplitude entre quartis é importante definir os __quartis__ de um conjunto de dados. -->
+
+<!-- ## Quartis -->
+
+<!-- - __Quartis__ são pontos que dividem um conjunto de dados ordenado em quatro partes iguais (quatro quartos). -->
+
+<!-- Denotamos os quartis por $Q_1$, $Q_2$ e $Q_3$: -->
+
+<!-- - $Q_1$ é o __primeiro quartil__. É o valor que tem 25% dos dados iguais ou menores do que ele. -->
+<!-- - $Q_2$ é o __segundo quartil__. É o valor que tem 50% dos dados iguais ou menores do que ele^[Note que o segundo quartil é também a mediana de um conjunto de dados.]. -->
+<!-- - $Q_3$ é o __terceiro quartil__. É o valor que tem 75% dos dados iguais ou menores do que ele. -->
+
+<!-- Uma forma de encontrar as posições de $Q_1$ e $Q_3$^[Já aprendemos a encontrar a posição de $Q_2$, a mediana.] na __série ordenada de dados__, como foi visto para o caso da mediana ($Q_2$). -->
+
+<!-- + posição de $Q_1$: $\frac{n+1}{4}$ -->
+<!-- + posição de $Q_3$: $\frac{3(n+1)}{4}$ -->
+
+<!-- No caso do conjunto de dados conter um número par de elementos, $Q_1$ e $Q_3$ são obtidos tomando-se a média dos valores vizinhos as suas posições. -->
+
+<!-- ## Separatrizes -->
+
+<!-- Da mesma forma que obtemos valores que dividem o conjunto de dados em quatro, podemos generalizar esta ideia para mais grupos. -->
+
+<!-- - __Decis__ dividem o conjunto de dados em dez partes iguais. -->
+
+<!-- Para obter os decis, organizamos os dados em ordem crescente e depois dividimos o conjunto em dez subconjuntos com igual número de elementos. Os decis são os valores que separam esses subconjuntos. -->
+
+<!-- - __Percentis__ dividem o conjunto de dados em cem partes iguais. -->
+
+<!-- Para obter os percentis, organizamos os dados em ordem crescente e depois dividimos o conjunto em cem subconjuntos com igual número de elementos. Os percentis são os valores que separam esses subconjuntos. -->
+
+<!-- Os decis e percentis são as __separatrizes__. -->
+
+<!-- ## Amplitude entre quartis -->
+
+<!-- A __amplitude entre quartis__ (ou __distância interquartílica__) é definida como a diferença entre o terceiro e o primeiro quartil. -->
+
+<!-- $$ -->
+<!-- DIQ = Q_3 - Q_1. -->
+<!-- $$ -->
+
+<!-- Note que entre $Q_1$ e $Q_3$ estão 50% dos valores mais centrais da distribuição. -->
+
+<!-- __Exemplo:__ -->
+
+<!-- ```{r fig-quartis, fig.align='center', cache=TRUE, echo=FALSE, out.width="70%", purl=FALSE} -->
+<!-- knitr::include_graphics(here::here('images', 'quartis.png')) -->
+<!-- ``` -->
+
+<!-- Temos que $Q_1 = 4.9$, $Q_3 = 5.25$, e portanto, a amplitude entre quartis é $Q_3 - Q_1 = 5.25 - 4.9 = 0.35$. -->
+
+<!-- ## Diagrama de caixa -->
+
+<!-- Existe uma forma de apresentar graficamente uma distribuição de uma variável contínua através de algumas medidas resumo, tais como: o mínimo, o máximo e os quartis. Tal gráfico é conhecido como __diagrama de caixa__^[Também chamado pelo nome em inglês, o _boxplot_.]. -->
+
+<!-- Para construir o diagrama de caixa, siga os seguintes passos: -->
+
+<!-- - Desenhe um retângulo (caixa, ou _box_) com comprimento igual a amplitude entre quartis (distância interquartílica). -->
+<!-- - Trace uma linha para representar a mediana, na posição (medida pela distância) que ela ocupa entre o primeiro e o terceiro quartil. -->
+<!-- - Trace linhas perpendiculares à mediana, saindo do meio do retângulo; a linha abaixo da caixa terá comprimento igual à distância entre o primeiro quartil e o valor mínimo; a linha acima da caixa, comprimento igual à distância entre o terceiro quartil e o valor máximo^[Existem variações na construção destas linhas do diagrama de caixa, também conhecidas por cerquilhas. Esta forma apresentada não é a mais usual. É comum traçar a linha abaixo da caixa partindo de $Q_1 - 1,5\times DIQ$ e chegando em $Q_1$, e a linha acima da caixa partindo de $Q_3$ e chegando em $Q_3 + 1,5\times DIQ$. Quando o diagrama de caixas é construído desta forma, alguns autores sugerem que os valores fora destas cerquilhas sejam consideradas discrepantes (_outliers_). É claro que este é apenas um critério prático, e classificar uma observação como discrepante, ou anômala, depende do contexto.]. -->
+
+<!-- ```{r fig-boxplot, fig.align='center', cache=TRUE, echo=FALSE, out.width="70%", purl=FALSE} -->
+<!-- knitr::include_graphics(here::here('images', 'resumo-cinco-numeros-box-plot.jpg')) -->
+<!-- ``` -->
+
+<!-- O diagrama de caixa é bastante utilizado para comparar a distribuição de uma certa variável em diferentes grupos. -->
+
+<!-- ```{r echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE, fig.align='center'} -->
+<!-- plot(Sepal.Length ~ Species, data = iris, col = "lightsalmon", xlab = "Espécies", ylab = "Comprimento de sépala") -->
+<!-- ``` -->
+
+<!-- __Sua vez:__ para cada gráfico abaixo (cada gráfico apresenta o diagrama de caixa de uma certa variável para três espécies de íris), aponte o grupo de maior e menor variabilidade. Como você chegou nestas conclusões? -->
+
+<!-- ```{r echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE, fig.align='center'} -->
+<!-- plot(Sepal.Length ~ Species, data = iris, col = "lightsalmon", xlab = "Espécies", ylab = "Comprimento de sépala") -->
+<!-- plot(Sepal.Width ~ Species, data = iris, col = "lightsalmon", xlab = "Espécies", ylab = "Largura de sépala") -->
+<!-- plot(Petal.Length ~ Species, data = iris, col = "lightsalmon", xlab = "Espécies", ylab = "Comprimento de pétala") -->
+<!-- plot(Petal.Width ~ Species, data = iris, col = "lightsalmon", xlab = "Espécies", ylab = "Largura de pétala") -->
+<!-- ``` -->
+
+# Complementa`R`
+
+## Complementa`R` {.allowframebreaks}
+
+```{r fig.align='right', message=FALSE, echo=FALSE, out.width="15%", purl=FALSE, warning=FALSE}
+
+knitr::include_graphics(here::here('images', 'teclado.png'))
+
+```
+
+###
+
+Esta seção é complementar. São apresentadas algumas poucas funções em `R` relacionadas a discussão da aula. Para tal, vamos utilizar o exemplo original de [@bussab_estatistica_2017] sobre os dados dos empregados da seção de orçamentos da Companhia MB. A planilha eletrônica correspondente encontra-se no arquivo `companhia_mb.xlsx`. Vamos começar carregando os dados para o `R`. Existem várias formas de se carregar __arquivos de dados__ em diferentes  no `R`. Como arquivo de interesse encontra-se no formato do Excel (xlsx), vamos utilizar a função `read_excel` do pacote `readxl`^[Caso você não tenha o pacote, instale-o:`install.packages("readxl")`.].
+
+## Complementa`R` {.allowframebreaks}
+
+\footnotesize
+
+```{r carrega-dados0, echo=TRUE, eval=FALSE, warning=FALSE, message=FALSE}
+# install.packages("readxl")
+library(readxl)
+
+dados <- read_excel(path = "companhia_mb.xlsx")
+```
+
+```{r carrega-dados1, echo=FALSE, warning=FALSE, message=FALSE, purl=FALSE}
+# install.packages("readxl")
+library(readxl)
+
+dados <- read_excel(path = here::here("data", "companhia_mb.xlsx"))
+```
+
+```{r carrega-dados2, warning=FALSE, message=FALSE}
+class(dados) # classe do objeto dados
+dim(dados) # dimensão do objeto dados
+```
+
+\framebreak
+
+\normalsize
+
+- Note que o objeto `dados` é uma tabela de dados bruto.
+
+\footnotesize
+
+```{r carrega-dados3, warning=FALSE, message=FALSE}
+head(dados) # apresenta as primeiras linhas do objeto dados
+```
+
+\framebreak
+
+\normalsize
+
+- As funções `min`, `max` e `range` retornam, respectivamente, o mínimo, o máximo e a variação de um conjunto de dados.
+
+\footnotesize
+
+```{r exetremos, warning=FALSE, message=FALSE}
+min(dados$Idade)
+max(dados$Idade)
+range(dados$Idade)
+```
+
+\framebreak
+
+\normalsize
+
+- Utilizando a função `diff` podemos computar a amplitude de variação do conjunto de dados.
+
+\footnotesize
+
+```{r amplitude, warning=FALSE, message=FALSE}
+diff(range(dados$Idade))
+```
+
+\normalsize
+
+- O argumento `na.rm = TRUE` para remover os dados ausentes do conjunto antes de calcular os extremos.
+
+\footnotesize
+
+```{r extremos2, warning=FALSE, message=FALSE}
+min(dados$`N de Filhos`, na.rm = TRUE)
+max(dados$`N de Filhos`, na.rm = TRUE)
+```
+
+\framebreak
+
+\normalsize
+
+- A variância de um conjunto de dados pode ser obtida utilizando a função `var`. O desvio padrão pode ser computado de duas formas (pelo menos): através da função `sd`, ou computando a raiz quadrada da variância utilizando a função `sqrt`.
+
+\footnotesize
+
+```{r var, warning=FALSE, message=FALSE}
+
+var(dados$Idade)
+sd(dados$Idade)
+sqrt(var(dados$Idade))
+
+```
+
+\framebreak
+
+\normalsize
+
+- O coeficiente de variação pode ser computado dividindo o desvio padrão pela média
+
+\footnotesize
+
+```{r cv, warning=FALSE, message=FALSE}
+
+sd(dados$Idade)/mean(dados$Idade)
+
+```
+
+\framebreak
+
+\normalsize
+
+- Os quartis (e demais separatrizes) podem ser obtidos pela função `quantile` da seguinte forma.
+
+\footnotesize
+
+```{r quantis, warning=FALSE, message=FALSE}
+
+quantile(dados$Idade, 
+         probs = c(0.25, 0.5, 0.75))
+
+```
+
+\framebreak
+
+\normalsize
+
+- O diagrama de caixa (boxplot) pode ser obtido pela função `boxplot`
+
+\footnotesize
+
+```{r boxplot, warning=FALSE, message=FALSE, out.width='70%', fig.align='center'}
+
+boxplot(dados$Idade,
+        ylab = "Idade", col = "gold", border = "purple")
+
+```
+
+\framebreak
+
+\normalsize
+
+- Se quisermos comparar as idades de solteiros e casados utilizando o boxplot, podemos utilizar a seguinte sintaxe:
+
+\footnotesize
+
+```{r boxplot2, warning=FALSE, message=FALSE, out.width='70%', fig.align='center'}
+
+boxplot(Idade ~ `Estado Civil`, data = dados,
+        ylab = "Idade", col = "gold", border = "purple")
+
+```
+
+\normalsize
+
+## Para casa
+
+<!-- - Resolver os exercícios 4 a 11 do Capítulo 8.5 do livro __Fundamentos de Estatística__\footnote{Vieira, S. {\bf Fundamentos de Estatística}, Atlas, 2019, p. 136-138.} (disponível no Sabi+). -->
+
+## Próxima aula 
+
+- Medidas de forma;
+- Propriedades de média e variância;
+- Valores padronizados ($z$-escores).
+
+## Por hoje é só!
+
+\begin{center}
+{\bf Bons estudos!}
+\end{center}
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='50%', out.height='50%', paged.print=FALSE, purl=FALSE}
+
+knitr::include_graphics(here::here('images', 'Statistically-Insignificant-barras02.jpg'))
+
+```
+
