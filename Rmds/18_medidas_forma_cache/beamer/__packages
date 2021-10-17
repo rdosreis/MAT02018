@@ -1,0 +1,14 @@
+base
+here
+rmarkdown
+dplyr
+knitr
+readxl
+timeDate
+timeSeries
+fBasics
+fGarch
+rmutil
+SemiPar
+kableExtra
+e1071

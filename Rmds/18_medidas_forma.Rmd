@@ -1,0 +1,696 @@
+---
+title: "MAT02018 - Estatística Descritiva"
+subtitle: "Medidas de forma"
+fontsize: 10pt
+author: |
+  | Rodrigo Citton P. dos Reis
+  | `citton.padilha@ufrgs.br`
+institute: |
+  | \textsc{Universidade Federal do Rio Grande do Sul}
+  | \textsc{Instituto de Matemática e Estatística}
+  | \textsc{Departamento de Estatística}
+date: |
+  | Porto Alegre, 2021
+bibliography: estatistica-descritiva.bib
+csl: associacao-brasileira-de-normas-tecnicas-ufrgs-initials.csl
+link-citations: yes
+header-includes:
+  - \titlegraphic{\hfill\includegraphics[height=1.5cm]{logos/Logo-40-anos-estatistica.png}}
+---
+
+```{r setup, include=FALSE, purl=FALSE}
+
+options(knitr.kable.NA = '-')
+library(dplyr)
+library(knitr)
+
+```
+
+# Introdução 
+
+- Nas últimas semanas dedicamos a nossa atenção para resumir numericamente certas características da distribuição de frequências.
+- No entanto, as medidas de localização e variabilidade nem sempre dão conta de descrever todas as características de uma distribuição.
+- Nestas breves notas de aula, vamos discutir duas \structure{medidas de forma:} os coeficientes de \structure{assimetria} e \structure{curtose}.
+- Além disso, vamos apresentar propriedades da média e variância.
+
+# Assimetria {.allowframebreaks}
+
+- A medida denominada \structure{coeficiente de assimetria} mede o grau de assimetria exibido pela distribuição dos dados.
+- A figura abaixo apresenta uma \structure{distribuição assimétrica}.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, results='asis', fig.align='center', out.width="70%"}
+
+library(fGarch)
+
+r <- rsnorm(1000, xi = 5)
+
+layout(mat = matrix(c(1, 2), 2, 1, byrow = TRUE),  height = c(1, 8))
+
+
+par(mar = c(0, 3.1, 1.1, 2.1))
+boxplot(r, horizontal = TRUE, ylim = c(-2,5), xaxt = "n" , col = rgb(0.8,0.8,0,0.5) , frame = F)
+
+par(mar=c(4, 3.1, 1.1, 2.1))
+
+hist(r,
+     xlab = "x", ylab = "Frequência",
+     col = rgb(0,0.25,0.25,0.5), border = "white", main = "", xlim = c(-2,5))
+abline(v = mean(r),
+       lty = 2, col = "red", lwd = 2)
+text(0.3, 200, "Média")
+
+```
+
+\framebreak
+
+- O histograma revela que há mais observações abaixo da média.
+- Veja que a mediana (apresentada no _boxplot_) está posicionada à esquerda da média (logo, mais de 50% dos valores da distribuição estão abaixo da média).
+- Também é possível notar que a classe modal (faixa de maior frequência; maior retângulo do histograma) está à esquerda da mediana (e portanto, à esquerda da média).
+- Este comportamento é conhecido como \structure{assimetria positiva}^[Quando $\bar{x} > Md > Mo$ dizemos que uma distribuição é assimétrica positiva.].
+
+## Assimetria {.allowframebreaks}
+
+- Já quando a média é menor que a mediana os dados apresentam \structure{assimetria negativa}^[Quando $\bar{x} < Md < Mo$ dizemos que uma distribuição é assimétrica negativa.], como na figura a seguir.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, results='asis', fig.align='center', out.width="70%"}
+
+library(fGarch)
+
+set.seed(2010)
+
+r <- rsnorm(1000, xi = -5)
+
+layout(mat = matrix(c(1, 2), 2, 1, byrow = TRUE),  height = c(1, 8))
+
+
+par(mar = c(0, 3.1, 1.1, 2.1))
+boxplot(r, horizontal = TRUE, ylim = c(-5,2), xaxt = "n" , col = rgb(0.8,0.8,0,0.5) , frame = F)
+
+par(mar=c(4, 3.1, 1.1, 2.1))
+
+hist(r,
+     xlab = "x", ylab = "Frequência",
+     col = rgb(0,0.25,0.25,0.5), border = "white", main = "", xlim = c(-5,2))
+abline(v = mean(r),
+       lty = 2, col = "red", lwd = 2)
+text(-0.3, 200, "Média")
+
+```
+
+## Assimetria {.allowframebreaks}
+
+- O \structure{coeficiente de assimetria}^[Existem outras propostas de mensuração da assimetria na literatura. Nestas notas vamos nos ater a apenas uma proposta.] é calculado primeiro somando o __cubo dos desvios da média__ e, então, dividindo pelo produto do __cubo do desvio padrão__ pelo número de observações:
+
+$$
+b_1 = \frac{\sum_{i=1}^n{(x_i - \bar{x})^3}}{ns^3}.
+$$
+
+- Quando \structure{$b_1 = 0$} os dados são simétricos em torno da média;
+- Quando \structure{$b_1 > 0$} os dados apresentam assimetria positiva;
+- Quando \structure{$b_1 < 0$} os dados apresentam assimetria negativa.
+
+## Assimetria {.allowframebreaks}
+
+- \structure{Exemplo:} considere mais uma vez que \structure{$x$} representa a largura de pétala de 30 flores do tipo Íris. Observando os gráficos de boxplot e histograma, é notável que a distribuição é assimétrica positiva.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, results='asis', fig.align='center', out.width="70%"}
+
+set.seed(1020)
+x <- sample(x = iris$Petal.Width[iris$Species == "setosa"], size = 30, replace = FALSE)
+
+layout(mat = matrix(c(1, 2), 2, 1, byrow = TRUE),  height = c(1, 8))
+
+par(mar = c(0, 3.1, 1.1, 2.1))
+boxplot(x, horizontal = TRUE, ylim = c(0.1,0.6), xaxt = "n" , col = rgb(0.8,0.8,0,0.5) , frame = F)
+
+par(mar=c(4, 3.1, 1.1, 2.1))
+
+hist(x,
+     xlab = "x", ylab = "Frequência",
+     col = rgb(0,0.25,0.25,0.5), border = "white", main = "", xlim = c(0.1,0.6))
+abline(v = mean(x),
+       lty = 2, col = "red", lwd = 2)
+text(0.3, 15, "Média")
+
+```
+
+## Assimetria {.allowframebreaks}
+
+- Vamos utilizar uma planilha para auxiliar na organização das operações necessárias para o cálculo do coeficiente de assimetria \structure{$b_1$}.
+
+\footnotesize
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE}
+mat <- as.data.frame(x)
+names(mat) <- c("$x_i$")
+mat$"$(x_i-\\bar{x})$" <- mat$"$x_i$" - mean(mat$"$x_i$")
+mat$"$(x_i-\\bar{x})^2$" <- mat$"$(x_i-\\bar{x})$"^2
+mat$"$(x_i-\\bar{x})^3$" <- mat$"$(x_i-\\bar{x})$"^3
+
+aux <- colSums(mat)
+mat <- rbind(mat, aux)
+
+aux <- c(rep(NA, 30), "Soma")
+mat <- cbind(aux, mat)
+
+names(mat)[1] <- "-"
+
+options(knitr.kable.NA = '')
+knitr::kable(mat, escape = FALSE,
+        align = 'c', digits = c(0, 1, 3, 3, 4),
+        format.args = list(decimal.mark = ","), format = "markdown")
+  # kable_styling(font_size = 9) %>%
+  # row_spec(6, bold = T)
+```
+
+\framebreak
+
+\normalsize
+
+Assim, temos
+
++ $\bar{x} = 7,8/30 = 0,26$;
++ $s^2 = \frac{\sum_{i=1}^n{(x_i - \bar{x})^2}}{n-1} = \frac{0,372}{29} = 0,0128$;
++ $s = \sqrt{s^2} = 0,1133$;
++ $b_1 = \frac{\sum_{i=1}^n{(x_i - \bar{x})^3}}{ns^3} = \frac{0,0406}{30\times (0,1133)^3} = 0,93 > 0$, confirmando a assimetria positiva que o gráfico já indicava.
+
+# Curtose {.allowframebreaks}
+
+- A \structure{curtose} mede o \structure{alongamento da distribuição}.
+- Sua definição é semelhante à da assimetria^[Mais uma vez, chamamos a atenção para o fato que existem outras propostas de medir a curtose, porém vamos discutir apenas uma delas.], com a ressalva de que a __quarta potência__ é usada em vez da terceira:
+
+$$
+b_2 = \frac{\sum_{i=1}^n{(x_i - \bar{x})^4}}{ns^4}.
+$$
+
+## Curtose {.allowframebreaks}
+
+- Distribuições com um elevado grau de alongamento são chamadas de \structure{leptocúrticas} e têm valores de \structure{curtose acima de 3}.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, results='asis', fig.align='center', out.width="70%"}
+
+library(rmutil)
+
+set.seed(2010)
+
+m <- rnorm(1000)
+p <- rt(1000, df = 8)
+l <- rlaplace(1000, s = 0.25)
+
+hist(l,
+     xlab = "x", ylab = "Frequência",
+     col = rgb(0,0.25,0.25,0.5), border = "white", main = "", breaks = 30, xlim = c(-3,3))
+
+```
+
+\framebreak
+
+- Distribuições achatadas são chamadas \structure{platicúrticas} e têm valores para \structure{curtose inferiores a 3}.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, results='asis', fig.align='center', out.width="70%"}
+
+hist(p,
+     xlab = "x", ylab = "Frequência",
+     col = rgb(0,0.25,0.25,0.5), border = "white", main = "", breaks = 30, xlim = c(-3,3))
+
+```
+
+\framebreak
+
+- No caso em que a \structure{curtose é igual a 3}, a distribuição é chamada \structure{mesocúrtica}.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, results='asis', fig.align='center', out.width="70%"}
+
+hist(m,
+     xlab = "x", ylab = "Frequência",
+     col = rgb(0,0.25,0.25,0.5), border = "white", main = "", breaks = 30, xlim = c(-3,3))
+
+```
+
+## Curtose {.allowframebreaks}
+
+### Origem dos termos
+
+```{r fig.align='center', cache=TRUE, message=FALSE, echo=FALSE, out.width="70%", purl=FALSE}
+
+knitr::include_graphics(here::here("images", "student_lepto_plati.png"))
+
+```
+
+\footnotesize
+
+_Student_ (em verdade, William Sealy Gosset) em seu artigo "_Errors of Routine Analysis_" de 1927, apresenta em uma nota de rodapé a explicação para os termos \structure{platicúrtica} e \structure{leptocúrtica}.
+
+- Livre tradução: _Eu mesmo tenho em mente o significado das palavras da __memoria technica__ acima, onde a primeira figura representa o ornitorrinco (__platypus__), e a segunda cangurus, conhecidos por "lebrar" ("__lepping__"), e portanto, talvez, com igual razão, devam ser lebres!_
+
+## Curtose {.allowframebreaks}
+
+\normalsize
+
+- \structure{Exemplo:} novamente considere os dados de 30 flores de iris. A variável \structure{$x$} agora representa o comprimento de pétala de 30 flores do tipo Íris. Observando o histograma de \structure{$x$}, a distribuição parece ser __leptocúrtica__.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, results='asis', fig.align='center', out.width="70%"}
+
+set.seed(1020)
+x <- sample(x = iris$Petal.Length[iris$Species == "setosa"], size = 30, replace = FALSE)
+
+layout(mat = matrix(c(1, 2), 2, 1, byrow = TRUE),  height = c(1, 8))
+
+par(mar = c(0, 3.1, 1.1, 2.1))
+boxplot(x, horizontal = TRUE, ylim = c(1,2), xaxt = "n" , col = rgb(0.8,0.8,0,0.5) , frame = F)
+
+par(mar=c(4, 3.1, 1.1, 2.1))
+
+hist(x,
+     xlab = "x", ylab = "Frequência",
+     col = rgb(0,0.25,0.25,0.5), border = "white", main = "", xlim = c(1,2))
+abline(v = mean(x),
+       lty = 2, col = "red", lwd = 2)
+text(1.6, 12, "Média")
+
+```
+
+\framebreak
+
+- Vamos utilizar uma planilha para auxiliar na organização das operações necessárias para o cálculo do coeficiente de curtose \structure{$b_2$}.
+
+\footnotesize
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE}
+mat <- as.data.frame(x)
+names(mat) <- c("$x_i$")
+mat$"$(x_i-\\bar{x})$" <- mat$"$x_i$" - mean(mat$"$x_i$")
+mat$"$(x_i-\\bar{x})^2$" <- mat$"$(x_i-\\bar{x})$"^2
+mat$"$(x_i-\\bar{x})^4$" <- mat$"$(x_i-\\bar{x})$"^4
+
+aux <- colSums(mat)
+mat <- rbind(mat, aux)
+
+aux <- c(rep(NA, 30), "Soma")
+mat <- cbind(aux, mat)
+
+names(mat)[1] <- "-"
+
+options(knitr.kable.NA = '')
+knitr::kable(mat, escape = FALSE,
+        align = 'c', digits = c(0, 1, 3, 3, 4),
+        format.args = list(decimal.mark = ","), format = "markdown")
+  # kable_styling(font_size = 9) %>%
+  # row_spec(6, bold = T)
+```
+
+\framebreak
+\normalsize
+
+Assim, temos
+
++ $\bar{x} = 44/30 = 1,47$;
++ $s^2 = \frac{\sum_{i=1}^n{(x_i - \bar{x})^2}}{n-1} = \frac{1,047}{29} = 0,0361$;
++ $s = \sqrt{s^2} = 0,19$;
++ $b_2 = \frac{\sum_{i=1}^n{(x_i - \bar{x})^4}}{ns^4} = \frac{0,1366}{30\times (0,19)^3} = 3,49 > 3$, confirmando o que o gráfico da distribuição já indicava (distribuição __leptocúrtica__).
+
+# Propriedades da média e variância {.allowframebreaks}
+
+- Sejam \structure{$x_1,x_2,\ldots,x_n$} valores observados da variável \structure{$x$}, tal que
+
+$$
+\bar{x} = \frac{1}{n}\sum_{i=1}^n{x_i}, \quad s^2_x = \frac{1}{n-1}\sum_{i=1}^n{(x_i - \bar{x})^2}
+$$
+são a média, e a variância da variável $x$.
+
+\framebreak
+
+\footnotesize
+
+- \structure{Exemplo (relembrando):} considere o peso em quilos de cinco ovelhas.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+library(SemiPar)
+library(knitr)
+data(pig.weights)
+kable(t(pig.weights$weight[pig.weights$num.weeks == 1][1:5]),
+      col.names = paste("Ovelha",1:5),
+      format.args = list(decimal.mark = ","), format = "markdown")
+
+```
+
+- Temos que o peso médio e a variância são
+
+$$
+\bar{peso} = 23,5; \quad s^2_{peso} = 0,875.s^2_{peso} = 0,875.
+$$
+\normalsize
+
+\framebreak
+
+- Defina a transformação linear \structure{$y_i$} de \structure{$x_i$}
+
+$$
+y_i = ax_i + b, i = 1, 2, \ldots, n,
+$$
+em que \structure{$a$} e \structure{$b$} \structure{são constantes}.
+
+- Então, temos como \structure{propriedades da média e variância}:
+
+$$
+\bar{y} = a\bar{x} + b,\quad \mbox{e}\quad s^2_y = a^2s^2_x.
+$$
+
+\framebreak
+
+- Logo, $s_y = \sqrt{s^2_y} = \sqrt{a^2s^2_x} = as_x$.
+    + Ou seja, temos que a média e variância da variável transformada pode ser expressa em função da média, variância e as constantes \structure{$a$} e \structure{$b$} da variável original.
+- Note também que a variância __não é influenciada pela constante__ \structure{$b$}.
+
+\framebreak
+
+- É fácil demonstrar tais propriedades, partindo da definição da média e variância e aplicando a transformação.
+
+\footnotesize
+
+\begin{eqnarray*}
+\bar{y} &=& \frac{1}{n}\sum_{i=1}^n{y_i} \\
+&=& \frac{1}{n}\sum_{i=1}^n{(ax_i + b)} \\
+&=& \frac{1}{n}\left(a\sum_{i=1}^n{x_i} + n\times b\right) \\
+&=& a\frac{\sum_{i=1}^n{x_i}}{n} + n\times \frac{b}{n}\\
+&=& a\bar{x} + b,
+\end{eqnarray*}
+e
+
+\framebreak
+
+\begin{eqnarray*}
+s^2_y &=& \frac{1}{n-1}\sum_{i=1}^n{(y_i - \bar{y})^2} \\
+&=& \frac{1}{n-1}\sum_{i=1}^n{\left[ax_i + b - (a\bar{x} + b)\right]^2} \\
+&=& \frac{1}{n-1}\sum_{i=1}^n{\left[ax_i - a\bar{x} + b - b)\right]^2} \\
+&=& \frac{1}{n-1}\sum_{i=1}^n{\left[a(x_i - \bar{x})\right]^2} \\
+&=& \frac{1}{n-1}\sum_{i=1}^n{\left[a^2(x_i - \bar{x})^2\right]} \\
+&=& a^2\frac{\sum_{i=1}^n{(x_i - \bar{x})^2}}{n-1} \\
+&=& a^2s^2_x.
+\end{eqnarray*}
+
+\normalsize
+
+\framebreak
+
+```{r fig.margin = TRUE, message=FALSE, echo=FALSE, out.width="5%", purl=FALSE, fig.align='right'}
+
+knitr::include_graphics(here::here("images", "ovelha.jpeg"))
+
+```
+
+- \structure{Exemplos (1):} considere um conjunto de 48 ovelhas. A distribuição do peso deste grupo de animais é apresentada a seguir.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, results='asis', fig.align='center', out.width="60%"}
+
+library(SemiPar)
+data(pig.weights)
+hist(pig.weights$weight[pig.weights$num.weeks == 1],
+     xlab = "Peso de 48 ovelhas", ylab = "Frequência",
+     col = rgb(0,0,1,0.5), border = "white", main = "")
+abline(v = mean(pig.weights$weight[pig.weights$num.weeks == 1]),
+       lty = 2, col = "red", lwd = 2)
+text(28, 15, "Média = 25 kg\n s = 2,47 kg")
+
+```
+
+\framebreak
+
+```{r message=FALSE, echo=FALSE, out.width="5%", purl=FALSE, fig.align='right'}
+
+knitr::include_graphics(here::here("images", "ovelha3.jpg"))
+
+```
+
+- Suponha agora, que após a tosa, cada ovelha "perde" \structure{exatamente} 8 kg. Após a tosa, a distribuição do peso é mais uma vez apresentada.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, results='asis', fig.align='center', out.width="60%"}
+
+hist(pig.weights$weight[pig.weights$num.weeks == 1] - 8,
+     xlab = "Peso de 48 ovelhas depois da tosa",
+     ylab = "Frequência",
+     col = rgb(1,0,0,0.5), border = "white",
+     main = "")
+abline(v = mean(pig.weights$weight[pig.weights$num.weeks == 1] - 8),
+       lty = 2, col = "red", lwd = 2)
+text(20, 15, "Média = 17 kg\n s = 2,47 kg")
+
+```
+
+\framebreak
+
+- Note que, se o peso antes da tosa é representado por $x$, então podemos escrever o peso após a tosa como $y = ax + b$, em que $a = 1$ e $b = - 8$.
+- Percebemos que a média diminui __exatamente__ 8 kg em relação a média do peso antes da tosa^[$\bar{y} = (1)\bar{x} - 8 = 25 - 8 = 17$.].
+    + Já a variância após a tosa é a mesma que a variância do peso antes da tosa^[$s^2_{y} = (1)^2s^2_{x} = (1)(2,47)^2 = (2,47)^2$.].
+
+## Propriedades da média e variância {.allowframebreaks}
+
+- Comparando as distribuições de $x$ (peso antes da tosa) e $y$ (peso após a tosa) percebemos que a forma da distribuição não muda, mas a distribuição é deslocada (em oito unidades) para a esquerda (constante $b$ negativa).
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, results='asis', fig.align='center', out.width="70%"}
+
+hist(pig.weights$weight[pig.weights$num.weeks == 1] - 8,
+     xlab = "Peso de 48 ovelhas", ylab = "Frequência",
+     col = rgb(1,0,0,0.5), border = "white",
+     main = "", xlim = c(8, 34))
+hist(pig.weights$weight[pig.weights$num.weeks == 1],
+     col = rgb(0,0,1,0.5), border = "white", add = TRUE)
+abline(v = c(mean(pig.weights$weight[pig.weights$num.weeks == 1] - 8),
+             mean(pig.weights$weight[pig.weights$num.weeks == 1])),
+       lty = 2, col = "red", lwd = 2)
+legend("topright",
+       fill = c(rgb(1,0,0,0.5), rgb(0,0,1,0.5)), border = "white",
+       c("Depois da tosa", "Antes da tosa"), bty = "n")
+
+```
+
+\framebreak
+
+- \structure{Exemplos (2):} considere mais uma vez o conjunto de 48 ovelhas (com o seu peso original; antes da tosa). Suponha que quando as ovelhas estão em gestação^[Considere um certo momento da gestação das ovelhas (o final da gestação, por exemplo).], o seu peso é __exatamente__ 1,5 vezes o seu peso original.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, results='asis', fig.align='center', out.width="60%"}
+
+hist(pig.weights$weight[pig.weights$num.weeks == 1]*1.5,
+     xlab = "Peso de 48 ovelhas em gestação", ylab = "Frequência",
+     col = rgb(0,1,0,0.5), border = "white", main = "")
+abline(v = mean(pig.weights$weight[pig.weights$num.weeks == 1]*1.5),
+       lty = 2, col = "red", lwd = 2)
+text(40, 10, "Média = 37,5 kg\n s = 3,7 kg")
+
+```
+
+## Propriedades da média e variância {.allowframebreaks}
+
+- Mais uma vez, representando o peso antes da tosa por $x$, podemos escrever o peso na gestação como $y = ax + b$, em que $a = 1,5$ e $b = 0$.
+- Percebemos que a média é __exatamente__ 1,5 a média do peso antes da gestação^[$\bar{y} = (1,5)\bar{x} - 0 = (1,5)25 = 37,5$.].
+- A variância do peso na gestação é a variância do peso original multiplicado por $1,5^2$ ($a^2$)^[$s^2_{y} = (1,5)^2s^2_{x} = (1,5)^2(2,47)^2 = 13,73$.].
+
+## Propriedades da média e variância {.allowframebreaks}
+
+- Comparando as distribuições de $x$ (peso original) e $y$ (peso na gestação) percebemos que a distribuição do peso é deslocada para a direita ($a > 0$) e a dispersão aumenta ($|a| > 1$).
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, results='asis', fig.align='center', out.width="80%"}
+
+hist(pig.weights$weight[pig.weights$num.weeks == 1]*1.5,
+     xlab = "Peso de 48 ovelhas", ylab = "Frequência",
+     col = rgb(0,1,0,0.5), border = "white",
+     main = "", xlim = c(18, 52))
+hist(pig.weights$weight[pig.weights$num.weeks == 1],
+     col = rgb(0,0,1,0.5), border = "white", add = TRUE)
+abline(v = c(mean(pig.weights$weight[pig.weights$num.weeks == 1]),
+             mean(pig.weights$weight[pig.weights$num.weeks == 1]*1.5)),
+       lty = 2, col = "red", lwd = 2)
+legend("topright",
+       fill = c(rgb(0,0,1,0.5), rgb(0,1,0,0.5)), border = "white",
+       c("Antes da gestação", "Na gestação"), bty = "n")
+
+```
+
+# Padronização {.allowframebreaks}
+
+- Uma transformação linear do tipo $y_i = ax_i + b$ merece destaque.
+    + Se especificarmos $a = \frac{1}{s_x}$ e $b = - \frac{\bar{x}}{s_x}$ temos a seguinte transformação
+
+$$
+z_i = \left(\frac{1}{s_x}\right)x_i + \left(- \frac{\bar{x}}{s_x}\right) = \frac{x_i - \bar{x}}{s_x}, i = 1, \ldots, n.
+$$
+
+\framebreak
+
+- Como se compartam $\bar{z}$ e $s_z$?
+
+$$
+\bar{z} = \frac{1}{s_x}\bar{x} - \frac{\bar{x}}{s_x} = 0,\quad\mbox{e}\quad s^2_z = \left(\frac{1}{s_x}\right)^2s^2_x = 1.
+$$
+
+\framebreak
+
+- Esta transformação é também chamada de \structure{padronização} e a variável resultante $z$ é chamada de \structure{escore padronizado} de $x$.
+- Como visto, esta transformação tem como propriedades média zero e variância um.
+- O escore padronizado pode ser interpretado como o \structure{número de desvios padrões} que uma observação está da média.
+    + Os dados abaixo da média (na escala original) têm escores $z$ padronizados negativos;
+    + Os dados acima da média possuem $z$-escores positivos.
+
+\framebreak
+
+### Observações
+
+1. Uma __regra geral__ para detecção de observações atípicas em uma distribuição é, após padronizar a variável, avaliar valores $z$ acima de 1,96 e valores de $z$ abaixo de -1,96 ($|z| > 1,96$)^[Esta regra geral tem sua justificativa nas propriedades da distribuição de probabilidades __normal padrão__ (média zero e variância um). Uma regra mais prática é considerar valores atípicos como $|z| > 2$, pois $1,96 \approx 2$.].
+2. Com a padronização é possível produzir __uma escala comum__ para variáveis que foram medidas em escalas diferentes (por exemplo, peso em quilos e altura em metros). Isso permite que possamos combinar diversas variáveis, como é o caso de alguns indicadores.
+
+## Padronização {.allowframebreaks}
+
+```{r message=FALSE, echo=FALSE, out.height="85%", out.width="50%", purl=FALSE, fig.align='center'}
+
+knitr::include_graphics(here::here("images", "ESI0.png"))
+
+```
+
+## Padronização {.allowframebreaks}
+
+- \structure{Exemplos (3):} veja como fica a distribuição do peso das 48 ovelhas quando padronizado.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, results='asis', fig.align='center', out.width="70%", purl=FALSE}
+
+hist((pig.weights$weight[pig.weights$num.weeks == 1] - mean(pig.weights$weight[pig.weights$num.weeks == 1]))/sd(pig.weights$weight[pig.weights$num.weeks == 1]),
+     xlab = "Peso padronizado de 48 ovelha", ylab = "Frequência",
+     col = rgb(0.25,0,0.25,0.5), border = "white", main = "")
+abline(v = mean((pig.weights$weight[pig.weights$num.weeks == 1] - mean(pig.weights$weight[pig.weights$num.weeks == 1]))/sd(pig.weights$weight[pig.weights$num.weeks == 1])),
+       lty = 2, col = "red", lwd = 2)
+text(1.5, 13, "Média = 0 kg\n s = 1 kg")
+
+```
+
+# Para casa {.allowframebreaks}
+
+A tabela a seguir apresenta as __frequências absolutas__ dos 48 valores observados da variável __peso de porcos__:
+
+```{r fig-porcovelha, fig.margin=TRUE, fig.cap="Eram porcos, e não ovelhas!", fig.width=1, fig.height=1, cache=TRUE, message=FALSE, echo=FALSE, out.width="50%", purl=FALSE}
+
+knitr::include_graphics(here::here("images", "porcovelha.jpg"))
+
+```
+
+\footnotesize
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE}
+
+library(SemiPar)
+library(knitr)
+data(pig.weights)
+library(kableExtra)
+pesodf <- data.frame(table(pig.weights$weight[pig.weights$num.weeks == 1]))
+names(pesodf)[1] <- "Peso"
+pesodf$Peso <- as.numeric(levels(pesodf$Peso))
+kable(pesodf,
+        escape = FALSE,
+        align = 'c',
+        col.names = c("Peso ($x_i$)", "Frequência ($n_i$)"),
+        format.args = list(decimal.mark = ","), format = "markdown")
+
+```
+
+\normalsize
+
+## Exercício
+
+- Quem são os valores de mínimo e máximo da variável peso?
+    + Qual é a amplitude de variação?
+- Qual é a média da variável peso?
+- Qual é o desvio padrão da variável peso?
+- Quem é a mediana da variável peso?
+- Considerando que o porco é classificado como __baixo peso__ se este possui peso __menor ou igual a 23__, qual é o percentual de porcos com baixo peso?
+- Utilizando gráficos ou medidas resumo, avalie a assimetria e a curtose da distribuição do peso.
+
+# Complementa`R`
+
+## Complementa`R` {.allowframebreaks}
+
+```{r fig.align='right', message=FALSE, echo=FALSE, out.width="15%", purl=FALSE, warning=FALSE}
+
+knitr::include_graphics(here::here('images', 'teclado.png'))
+
+```
+
+###
+
+Esta seção é complementar. São apresentadas algumas poucas funções em `R` relacionadas a discussão da aula. Para tal, vamos utilizar o exemplo original de [@bussab_estatistica_2017] sobre os dados dos empregados da seção de orçamentos da Companhia MB. A planilha eletrônica correspondente encontra-se no arquivo `companhia_mb.xlsx`. Vamos começar carregando os dados para o `R`. Existem várias formas de se carregar __arquivos de dados__ em diferentes  no `R`. Como arquivo de interesse encontra-se no formato do Excel (xlsx), vamos utilizar a função `read_excel` do pacote `readxl`^[Caso você não tenha o pacote, instale-o:`install.packages("readxl")`.].
+
+## Complementa`R` {.allowframebreaks}
+
+\footnotesize
+
+```{r carrega-dados0, echo=TRUE, eval=FALSE, warning=FALSE, message=FALSE}
+# install.packages("readxl")
+library(readxl)
+
+dados <- read_excel(path = "companhia_mb.xlsx")
+```
+
+```{r carrega-dados1, echo=FALSE, warning=FALSE, message=FALSE, purl=FALSE}
+# install.packages("readxl")
+library(readxl)
+
+dados <- read_excel(path = here::here("data", "companhia_mb.xlsx"))
+```
+
+```{r carrega-dados2, warning=FALSE, message=FALSE}
+class(dados) # classe do objeto dados
+dim(dados) # dimensão do objeto dados
+```
+
+\framebreak
+
+\normalsize
+
+- Note que o objeto `dados` é uma tabela de dados bruto.
+
+\footnotesize
+
+```{r carrega-dados3, warning=FALSE, message=FALSE}
+head(dados) # apresenta as primeiras linhas do objeto dados
+```
+
+\framebreak
+
+\normalsize
+
+- As funções `skewness` e `kurtosis` do pacote `e1071` calcula, respectivamente, o coeficiente de assimetria e curtose, sendo que este último retorna $b_2 - 3$.
+- Assim, o ponto de referência para classificar uma distribuição como mesocúrtica ($b_2 - 3 = 0$), platicúrtica ($b_2 - 3 < 0$), ou leptocúrtica ($b_2 - 3 > 0$) é o zero.
+
+\footnotesize
+
+```{r exetremos, warning=FALSE, message=FALSE}
+# install.packages("e1071")
+library(e1071)
+
+skewness(dados$Idade)
+kurtosis(dados$Idade)
+
+skewness(dados$`Salario (x Sal Min)`)
+kurtosis(dados$`Salario (x Sal Min)`)
+
+skewness(dados$`N de Filhos`, na.rm = TRUE)
+kurtosis(dados$`N de Filhos`, na.rm = TRUE)
+
+```
+
+\normalsize
+
+## Próxima aula
+
+- Distribuições bivariadas.
+
+## Por hoje é só!
+
+\begin{center}
+{\bf Bons estudos!}
+\end{center}
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='50%', out.height='50%', paged.print=FALSE, purl=FALSE}
+
+knitr::include_graphics(here::here('images', 'Statistically-Insignificant-final01.jpg'))
+
+```
+
