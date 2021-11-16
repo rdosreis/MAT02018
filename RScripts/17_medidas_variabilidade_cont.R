@@ -1,8 +1,8 @@
 ## ----carrega-dados0, echo=TRUE, eval=FALSE, warning=FALSE, message=FALSE------------------------
 ## # install.packages("readxl")
-## library(readxl)
-## 
-## dados <- read_excel(path = "companhia_mb.xlsx")
+library(readxl)
+
+dados <- read_excel(path = here::here("companhia_mb.xlsx"))
 
 
 

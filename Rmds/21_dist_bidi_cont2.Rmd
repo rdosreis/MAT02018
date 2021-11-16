@@ -1,0 +1,281 @@
+---
+title: "MAT02018 - Estatística Descritiva"
+subtitle: "Distribuições bidimensionais"
+fontsize: 10pt
+author: |
+  | Rodrigo Citton P. dos Reis
+  | `citton.padilha@ufrgs.br`
+institute: |
+  | \textsc{Universidade Federal do Rio Grande do Sul}
+  | \textsc{Instituto de Matemática e Estatística}
+  | \textsc{Departamento de Estatística}
+date: |
+  | Porto Alegre, 2021
+bibliography: estatistica-descritiva.bib
+csl: associacao-brasileira-de-normas-tecnicas-ufrgs-initials.csl
+link-citations: yes
+header-includes:
+  - \titlegraphic{\hfill\includegraphics[height=1.5cm]{logos/Logo-40-anos-estatistica.png}}
+---
+
+```{r setup, include=FALSE, purl=FALSE}
+
+options(knitr.kable.NA = '-')
+library(dplyr)
+library(knitr)
+
+```
+
+# Uma variável qualitativa e uma variável quantitativa {.allowframebreaks}
+
+- Como mencionado anteriormente, é comum nessas situações analisar o que acontece com a variável quantitativa dentro de cada categoria da variável qualitativa.
+- Essa análise pode ser conduzida por meio de medidas-resumo, histogramas ou _boxplots_.
+- Consideremos novamente o exemplo dos empregados da seção de orçamentos da Companhia MB, mas agora com o interesse de avaliar a associação entre a variável _salário_ e _grau de instrução_.
+
+\framebreak
+
+\scriptsize
+
+```{r mb, echo=FALSE, warning=FALSE, message=FALSE}
+library(dplyr)
+library(readxl)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+
+mb_df <- read_excel(path = here::here("data", "companhia_mb.xlsx"))
+```
+
+```{r sal_grupo, echo=FALSE, warning=FALSE, message=FALSE}
+
+mb_df_arrange <- mb_df %>% 
+  dplyr::select("N" ,`Salario (x Sal Min)`, `Grau de Instrução`) %>% 
+  rename("ID" = "N") %>% 
+  arrange(`Grau de Instrução`)
+
+mb_df_arrange[1:18,] %>%
+  kable(#caption = "Tabela de dados brutos.",
+        align = 'c',
+        format.args = list(decimal.mark = ","), format = "latex") %>% 
+  kable_styling() %>%
+  row_spec(which(mb_df_arrange[1:18,]$`Grau de Instrução` == "ensino fundamental"), background = "lightsalmon") %>% 
+  row_spec(which(mb_df_arrange[1:18,]$`Grau de Instrução` == "ensino médio"), background = "lightblue") %>% 
+  row_spec(which(mb_df_arrange[1:18,]$`Grau de Instrução` == "superior"), background = "lightyellow")
+
+```
+
+\framebreak
+
+```{r sal_grupo2, echo=FALSE, warning=FALSE, message=FALSE}
+
+mb_df_arrange[19:36,] %>% 
+  kable(#caption = "Tabela de dados brutos.",
+        align = 'c',
+        format.args = list(decimal.mark = ","), format = "latex") %>% 
+  kable_styling() %>%
+  row_spec(which(mb_df_arrange[19:36,]$`Grau de Instrução` == "ensino fundamental"), background = "lightsalmon") %>% 
+  row_spec(which(mb_df_arrange[19:36,]$`Grau de Instrução` == "ensino médio"), background = "lightblue") %>% 
+  row_spec(which(mb_df_arrange[19:36,]$`Grau de Instrução` == "superior"), background = "lightyellow")
+
+```
+
+\framebreak
+
+\normalsize
+
+- Vamos começar organizando em uma tabela as principais medidas resumo da variável salário para cada um dos grupos de escolaridade.
+    - Ou seja, vamos calcular a média, o desvio padrão e demais medidas resumo considerando apenas os indivíduos com ensino superior.
+    - Logo em seguida, calcularemos as mesmas medidas considerando apenas os indivíduos com ensino médio.
+    - E por fim, calcularemos as mesmas medidas considerando apenas os indivíduos com ensino fundamental.
+
+\framebreak
+
+- Assim, a variável grau de instrução define grupos de indivíduos, e descreveremos a distribuição da variável salário para cada um dos grupos.
+
+\tiny
+
+```{r sal_grupo_res, echo=FALSE, warning=FALSE, message=FALSE}
+
+tab <- mb_df_arrange %>% 
+  group_by(`Grau de Instrução`) %>% 
+  summarize(n = n(),
+            `Média` = mean(`Salario (x Sal Min)`),
+            `D. Padrão` = sd(`Salario (x Sal Min)`),
+            `Variância` = var(`Salario (x Sal Min)`),
+            `Min` = min(`Salario (x Sal Min)`),
+            `Q1` = quantile(`Salario (x Sal Min)`, 0.25),
+            `Q2` = quantile(`Salario (x Sal Min)`, 0.5),
+            `Q3` = quantile(`Salario (x Sal Min)`, 0.75),
+            `Max` = max(`Salario (x Sal Min)`)
+            )
+
+tab2 <- mb_df_arrange %>% 
+  summarize(n = n(),
+            `Média` = mean(`Salario (x Sal Min)`),
+            `D. Padrão` = sd(`Salario (x Sal Min)`),
+            `Variância` = var(`Salario (x Sal Min)`),
+            `Min` = min(`Salario (x Sal Min)`),
+            `Q1` = quantile(`Salario (x Sal Min)`, 0.25),
+            `Q2` = quantile(`Salario (x Sal Min)`, 0.5),
+            `Q3` = quantile(`Salario (x Sal Min)`, 0.75),
+            `Max` = max(`Salario (x Sal Min)`)
+            )
+
+tab2$`Grau de Instrução` <- "Global"
+tab2 <- tab2[c(names(tab2)[10],names(tab2)[-10])]
+
+tab <- rbind(tab, tab2)
+
+kable(tab,
+      caption = "Medidas-resumo para a variável salário, segundo o grau de instrução, na Companhia MB.",
+      align = 'c', digits = c(0,0,rep(2,8)),
+      format.args = list(decimal.mark = ","), format = "latex") %>% 
+  kable_styling() %>%
+  row_spec(1, background = "lightsalmon") %>% 
+  row_spec(2, background = "lightblue") %>% 
+  row_spec(3, background = "lightyellow")
+```
+
+\framebreak
+
+\normalsize
+
+- Uma outra forma de apresentarmos a distribuição de salário por grupo de instrução é através do gráfico de _boxplot_.
+- Novamente devemos construir cada uma das caixas considerando os dados dos indivíduos de cada um dos grupos.
+
+\framebreak
+
+```{r sal_bp, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width="100%"}
+
+mb_df_arrange$cor <- NULL
+mb_df_arrange$cor <- ifelse(mb_df_arrange$`Grau de Instrução` == "ensino fundamental", "lightsalmon", ifelse(mb_df_arrange$`Grau de Instrução` == "ensino médio", "lightblue", "lightyellow"))
+
+
+bp <- ggplot(data = mb_df_arrange,
+             mapping = aes(x = `Grau de Instrução`,
+                           y = `Salario (x Sal Min)`)) +
+  geom_boxplot(fill = c("lightsalmon", "lightblue", "lightyellow")) +
+  theme_bw()
+
+bp
+```
+
+\framebreak
+
+- Estes resultados sugerem uma __dependência__ dos salários em relação ao grau de instrução: o salário aumenta conforme aumenta o nível de escolaridade do indivíduo.
+- O salário médio de um funcionário é 11,12 (salários mínimos), já para um funcionário com curso superior o salário médio passa a ser 16,48, enquanto funcionários com o ensino fundamental completo recebem, em média, 7,84.
+
+\framebreak
+
+- Como nos casos anteriores, é conveniente poder contar com uma medida que quantifique o __grau de dependência__ entre as variáveis.
+- Tal medida pode ser construída a partir das variâncias de grupo e a variância global.
+- Sem usar a informação da variável categorizada^[Em nosso exemplo, a variável grau de instrução.], a variância calculada para a variável quantitativa^[Em nosso exemplo, a variável salário.] para todos os dados mede a dispersão dos dados globalmente.
+- __Se a variância dentro de cada categoria for pequena e menor do que a global__, significa que a variável qualitativa __melhora a capacidade de previsão__^[Ao saber o grau de instrução conseguimos falar de maneira mais "precisa" sobre o salário dos empregados da Companhia MB?] da quantitativa __e portanto existe uma relação entre as duas variáveis__.
+
+## Uma variável qualitativa e uma variável quantitativa {.allowframebreaks}
+
+- Observe que, para as variáveis salário (denotaremos por $Y$) e grau de instrução, as variâncias de $Y$ dentro das três categorias são menores do que a global^[Lembrando: para o grupo ensino fundamental, $s^2_Y = 8,74$; para o grupo ensino médio, $s^2_Y = 13,80$; para o grupo ensino superior, $s^2_Y = 20,27$; e por fim, para todo o grupo de empregados, $s^2_Y = 21,04$.]. 
+- Necessita-se, então, de uma medida resumo da variância entre as categorias da variável qualitativa.
+- Vamos usar a __média das variâncias__ ponderada pelo número de observações em cada categoria, ou seja,
+
+$$
+\bar{s^2}_Y = \frac{\sum_{j=1}^k{s^2_j(Y)n_j}}{\sum_{j=1}^k{n_j}},
+$$
+em que $k$ é o número de categorias ($k = 3$ em nosso exemplo) e $s^2_j(Y)$ denota a variância de $Y$ dentro da categoria $j$, $j = 1, 2, \ldots, k$.
+
+## Uma variável qualitativa e uma variável quantitativa {.allowframebreaks}
+
+- Pode-se mostrar que a média das variâncias é menor ou igual a variância global^[$\bar{s^2}_Y \leq s^2_Y$.], de modo que podemos definir o __grau de associação__ entre as duas variáveis __como o ganho relativo na variância__, obtido pela introdução da variável qualitativa. Explicitamente,
+
+$$
+R^2 = \frac{s^2_Y - \bar{s^2}_Y}{s^2_Y} = 1 - \frac{\bar{s^2}_Y}{s^2_Y}.
+$$
+
+\framebreak
+
+- Note que $0 \leq R^2 \leq 1$.
+- Quanto maior a capacidade preditiva da variável de grupo, menor será a média das variâncias ($\bar{s^2}_Y$) em relação a variância global, e portanto a razão $\frac{\bar{s^2}_Y}{s^2_Y}$ será próxima de zero, enquanto que $R^2$ tenderá a 1.
+- Já se a média das variâncias é próxima da variância global, então a razão $\frac{\bar{s^2}_Y}{s^2_Y}$ será próxima de um, enquanto que $R^2$ tenderá a 0. Concluímos então, que:
+- $R^2$ alto (valores próximos de 1) indicam forte dependência (associação) entre a variável qualitativa e a variável quantitativa.
+- $R^2$ baixo (valores próximos de 0) indicam fraca dependência (associação), ou ausência de associação, entre a variável qualitativa e a variável quantitativa.
+
+\framebreak
+
+- Retomando o exemplo da Companhia MB, temos que
+
+$$
+\bar{s^2}_Y = \frac{\sum_{j=1}^3{s^2_j(Y)n_j}}{\sum_{j=1}^3{n_j}} = \frac{12\times 8,74 + 18\times 13,8, + 6 \times 20,27}{12 + 18 + 6} = 13,19,
+$$
+de modo que
+
+$$
+R^2 = 1 - \frac{\bar{s^2}_Y}{s^2_Y} = 1 - \frac{13,19}{21,04} = 0,3731.
+$$
+
+e dizemos que 37,31% da variância global do salário é explicada pela variável grau de instrução^[Uma dependência relativamente forte, levando em consideração que dificilmente um $R^2$ próximo de 1 é observado.].
+
+# Exercício {.allowframebreaks}
+
+A tabela a seguir apresenta os dados referentes a uma amostra de 30 flores.
+
+\scriptsize
+
+```{r iris, echo=FALSE, message=FALSE, warning=FALSE}
+
+set.seed(1000)
+
+iris_ex_1 <- iris %>% 
+  filter(Species == "setosa") %>% 
+  slice_head(n = 10)
+
+iris_ex_2 <- iris %>% 
+  filter(Species == "versicolor") %>% 
+  slice_head(n = 10)
+
+iris_ex_3 <- iris %>% 
+  filter(Species == "virginica") %>% 
+  slice_head(n = 10)
+
+iris_ex <- rbind(iris_ex_1, iris_ex_2)
+iris_ex <- rbind(iris_ex, iris_ex_3)
+
+iris_ex %>% 
+kable(caption = "Tabela de dados brutos.",
+        align = 'c', col.names = c("comprimento da sépala", "largura da sépala", "comprimento da pétala", "largura da pétala", "espécie"),
+        format.args = list(decimal.mark = ","), format = "pandoc")
+
+```
+
+\normalsize
+
+## Exercício {.allowframebreaks}
+
+- Crie uma nova variável a partir da variável comprimento da pétala, atribuindo valores: __pequeno__ se o comprimento da pétala é menor ou igual que 4,5 e __normal__ se o comprimento da pétala é superior a 4,5. Chame esta variável de _comprimento da pétala categorizado_.
+- Construa a tabela de dupla entrada da distribuição conjunta de frequências das variáveis _espécie_ e _comprimento da pétala categorizado_. Você diria que estas variáveis são associadas?
+- Construa o gráfico de dispersão das variáveis _comprimento da sépala_ e _largura da sépala_. Calcule o coeficiente de regressão. O que você diria sobre a associação entre estas variáveis?
+- Construa o gráfico de dispersão das variáveis _comprimento da sépala_ e _comprimento da pétala_. Calcule o coeficiente de regressão. O que você diria sobre a associação entre estas variáveis?
+
+\framebreak
+
+A partir dos seguintes exercícios, conclua a respeito da associação entre as variáveis _largura da pétala_ e _espécie_.
+
++ Organize uma tabela com o cálculo de diferentes medidas resumo para descrever a distribuição da variável _largura da pétala_ entre as diferentes _espécies_.
++ Construa um gráfico para apresentar a distribuição a distribuição da variável _largura da pétala_ entre as diferentes _espécies_.
++ Calcule o $R^2$ para avaliar a associação entre as variáveis _largura da pétala_ e _espécie_.
+
+## Próxima aula
+
+- Números índices.
+
+## Por hoje é só!
+
+\begin{center}
+{\bf Bons estudos!}
+\end{center}
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='50%', out.height='50%', paged.print=FALSE, purl=FALSE}
+
+knitr::include_graphics(here::here('images', 'Statistically-Insignificant-final04.jpg'))
+
+```
+
