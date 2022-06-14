@@ -1,0 +1,252 @@
+---
+title: "MAT02018 - Estatística Descritiva"
+subtitle: "Apresentações"
+fontsize: 10pt
+author: |
+  | Rodrigo Citton P. dos Reis
+  | `citton.padilha@ufrgs.br`
+institute: |
+  | \textsc{Universidade Federal do Rio Grande do Sul}
+  | \textsc{Instituto de Matemática e Estatística}
+  | \textsc{Departamento de Estatística}
+date: |
+  | Porto Alegre, 2021
+header-includes:
+  - \titlegraphic{\hfill\includegraphics[height=1.5cm]{logos/Logo-40-anos-estatistica.png}}
+---
+
+# O professor
+
+## Olá!
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='80%', out.height='80%', paged.print=FALSE}
+
+knitr::include_graphics(here::here('images', 'hi_my_name_is.png'))
+
+```
+
+## Olá! {.allowframebreaks}
+
+\ttfamily
+
+- Desde __outubro de 2017__ eu sou Professor do __Departamento de Estatística__ e faço parte do Corpo Docente do __Programa de Pós Graduação em Epidemiologia__ da __Universidade Federal do Rio Grande do sul__ (UFRGS). Além disso, eu atuo como pesquisador no __Estudo Longitudinal de Saúde do Adulto (ELSA-Brasil)__.
+
+- Eu me formei __Bacharel em Estatística__ pelo Departamento de Estatística da UFRGS em __2007__, e __Mestre__ (__2010__) e __Doutor__ (__2014__) __em Estatística__ pelo __Programa de Pós Graduação em Estatística__ da __Universidade Federal de Minas Gerais__. 
+- A minha dissertação de mestrado, intitulada _Técnicas estatísticas para avaliação de novos marcadores de risco: aplicações envolvendo o Modelo de Cox_, foi orientada pelos Professores Enrico A. Colosimo e Maria do Carmo P. Nunes.
+- A minha tese de doutorado, intitulada _Análise hierárquica de múltiplos sistemas reparáveis_, foi orientada pelos Professores Enrico A. Colosimo e Gustavo L. Gilardoni.
+
+- Os meus interesses de pesquisa são __Inferência causal em epidemiologia__, __Análise de mediação__, __Modelos de predição de risco__ e __Análise de sobrevivência__.
+- Em estatística aplicada eu tenho interesse na __epidemiologia do Diabetes Mellitus__.
+
+<!-- - Eu sou um grande entusiasta do R! -->
+<!-- - Nascido em Porto Velho, morador de Porto Alegre, com uma passagem (estatisticamente) significante por Belo Horizonte! -->
+<!-- - Sigo acreditando que a Terra é redonda! -->
+
+# A disciplina
+
+## Objetivos
+
+- Trabalhar o instrumental da __Estatística Descritiva__ evidenciando sua importância como primeira abordagem na análise de dados, explorando sua potencialidade no campo da aplicação às demais ciências. 
+- Aprofundar os conceitos fundamentais da __Estatística Descritiva__, estabelecendo, via \structure{procedimentos computacionais}, o vínculo do aluno com a \structure{linguagem estatística}. 
+- Iniciar o estudante nas técnicas da construção de __indicador__ de preços e de indicador de concentração, bem como nos procedimentos clássicos de __análise de séries temporais__. 
+- Desenvolver a __análise exploratória de dados__ enfatizando sua importância como ferramenta inicial na interpretação de dados.
+
+## Organização
+
+- __Disciplina:__ Estatística Descritiva
+- __Turma:__ U
+- __Modalidade:__ Ensino remoto emergencial \structure{(Moodle)}
+- __Professor:__ Rodrigo Citton Padilha dos Reis
+    + e-mail: `citton.padilha@ufrgs.br` ou `rodrigocpdosreis@gmail.com` 
+    + Sala: B215 do Instituto de Matemática e Estatística
+
+<!-- - Sala F115 do Instituto de Química - Salas de Aula - Campus do Vale - 43123 -->
+
+## Aulas e material didático
+
+- __Aulas__ (teóricas e práticas)
+    + Exposição e __discussão__ dos conteúdos
+        - __Faremos leituras semanais de artigos e capítulos de livros__
+    + Exemplos
+- __Notas de aula__
+    + Slides
+    + Arquivos de rotinas em `R`
+- __Exercícios__
+    + Listas de exercícios
+    + Para casa
+    + Questionários do Moodle
+- __Canais de comunicação:__
+    + Durante as aulas
+    + Moodle: aulas, materiais, listas de exercícios
+    + Sala de aula virtual: notas das avaliações
+    + e-mail do professor
+
+## Aulas e material didático
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='50%', paged.print=FALSE}
+knitr::include_graphics(here::here('images','videoaula-2.png'))
+```
+
+- __Aulas:__ Terças e quintas, das 10hs 30min às 11hs 30min, no MConf do Moodle da disciplina
+    + As aulas serão realizadas de maneira __síncrona__ com __gravação__ e disponibilizada para posterior consulta
+
+## Aulas e material didático
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='10%', paged.print=FALSE}
+knitr::include_graphics(here::here('images','Rlogo.png'))
+```
+
+- Exemplos e exercícios com o apoio do computador:
+    + `R` e `RStudio`
+    
+```{r, echo=FALSE, eval=TRUE}
+x <- rnorm(n = 100, mean = 10, sd = 1)
+```
+
+```{r, echo=TRUE, eval=TRUE, fig.align='center', out.width='50%'}
+hist(x, col = 'black', border = 'white')
+```
+
+## Conteúdo programático {.allowframebreaks}
+
+- __Área 1__
+    + Introdução/Conceitos básicos
+    + Variáveis e medidas
+    + Tabelas de distribuição de frequências
+    + Análise gráfica de dados
+
+- __Área 2__
+    + Medidas de tendência central
+    + Medidas de Variabilidade
+    + Medidas de forma
+    + Distribuições bidimensionais
+
+- __Área 3__
+    + Números índices
+    + Taxas de crescimento populacional
+    + Séries temporais __(introdução)__
+
+## Avaliação
+
+- Serão realizadas pelo menos uma (e no máximo três) avaliação(ões) de cada área por meio de questionários e tarefas do Moodle
+- Cada atividade de avaliação vale 10 pontos
+- Será realizado um um teste no Moodle (individual) como atividade de recuperação ($TR$)
+    + Para os alunos que não atingirem o conceito mínimo
+    + __Este teste abrange todo o conteúdo da disciplina__
+
+## Avaliação
+
+$$
+MF = \mbox{média das atividades de avaliação}
+$$
+
++ __A:__ $9 \leq MF \leq 10$
++ __B:__ $7,5 \leq MF < 9$
++ __C:__ $6 \leq MF < 7,5$
+
++ Se $MF < 6$ o aluno poderá realizar o teste de recuperação e neste caso
+
+$$
+MF' = MF \times 0,4 + TR \times 0,6
+$$
+
+- __C:__ $MF' \geq 6$
+- __D:__ $MF' < 6$
+
+## Referências bibliográficas
+
+```{r echo=FALSE, fig.align='right', message=FALSE, warning=FALSE, out.width='15%', paged.print=FALSE}
+knitr::include_graphics(here('images','ctanlion.png'))
+```
+
+### Principais
+
+\footnotesize
+
+Vieira, S. __Fundamentos de Estatística__, Atlas, 2019.
+
+Morettin, P. A. e Bussab, W. O. __Estatística Básica__, Saraiva, 2010.
+
+Magalhães, M. N. e Lima, A. C. P. __Noções de Probabilidade e Estatística__, Edusp, 2008.
+
+### Complementares
+
+\footnotesize
+
+Vieira, S. __Estatística Básica__, Cengage, 2018.
+
+Callegari-Jacques, S. M. __Bioestatística: princípios e aplicações__, Artmed, 2003.
+
+Fernandez, D. W. X. __Estatística descritiva II__, Cadernos de matemática e estatística. Série B, 1994.
+
+Fernandez, D. W. X. __Estatística descritiva I__, Cadernos de matemática e estatística. Série B, 1994.
+
+Fernandez, D. W. X. __Números índices__, Cadernos de matemática e estatística. Série B, 1992.
+
+
+# A Estatística
+
+## Estatística em toda parte {.allowframebreaks}
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', out.height='80%', paged.print=FALSE}
+
+knitr::include_graphics(here::here('images', 'estat1.jpg'))
+
+```
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', out.height='80%', paged.print=FALSE}
+
+knitr::include_graphics(here::here('images', 'estat2.jpg'))
+
+```
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', out.height='80%', paged.print=FALSE}
+
+knitr::include_graphics(here::here('images', 'estat3.png'))
+
+```
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', out.height='80%', paged.print=FALSE}
+
+knitr::include_graphics(here::here('images', 'estat4.jpg'))
+
+```
+
+## O que é Estatística?
+
+- Essa pergunta já vem sendo feita (e diversas vezes) há muito tempo.
+- A persistência da pergunta e a variedade das respostas durante os anos sugerem que a Estatística não se caracteriza como um objeto singular.
+- Ainda, a Estatística apresenta diferentes faces para diferentes áreas da ciência.
+
+# A Estatística Descritiva
+
+## Estatística descritiva
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', out.height='80%', paged.print=FALSE}
+
+knitr::include_graphics(here::here('images', 'Descritiva_Inferencia.png'))
+
+```
+
+## Estatística descritiva
+
+- A __Estatística Descritiva__ corresponde aos procedimentos relacionados com a __coleta__, __elaboração__, __tabulação__, __análise__, __interpretação__ e __apresentação dos dados__.
+- Isto é, inclui as técnicas que dizem respeito à sintetização e à descrição de dados numéricos.
+- Tais métodos tanto podem ser gráficos como envolver análise computacional.
+
+## Próxima aula
+
+- Introdução e conceitos básicos de Estatística.
+
+## Por hoje é só!
+
+\begin{center}
+{\bf Sejam tod@s bem-vind@s!}
+\end{center}
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='50%', out.height='50%', paged.print=FALSE}
+
+knitr::include_graphics(here::here('images', 'Statistically-Insignificant-8.jpg'))
+
+```
+

@@ -1,0 +1,277 @@
+---
+title: "MAT02018 - Estatística Descritiva"
+subtitle: "Construção de gráficos (continuação)"
+fontsize: 10pt
+author: |
+  | Rodrigo Citton P. dos Reis
+  | `citton.padilha@ufrgs.br`
+institute: |
+  | \textsc{Universidade Federal do Rio Grande do Sul}
+  | \textsc{Instituto de Matemática e Estatística}
+  | \textsc{Departamento de Estatística}
+date: |
+  | Porto Alegre, 2021
+bibliography: estatistica-descritiva.bib
+csl: associacao-brasileira-de-normas-tecnicas-ufrgs-initials.csl
+link-citations: yes
+header-includes:
+  - \titlegraphic{\hfill\includegraphics[height=1.5cm]{logos/Logo-40-anos-estatistica.png}}
+---
+
+# Apresentação gráfica de dados quantitativos
+
+## Diagrama de pontos
+
+- O \structure{diagrama de pontos} é usado para comparar as frequências de dados discretos, desde que \structure{em pequeno número}\footnote{Também pode ser usado para comparar frequências de categorias de dados qualitativos.}.
+- Utilizaremos os dados da variável \structure{``Número de filhos''} dos 36 empregados da seção de orçamentos da Companhia MB para exemplificarmos a construção do diagrama de pontos. A tabela de frequências é apresentada a seguir.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE}
+
+dados$`N de Filhos`[is.na(dados$`N de Filhos`)] <- sample(x = 0:5, size = sum(is.na(dados$`N de Filhos`)), replace = T)
+
+df_filho <- dados %>% 
+  group_by(`N de Filhos`) %>% 
+  summarise(n = n()) %>% 
+  # mutate(freq = round(100 * (n / sum(n)), 0)) %>%
+  adorn_totals("row") 
+
+knitr::kable(df_filho,
+             col.names = c("Número de filhos", "Frequência ($n_i$)"),
+             align = c('l', 'c'))
+```
+
+## Diagrama de pontos {.allowframebreaks}
+
+Para construir o diagrama de pontos seguimos os seguintes passos:
+
+1. Trace o eixo das abscissas;
+2. Faça a escala, de maneira a cobrir todo o intervalo de observações;
+3. Desenhe um ponto para cada uma das observações;
+4. Escreva a escala e o título.
+
+\framebreak
+
+```{r fig-stripchart, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width='90%'}
+ 
+p <- ggplot(dados, aes(x = `N de Filhos`)) +
+  geom_dotplot(fill = "steelblue") +
+  labs(x = "Número de filhos",
+       caption = "Fonte: Companhia MB.") +
+  theme_classic() +
+  theme(axis.title.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.line.y = element_blank(),
+        axis.text.y = element_blank()) 
+p
+
+```
+
+\framebreak
+
+### Observação
+
+- O diagrama de pontos pode ser substituído pelo gráfico de barras, ou ainda, pelo histograma (caso da variável idade, que pode ser considerada discreta).
+- O \structure{histograma} será apresentado a seguir.
+
+## Histograma {.allowframebreaks}
+
+- Dados contínuos, desde que já estejam em uma tabela de distribuição de frequências\footnote{Mais uma vez lembramos que estamos apresentando os passos para a construção de gráficos sem que seja necessário o conhecimento de recursos computacionais. Os \emph{softwares} estatísticos possuem funções próprias para a construção de gráficos, sem que seja necessário a realização destes passos.}, podem ser apresentados em um \structure{histograma}.
+- O \structure{histograma} é um gráfico de \structure{barras contíguas} as bases proporcionais aos intervalos de classe e a área de cada retângulo proporcional à respectiva frequência.
+- Pode-se usar tanto a frequência absoluta, \structure{$n_i$}, como a relativa, \structure{$f_i$}.
+- Indiquemos a \structure{amplitude} do \structure{$i$}-ésimo intervalo\footnote{Estamos utilizando o \emph{índice} $i$ para indexar os intervalos de classe ($C_1, C_2, \ldots, C_i, \ldots, C_I$).} por \structure{$\Delta_i$}.
+
+## Histograma {.allowframebreaks}
+
+- Para que a \structure{área do retângulo} respectivo seja proporcional a $f_i$, a sua \structure{altura} deve ser proporcional a \structure{$f_i/\Delta_i$} (ou \structure{$n_i/\Delta_i$}), que é chamada \structure{densidade de frequência} da $i$-ésima classe.
+- Quanto mais dados tivermos em cada classe, mais alto deve ser o retângulo.
+- Com essa convenção, a __área total__ do histograma será __igual a 1__\footnote{Considere $a_i$ a área do $i$-ésimo retângulo do histograma. Então a área total é $\sum_i{a_i} = \sum_i{\Delta_i\times f_i/\Delta_i} = \sum_i{f_i} = 1$ (por que?).}.
+
+## Histograma {.allowframebreaks}
+
+- Quando os intervalos das classes forem todos iguais a \structure{$\Delta$}, a densidade de frequência da $i$-ésima classe passa a ser \structure{$f_i/\Delta$} (ou \structure{$n_i/\Delta$}).
+- Vamos ver como fica o histograma para a variável \structure{``salário''} (x sal. mínimo) dos 36 empregados da seção de orçamentos da Companhia MB.
+- As frequências absolutas e relativas das classes são apresentadas a seguir, considerando amplitude de classe \structure{$\Delta = 4$}.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE}
+
+options(knitr.kable.NA = '-')
+
+dados$salario <- cut(x = dados$`Salario (x Sal Min)`,
+                     breaks = c(4, 8, 12, 16, 20, 24),
+                     include.lowest = T,
+                     right = FALSE)
+
+df_salario <- dados %>% 
+  group_by(salario) %>% 
+  summarise(n = n()) %>% 
+  mutate(freq = round((n / sum(n)), 2)) %>%
+  mutate(freq_delta = freq/4) %>% 
+  mutate(n_delta = n/4) %>% 
+  adorn_totals("row") 
+
+df_salario[dim(df_salario)[1], 4:5] <- NA
+
+knitr::kable(df_salario,
+             col.names = c("Faixa salarial", 
+                           "Frequência ($n_i$)",
+                           "Freq. relativa ($f_i$)",
+                           "$f_i/\\Delta$ ($\\Delta = 4$)",
+                           "$n_i/\\Delta$ ($\\Delta = 4$)"),
+             align = c('l', 'c', 'c', 'c', 'c'))
+```
+
+\framebreak
+
+- Note que as colunas $f_i/\Delta$ e $n_i/\Delta$ são o resultado da divisão dos valores das colunas $f_i$ e $n_i$, respectivamente, por 4, o valor da amplitude de classe ($\Delta$).
+- Estas colunas (separadamente) serão utilizadas para marcarmos as alturas das barras do histograma.
+- A seguir é apresentado o histograma para $f_i/\Delta$.
+
+\framebreak
+
+```{r fig-hist, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width='90%'}
+ 
+p <- ggplot(data = dados) +
+  geom_histogram(mapping = aes(x = `Salario (x Sal Min)`, y = ..density..),
+                 breaks = seq(4, 24, by = 4), fill = "steelblue", color = "white") +
+  labs(x = "Salário (x. sal. mínimo)",
+       y = "Densidade de frequência",
+       title = "Distribuição salarial da seção de orçamentos",
+       caption = "Fonte: Companhia MB.") +
+  theme_bw()
+p
+
+```
+
+\framebreak
+
+- Veja que salários mais altos são pouco frequentes na seção de orçamentos, e a maior parte dos empregados recebe até doze salários mínimos. A seguir apresentamos o histograma utilizando $n_i/\Delta$ como altura das barras.
+
+```{r fig-hist2, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width='60%'}
+ 
+p <- ggplot(data = dados) +
+  geom_histogram(mapping = aes(x = `Salario (x Sal Min)`, y = I(36 * ..density..)),
+                 breaks = seq(4, 24, by = 4), fill = "steelblue", color = "white") +
+  labs(x = "Salário (x. sal. mínimo)",
+       y = "Densidade de frequência",
+       title = "Distribuição salarial da seção de orçamentos",
+       caption = "Fonte: Companhia MB.") +
+  theme_bw()
+p
+
+```
+
+- É fácil ver que as duas versões do histograma possuem a \structure{mesma forma} (__mesma distribuição__), e portanto devemos obter as mesmas conclusões.
+
+\framebreak
+
+Passos para a construção do histograma:
+
+1. Trace o sistema de eixos cartesianos.
+2. Marque os extremos de classes no eixo das abscissas.
+3. No eixo das ordenadas, escreva os valores das razões das frequências relativas (ou absolutas) divididas pelas amplitudes de classes ($f_i/\Delta_i$ ou $n_i/\Delta_i$).
+4. Para cada classe da distribuição de frequências, trace um retângulo com base igual ao intervalo de classe e altura igual a $f_i/\Delta_i$ ou $n_i/\Delta_i$ relativa a classe.
+5. Coloque título e fonte, se houver.
+
+\framebreak
+
+- __Exercício:__ construa o histograma da variável __Salário__ do exemplo __adaptado__ de [@bussab_estatistica_2017] (15 empregados da seção de orçamentos) que encontra-se na planilha física das __notas de aula "Organização dos dados"__ utilizando como extremos das classes os seguintes valores: $4; 5; 6; 7,5$ e $9,5$.
+
+```{r, message=FALSE, echo=FALSE, out.width="100%", purl=FALSE, fig.align='center'}
+
+knitr::include_graphics(here::here('images', 'quadro_preto.jpg'))
+
+```
+
+## Polígono de frequências {.allowframebreaks}
+
+- O \structure{polígono de frequências} é constituído por segmentos de retas que unem os pontos cujas coordenadas são o \structure{ponto médio} (ou ponto central) e a frequência de cada classe.
+- Para fechá-lo toma-se uma \structure{classe anterior a primeira} e uma \structure{posterior a última}, uma vez que ambas possuem frequência zero.
+
+\framebreak
+
+- Se considerarmos o exemplo anterior, temos a seguinte tabela de frequências.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE}
+
+dados$salario <- cut(x = dados$`Salario (x Sal Min)`, breaks = c(0, 4, 8, 12, 16, 20, 24, 28), include.lowest = T, right = FALSE)
+
+df_salario <- dados %>% 
+  count(salario, .drop = FALSE) %>% 
+  adorn_totals("row") 
+
+extremos <- seq(0, 28, by = 4)
+df_salario$pm <- c((extremos[-length(extremos)] + extremos[-length(extremos)] + 4) / 2, NA)
+
+knitr::kable(df_salario,
+             col.names = c("Faixa salarial", "Frequência ($n_i$)", "Ponto central da classe"),
+             align = c('l', 'c', 'c'))
+```
+
+\framebreak
+
+- Veja que criamos duas classes mais extremas que apresentam frequência zero.
+- Além disso, computamos uma coluna com o ponto central de cada classe.
+    + \structure{Ponto central de classe} é a __média aritmética__ dos dois extremos de classe.
+- Assim, se a classe tem como extremos \structure{$4$} e \structure{$8$}, então o ponto central é 
+
+$$
+\textcolor{blue}{\frac{4 + 8}{2} = 6.}
+$$
+
+\framebreak
+
+Os passos para a construção do polígono de frequências são apresentados a seguir:
+
+1. Trace o sistema de eixos cartesianos.
+2. Marque os pontos centrais de cada classe no eixo das abscissas.
+3. No eixo das ordenadas, coloque as frequências.
+4. Faça um ponto (pode ser apresentado em destaque ou apenas para auxiliar na costrução) para representar cada classe. Esses pontos terão abscissa igual ao ponto central de classe. A ordenada será igual à frequência da classe.
+5. Marque, no eixo das abscissas, um ponto que corresponda ao ponto central de uma classe anterior à primeira.
+6. Marque, no eixo das abscissas, um ponto que corresponda ao ponto central de uma classe posterior à última.
+7. Una todos os pontos por segmentos de reta.
+8. Coloque o título.
+
+\framebreak
+
+```{r fig-freqpoly, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width='90%'}
+ 
+p <- ggplot(data = dados) +
+  geom_freqpoly(mapping = aes(x = `Salario (x Sal Min)`),
+                 breaks = seq(4, 24, by = 4), color = I("#DA70D6"), size = 1) +
+  scale_x_continuous(breaks = seq(4, 24, by = 4)) +
+  labs(x = "Salário (x. sal. mínimo)",
+       y = "Frequência",
+       title = "Distribuição salarial da seção de orçamentos",
+       caption = "Fonte: Companhia MB.") +
+  theme_bw()
+p
+
+```
+
+\framebreak
+
+### Observações
+
+- Quando construímos o polígono de frequências de uma variável contínua, assim como no caso do histograma, estamos interessados na forma da distribuição.
+
+## Para casa
+
+1. Resolver os exercícios 3 a 6 do Capítulo 5.4 do livro __Fundamentos de Estatística__\footnote{Vieira, S. {\bf Fundamentos de Estatística}, Atlas, 2019, p. 75-76.} (disponível no Sabi+).
+2. Para o seu levantamento estatístico, construa gráficos para os dados quantitativos. Compartilhe no Fórum Geral do Moodle.
+
+## Próxima aula 
+
+- Construção de gráficos com o `ggplot2`.
+
+## Por hoje é só!
+
+\begin{center}
+{\bf Bons estudos!}
+\end{center}
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='50%', out.height='50%', paged.print=FALSE}
+
+knitr::include_graphics(here::here('images', 'Statistically-Insignificant-girafa.jpg'))
+
+```
+

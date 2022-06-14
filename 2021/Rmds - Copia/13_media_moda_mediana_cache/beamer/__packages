@@ -1,0 +1,10 @@
+base
+readxl
+stringr
+ggplot2
+gapminder
+dplyr
+ggthemes
+here
+rmarkdown
+knitr

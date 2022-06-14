@@ -1,0 +1,333 @@
+---
+title: "MAT02018 - Estatística Descritiva"
+subtitle: "Medidas de variabilidade"
+fontsize: 10pt
+author: |
+  | Rodrigo Citton P. dos Reis
+  | `citton.padilha@ufrgs.br`
+institute: |
+  | \textsc{Universidade Federal do Rio Grande do Sul}
+  | \textsc{Instituto de Matemática e Estatística}
+  | \textsc{Departamento de Estatística}
+date: |
+  | Porto Alegre, 2021
+bibliography: estatistica-descritiva.bib
+csl: associacao-brasileira-de-normas-tecnicas-ufrgs-initials.csl
+link-citations: yes
+header-includes:
+  - \titlegraphic{\hfill\includegraphics[height=1.5cm]{logos/Logo-40-anos-estatistica.png}}
+---
+
+```{r setup, include=FALSE, purl=FALSE}
+options(knitr.kable.NA = '-')
+library(dplyr)
+library(knitr)
+```
+
+# Estatísticas de ordem
+
+- A \structure{média} e o \structure{desvio padrão} são bastante conhecidos e muito usados para descrever um conjunto de dados.
+    - No entanto, não são as únicas.
+- Também podem ser adotadas as medidas de posição relativa, mais conhecidas como \structure{estatísticas de ordem}.
+    - Uma destas medidas é a \structure{mediana}.
+- Falaremos também dos \structure{quartis}, \structure{decis} e \structure{percentis}.
+    - Os quartis serão utilizados também para calcularmos a \structure{amplitude entre quartis}, que pode ser utilizada como uma medida de dispersão.
+
+## Quartis {.allowframebreaks}
+
+- \structure{Quartis} são pontos que dividem um \structure{conjunto de dados ordenado} em \structure{quatro partes} iguais (quatro quartos).
+- Denotamos os quartis por \structure{$Q_1$}, \structure{$Q_2$} e \structure{$Q_3$}:
+    - \structure{$Q_1$} é o \structure{primeiro quartil}. É o valor que tem 25% dos dados iguais ou menores do que ele.
+    - \structure{$Q_2$} é o \structure{segundo quartil}. É o valor que tem 50% dos dados iguais ou menores do que ele^[Note que o segundo quartil é também a mediana de um conjunto de dados.].
+    - \structure{$Q_3$} é o \structure{terceiro quartil}. É o valor que tem 75% dos dados iguais ou menores do que ele.
+
+## Quartis {.allowframebreaks}
+
+- Uma forma de encontrar as posições de \structure{$Q_1$} e \structure{$Q_3$}^[Já aprendemos a encontrar a posição de $Q_2$, a mediana.] na __série ordenada de dados__, como foi visto para o caso da mediana (\structure{$Q_2$}).
+    + posição de $Q_1$: \structure{$\frac{n+1}{4}$}
+    + posição de $Q_3$: \structure{$\frac{3(n+1)}{4}$}
+- No caso do conjunto de dados conter um número par de elementos, $Q_1$ e $Q_3$ são obtidos tomando-se a média dos valores vizinhos as suas posições.
+
+## Separatrizes {.allowframebreaks}
+
+- Da mesma forma que obtemos valores que dividem o conjunto de dados em quatro, podemos generalizar esta ideia para mais grupos.
+- \structure{Decis} dividem o conjunto de dados em dez partes iguais.
+    + Para obter os decis, organizamos os dados em ordem crescente e depois dividimos o conjunto em dez subconjuntos com igual número de elementos.
+    + Os decis são os valores que separam esses subconjuntos.
+- \structure{Percentis} dividem o conjunto de dados em cem partes iguais.
+    + Para obter os percentis, organizamos os dados em ordem crescente e depois dividimos o conjunto em cem subconjuntos com igual número de elementos.
+    + Os percentis são os valores que separam esses subconjuntos.
+
+\framebreak
+
+### Comentários
+
+- Os quartis, decis e percentis são conhecidos como as \structure{separatrizes}.
+    - Se divimos o conjunto de dados ordenado em três partes iguais, temos os \structure{tercis}.
+    - Se divimos o conjunto de dados ordenado em cinco partes iguais, temos os \structure{quintis}.
+- O cálculo dos decis e percentis é mais adequado quando o tamanho da amostra (ou população) é grande.
+
+# Amplitude entre quartis {.allowframebreaks}
+
+- A \structure{amplitude entre quartis} (ou \structure{distância interquartílica}) é definida como a __diferença entre o terceiro e o primeiro quartil__:
+
+$$
+DIQ = Q_3 - Q_1.
+$$
+
+- Note que entre \structure{$Q_1$} e \structure{$Q_3$} estão 50% dos valores mais centrais da distribuição.
+
+\framebreak
+
+- \structure{Exemplo:}
+
+```{r fig.align='center', echo=FALSE, out.width="70%", purl=FALSE}
+
+knitr::include_graphics(here::here('images', 'quartis.png'))
+
+```
+
+- Temos que \structure{$Q_1 = 4,9$}, \structure{$Q_3 = 5,25$}, e portanto, a amplitude entre quartis é
+
+$$
+Q_3 - Q_1 = 5,25 - 4,9 = 0,35.
+$$
+
+## Diagrama de caixa {.allowframebreaks}
+
+- Existe uma forma de apresentar graficamente uma distribuição de uma variável contínua através de algumas medidas resumo, tais como: o mínimo, o máximo e os quartis.
+- Tal gráfico é conhecido como \structure{diagrama de caixa}^[Também chamado pelo nome em inglês, o _boxplot_.].
+
+## Diagrama de caixa {.allowframebreaks}
+
+Para construir o diagrama de caixa, siga os seguintes passos:
+
+1. Desenhe um retângulo (caixa, ou _box_) com comprimento igual a amplitude entre quartis (distância interquartílica).
+2. Trace uma linha para representar a mediana, na posição (medida pela distância) que ela ocupa entre o primeiro e o terceiro quartil.
+3. Trace linhas perpendiculares à mediana, saindo do meio do retângulo; a linha abaixo da caixa terá comprimento igual à distância entre o primeiro quartil e o valor mínimo; a linha acima da caixa, comprimento igual à distância entre o terceiro quartil e o valor máximo^[Existem variações na construção destas linhas do diagrama de caixa, também conhecidas por cerquilhas. Esta forma apresentada não é a mais usual. É comum traçar a linha abaixo da caixa partindo de $Q_1 - 1,5\times DIQ$ e chegando em $Q_1$, e a linha acima da caixa partindo de $Q_3$ e chegando em $Q_3 + 1,5\times DIQ$. Quando o diagrama de caixas é construído desta forma, alguns autores sugerem que os valores fora destas cerquilhas sejam consideradas discrepantes (_outliers_). É claro que este é apenas um critério prático, e classificar uma observação como discrepante, ou anômala, depende do contexto.].
+
+## Diagrama de caixa {.allowframebreaks}
+
+```{r fig.align='center', echo=FALSE, out.width="70%", out.height='70%', purl=FALSE}
+
+knitr::include_graphics(here::here('images', 'resumo-cinco-numeros-box-plot.jpg'))
+
+```
+
+\framebreak
+
+- O diagrama de caixa é bastante utilizado para comparar a distribuição de uma certa variável em diferentes grupos.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE, fig.align='center', out.width='70%'}
+
+plot(Sepal.Length ~ Species, data = iris, col = "lightsalmon", xlab = "Espécies", ylab = "Comprimento de sépala")
+
+```
+
+\framebreak
+
+- \structure{Sua vez:} para cada gráfico a seguir (cada gráfico apresenta o diagrama de caixa de uma certa variável para três espécies de íris), aponte o grupo de maior e menor variabilidade.
+    + Como você chegou nestas conclusões?
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE, fig.align='center', out.width='100%'}
+
+par(mfrow = c(2,2))
+
+plot(Sepal.Length ~ Species, data = iris, col = "lightsalmon", xlab = "Espécies", ylab = "Comprimento de sépala")
+
+plot(Sepal.Width ~ Species, data = iris, col = "lightsalmon", xlab = "Espécies", ylab = "Largura de sépala")
+
+plot(Petal.Length ~ Species, data = iris, col = "lightsalmon", xlab = "Espécies", ylab = "Comprimento de pétala")
+
+plot(Petal.Width ~ Species, data = iris, col = "lightsalmon", xlab = "Espécies", ylab = "Largura de pétala")
+
+par(mfrow = c(1,1))
+
+```
+
+# Complementa`R`
+
+## Complementa`R` {.allowframebreaks}
+
+```{r fig.align='right', message=FALSE, echo=FALSE, out.width="15%", purl=FALSE, warning=FALSE}
+
+knitr::include_graphics(here::here('images', 'teclado.png'))
+
+```
+
+###
+
+Esta seção é complementar. São apresentadas algumas poucas funções em `R` relacionadas a discussão da aula. Para tal, vamos utilizar o exemplo original de [@bussab_estatistica_2017] sobre os dados dos empregados da seção de orçamentos da Companhia MB. A planilha eletrônica correspondente encontra-se no arquivo `companhia_mb.xlsx`. Vamos começar carregando os dados para o `R`. Existem várias formas de se carregar __arquivos de dados__ em diferentes  no `R`. Como arquivo de interesse encontra-se no formato do Excel (xlsx), vamos utilizar a função `read_excel` do pacote `readxl`^[Caso você não tenha o pacote, instale-o:`install.packages("readxl")`.].
+
+## Complementa`R` {.allowframebreaks}
+
+\footnotesize
+
+```{r carrega-dados0, echo=TRUE, eval=FALSE, warning=FALSE, message=FALSE}
+# install.packages("readxl")
+library(readxl)
+
+dados <- read_excel(path = "companhia_mb.xlsx")
+```
+
+```{r carrega-dados1, echo=FALSE, warning=FALSE, message=FALSE, purl=FALSE}
+# install.packages("readxl")
+library(readxl)
+
+dados <- read_excel(path = here::here("data", "companhia_mb.xlsx"))
+```
+
+```{r carrega-dados2, warning=FALSE, message=FALSE}
+class(dados) # classe do objeto dados
+dim(dados) # dimensão do objeto dados
+```
+
+\framebreak
+
+\normalsize
+
+- Note que o objeto `dados` é uma tabela de dados bruto.
+
+\footnotesize
+
+```{r carrega-dados3, warning=FALSE, message=FALSE}
+head(dados) # apresenta as primeiras linhas do objeto dados
+```
+
+\framebreak
+
+\normalsize
+
+- As funções `min`, `max` e `range` retornam, respectivamente, o mínimo, o máximo e a variação de um conjunto de dados.
+
+\footnotesize
+
+```{r exetremos, warning=FALSE, message=FALSE}
+min(dados$Idade)
+max(dados$Idade)
+range(dados$Idade)
+```
+
+\framebreak
+
+\normalsize
+
+- Utilizando a função `diff` podemos computar a amplitude de variação do conjunto de dados.
+
+\footnotesize
+
+```{r amplitude, warning=FALSE, message=FALSE}
+diff(range(dados$Idade))
+```
+
+\normalsize
+
+- O argumento `na.rm = TRUE` para remover os dados ausentes do conjunto antes de calcular os extremos.
+
+\footnotesize
+
+```{r extremos2, warning=FALSE, message=FALSE}
+min(dados$`N de Filhos`, na.rm = TRUE)
+max(dados$`N de Filhos`, na.rm = TRUE)
+```
+
+\framebreak
+
+\normalsize
+
+- A variância de um conjunto de dados pode ser obtida utilizando a função `var`. O desvio padrão pode ser computado de duas formas (pelo menos): através da função `sd`, ou computando a raiz quadrada da variância utilizando a função `sqrt`.
+
+\footnotesize
+
+```{r var, warning=FALSE, message=FALSE}
+
+var(dados$Idade)
+sd(dados$Idade)
+sqrt(var(dados$Idade))
+
+```
+
+\framebreak
+
+\normalsize
+
+- O coeficiente de variação pode ser computado dividindo o desvio padrão pela média
+
+\footnotesize
+
+```{r cv, warning=FALSE, message=FALSE}
+
+sd(dados$Idade)/mean(dados$Idade)
+
+```
+
+\framebreak
+
+\normalsize
+
+- Os quartis (e demais separatrizes) podem ser obtidos pela função `quantile` da seguinte forma.
+
+\footnotesize
+
+```{r quantis, warning=FALSE, message=FALSE}
+
+quantile(dados$Idade, 
+         probs = c(0.25, 0.5, 0.75))
+
+```
+
+\framebreak
+
+\normalsize
+
+- O diagrama de caixa (boxplot) pode ser obtido pela função `boxplot`
+
+\footnotesize
+
+```{r boxplot, warning=FALSE, message=FALSE, out.width='70%', fig.align='center'}
+
+boxplot(dados$Idade,
+        ylab = "Idade", col = "gold", border = "purple")
+
+```
+
+\framebreak
+
+\normalsize
+
+- Se quisermos comparar as idades de solteiros e casados utilizando o boxplot, podemos utilizar a seguinte sintaxe:
+
+\footnotesize
+
+```{r boxplot2, warning=FALSE, message=FALSE, out.width='70%', fig.align='center'}
+
+boxplot(Idade ~ `Estado Civil`, data = dados,
+        ylab = "Idade", col = "gold", border = "purple")
+
+```
+
+\normalsize
+
+## Para casa
+
+1. Resolver os exercícios 5, 9 e 10 do Capítulo 9.7 do livro __Fundamentos de Estatística__\footnote{Vieira, S. {\bf Fundamentos de Estatística}, Atlas, 2019, p. 153-154.} (disponível no Sabi+).
+2. Para o seu levantamento estatístico, calcule os quartis, a amplitude entre quartis e construa um diagrama de caixa, de acordo com a classificação das variáveis. Compartilhe no Fórum Geral do Moodle.
+
+## Próxima aula 
+
+- Medidas de forma;
+- Propriedades de média e variância;
+- Valores padronizados ($z$-escores).
+
+## Por hoje é só!
+
+\begin{center}
+{\bf Bons estudos!}
+\end{center}
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='50%', out.height='50%', paged.print=FALSE, purl=FALSE}
+
+knitr::include_graphics(here::here('images', 'Statistically-Insignificant-barras01.jpg'))
+
+```
+

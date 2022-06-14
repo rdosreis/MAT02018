@@ -1,0 +1,133 @@
+---
+title: "MAT02018 - Estatística Descritiva"
+subtitle: "Distribuição de Frequências"
+fontsize: 10pt
+author: |
+  | Rodrigo Citton P. dos Reis
+  | `citton.padilha@ufrgs.br`
+institute: |
+  | \textsc{Universidade Federal do Rio Grande do Sul}
+  | \textsc{Instituto de Matemática e Estatística}
+  | \textsc{Departamento de Estatística}
+date: |
+  | Porto Alegre, 2021
+header-includes:
+  - \titlegraphic{\hfill\includegraphics[height=1.5cm]{logos/Logo-40-anos-estatistica.png}}
+---
+
+# Introdução
+
+## Introdução {.allowframebreaks}
+
+- Uma contribuição importante da estatística no manejo das informações foi a criação de procedimentos para a organização e o resumo de grandes quantidades de dados.
+- A descrição das variáveis é imprescindível como passo prévio para a adequada interpretação dos resultados de uma investigação, e a metodologia empregada faz parte da estatística descritiva.
+
+- Os dados podem ser organizados em \structure{tabelas} ou \structure{gráficos}. Nestas notas de aula, vamos apresentar como organizar a informação em \structure{tabelas de frequências}.
+
+# Distribuição de Frequências
+
+## Distribuição de Frequências {.allowframebreaks}
+
+- Dados nominais, ordinais e discretos, depois de apurados, devem ser organizados em \structure{tabelas de distribuição de frequências}.
+
+- \structure{Frequência de uma categoria (ou valor)} é o número de vezes que essa categoria (ou valor) ocorre no conjunto de dados (uma amostra ou população)\footnote{{\bf Lembrando:} {\bf população} é o conjunto de todos os elementos que apresentam uma ou mais características em comum. Quando o estudo é realizado com toda a população de interesse, chamaremos este estudo de {\bf censo}. Por motivos de tempo, custo, logística, entre outros, geralmente não é possível realizar um censo. Nestes casos, estudamos apenas uma parcela da população, que chamamos de {\bf amostra}. Amostra é qualquer fração de uma população. Como sua finalidade é representar a população, deseja-se que a amostra escolhida apresente as mesmas características da população de origem, isto é, que seja uma amostra {\bf ``representativa''} ou {\bf ``não tendenciosa''}.}.
+
+## Dados nominais {.allowframebreaks}
+
+- Para organizar os dados nominais em uma tabela de distribuição de frequências escreva, na __primeira coluna__, o __nome da variável__ em estudo e logo abaixo, na mesma coluna, as categorias (ou seja, os valores) da variável.
+- Na __segunda coluna__, escreva __"Frequência"__, e logo abaixo as frequências das respectivas categorias.
+
+\framebreak
+
+- __Exemplo:__ reveja o exemplo do grupo de 15 empregados da seção de orçamentos da Companhia MB.
+    + Anotamos o número de solteiros e casados para organizar os dados em uma tabela de frequências.
+    + Para isso, devemos escrever o nome da variável (_Estado civil_) e, em coluna, as categorias (_solteiro_, _casado_).
+    + As frequências são 8 empregados solteiros e 7 empregados casados que, somadas, dão um total de 15 empregados.
+
+\framebreak
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE}
+civil <- c(rep("Solteiro", 8), rep("Casado", 7))
+
+library(summarytools)
+
+civil.tab <- as.data.frame(na.omit(summarytools::freq(civil, order = "freq")))["Freq"]
+civil.tab <- data.frame("estado_civil"= row.names(civil.tab), "freq" = civil.tab$Freq)
+
+knitr::kable(civil.tab, col.names = c("Estado civil", "Frequência"))
+```
+
+\framebreak
+
+### Observações
+
+1. É comum utilizar a última linha da tabela para expressar o total. Em geral, este deve coincidir com o tamanho do conjunto de dados. Em alguns casos, a variável não foi observada/coletada (_dados ausentes_) para uma ou mais unidades, e portanto, o total deve ser menor que o tamanho do conjunto de dados.
+2. Usaremos a \structure{notação $n_i$} para indicar a frequência (absoluta) cada classe, ou categoria, da variável.
+
+## Dados nominais {.allowframebreaks}
+
+### Exercício
+
+- Construa a tabela de distribuição de frequências da variável _Região de procedência_ do exemplo do grupo de 15 empregados da seção de orçamentos da Companhia MB.
+
+## Dados ordinais {.allowframebreaks}
+
+- Dados ordinais devem ser organizados em tabelas de distribuição de frequências.
+- Escreva, na primeira coluna, o nome da variável em estudo e, logo abaixo, os nomes das categorias em __ordem crescente__\footnote{Nos referimos a ordem das categorias e não das suas frequências.}.
+- As frequências devem estar em outra coluna, mas nas linhas das respectivas categorias.
+
+## Dados ordinais {.allowframebreaks}
+
+- Retornando ao exemplo do grupo de 15 empregados da seção de orçamentos da Companhia MB, considere a variável _Grau de instrução_.
+    + O nome da variável e suas categorias foram escritos na primeira coluna e, na segunda coluna, as respectivas frequências.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE}
+escola <- factor(x = c(rep("Ensino fundamental", 9), rep("Ensino médio", 5), "Superior"))
+
+escola.tab <- as.data.frame(na.omit(summarytools::freq(escola)))["Freq"]
+escola.tab <- data.frame("escola"= row.names(escola.tab), "freq" = escola.tab$Freq)
+
+knitr::kable(escola.tab, col.names = c("Grau de instrução", "Frequência ($n_i$)"))
+```
+
+## Dados discretos {.allowframebreaks}
+
+- Dados discretos também são organizados em tabelas de distribuição de frequências.
+- Para isso, os valores que a variável pode assumir são colocados na primeira coluna, em __ordem crescente__.
+- O número de vezes que cada valor se repete (a frequência) é escrito em outra coluna, nas linhas respectivas aos valores.
+
+\framebreak
+
+- Mais uma vez, retorne ao exemplo da seção de orçamentos da Companhia MB.
+    + O número de filhos dos empregados da seção é apresentado a seguir na distribuição de frequências.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE}
+filhos <- c(rep(0, 6), rep(1, 4), rep(2, 4), 3)
+
+filhos.tab <- as.data.frame(na.omit(summarytools::freq(filhos)))["Freq"]
+filhos.tab <- data.frame("filhos"= row.names(filhos.tab), "freq" = filhos.tab$Freq)
+
+knitr::kable(filhos.tab, col.names = c("Número de filhos", "Frequência ($n_i$)"))
+```
+
+## Para casa
+
+1. Resolver os exercícios 1, 2 e 3 do Capítulo 3.5 do livro __Fundamentos de Estatística__\footnote{Vieira, S. {\bf Fundamentos de Estatística}, Atlas, 2019, pg. 37-38.} (disponível no Sabi+).
+2. Para os dados nominais, ordinais e discretos do seu levantamento estatístico, construa tabelas de frequências e compartilhe no Fórum Geral do Moodle.
+
+## Próxima aula 
+
+- Distribuição de frequências __(dados contínuos)__.
+
+## Por hoje é só!
+
+\begin{center}
+{\bf Bons estudos!}
+\end{center}
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='50%', out.height='50%', paged.print=FALSE}
+
+knitr::include_graphics(here::here('images', 'Statistically-Insignificant-forecast.jpg'))
+
+```
+

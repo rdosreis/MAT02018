@@ -1,0 +1,435 @@
+---
+title: "MAT02018 - Estatística Descritiva"
+subtitle: "Distribuições bidimensionais"
+fontsize: 10pt
+author: |
+  | Rodrigo Citton P. dos Reis
+  | `citton.padilha@ufrgs.br`
+institute: |
+  | \textsc{Universidade Federal do Rio Grande do Sul}
+  | \textsc{Instituto de Matemática e Estatística}
+  | \textsc{Departamento de Estatística}
+date: |
+  | Porto Alegre, 2021
+bibliography: estatistica-descritiva.bib
+csl: associacao-brasileira-de-normas-tecnicas-ufrgs-initials.csl
+link-citations: yes
+header-includes:
+  - \titlegraphic{\hfill\includegraphics[height=1.5cm]{logos/Logo-40-anos-estatistica.png}}
+---
+
+```{r setup, include=FALSE, purl=FALSE}
+
+options(knitr.kable.NA = '-')
+library(dplyr)
+library(knitr)
+
+```
+
+# Variáveis quantitativas {.allowframebreaks}
+
+- Quando as variáveis envolvidas são ambas quantitativas, podemos "categorizá-las".
+- Ou seja, agrupar as observações em __intervalos de classe__ para cada uma das variáveis^[Da mesma forma que foi apresentado e discutido nas notas de aula de _Distribuição de Frequências_.] e assim, analisá-las como variáveis qualitativas, apresentando a distribuição conjunta em tabelas de dupla entrada^[Se as variáveis de interesse não apresentam um número muito grande de valores distintos, uma alternativa seria não agrupar em intervalos de classe, e simplesmente utilizar uma tabela de dupla entrada considerando os próprios valores da variável.].
+- Mas, além desse tipo de análise, as variáveis quantitativas são passíveis de procedimentos analíticos e gráficos mais refinados.
+- O __gráfico de dispersão__ é provavelmente o mais comum destes procedimentos .
+
+## Variáveis quantitativas {.allowframebreaks}
+
+- __Exemplo:__ suponha que vinte e cinco pacientes são atendidos em uma clínica oftalmológica e os seguintes valores são registrados para __pressão intraocular__ (PIO) e __idade__.
+
+\footnotesize
+
+```{r pio, echo=FALSE, warning=FALSE, message=FALSE}
+
+idade <- c(35, 40, 41, 44, 45, 48, 50, 50, 50, 52, 
+           54, 55, 55, 55, 57, 58, 59, 60, 60, 61,
+           63, 65, 67, 71, 77)
+
+pio <- c(15, 17, 16, 18, 15, 19, 19, 18, 17, 16, 
+         19, 18, 21, 20, 19, 20, 19, 23, 19, 22,
+         23, 24, 23, 24, 22)
+
+pio_df <- data.frame(id = 1:length(pio), idade, pio)
+
+kable(x = pio_df, 
+      caption = "Tabela de dados brutos.",
+      col.names = c("ID", "Idade", "PIO"),
+      align = 'c', format = "pandoc")
+
+```
+
+\framebreak
+
+\normalsize
+
+- A figura abaixo apresenta a distribuição conjunta das variáveis idade e pressão intraocular por meio de um gráfico de dispersão.
+
+```{r pontos, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width="80%"}
+
+p <- ggplot(data = pio_df,
+            mapping = aes(x = idade, y = pio)) +
+  geom_point(colour = I("purple4"), size = 2) +
+  labs(x = "Idade (anos)", y = "PIO") +
+  theme_bw()
+p
+
+```
+
+\framebreak
+
+- O gráfico de dispersão é construído pelo conjunto de pontos \alert{$\{(x_i, y_i); i = 1, 2, \ldots, n\}$} em que $x$ representa a variável do eixo horizontal (no exemplo, a variável idade) e $y$ representa a variável do eixo vertical (no exemplo, a variável pressão intraocular).
+- Note que cada ponto corresponde aos valores observados para um indivíduo específico.
+- Através do diagrama de dispersão é possível observar que, em geral, valores de idade mais altos são associados com valores de pressão intraocular mais altos (as variáveis parecem relacionadas).
+
+\framebreak
+
+- __Perguntas:__
+    + Qual o tipo da relação entre as variáveis Idade e PIO?
+    + Qual a força desta relação?
+    
+## Tipos de relação {.allowframebreaks}
+
+- A relação entre duas variáveis quantitativas pode ser descrito como __positivo (direta)__ ou __negativo (inversa)__, e __linear__ ou __não-linear__.
+
+```{r pos_neg, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width="80%"}
+
+library(MASS)
+set.seed(1000)
+
+rho <- cbind(c(1, .9), c(.9, 1))
+x <- as.data.frame(mvrnorm(n = 1000, mu = c(0,0), Sigma = rho))
+names(x) <- c("X", "Y")
+
+p1 <- ggplot(data = x, mapping = aes(x = X, y = Y)) +
+  geom_point(alpha = 0.5) +
+  geom_vline(xintercept = 0, linetype = "dashed", col = "blue") +
+  geom_hline(yintercept = 0, linetype = "dashed", col = "blue") +
+  stat_ellipse(type = "norm", col = "red") +
+  labs(title = "Relação direta") +
+  theme_bw()
+
+rho <- cbind(c(1, -.9), c(-.9, 1))
+x <- as.data.frame(mvrnorm(n = 1000, mu = c(0,0), Sigma = rho))
+names(x) <- c("X", "Y")
+
+p2 <- ggplot(data = x, mapping = aes(x = X, y = Y)) +
+  geom_point(alpha = 0.5) +
+  geom_vline(xintercept = 0, linetype = "dashed", col = "blue") +
+  geom_hline(yintercept = 0, linetype = "dashed", col = "blue") +
+  stat_ellipse(type = "norm", col = "red") +
+  labs(title = "Relação inversa") +
+  theme_bw()
+
+library(cowplot)
+
+plot_grid(p1, p2, labels = c('', ''), label_size = 5, ncol = 2)
+
+```
+
+\framebreak
+
+- O gráfico de dispersão da esquerda mostra uma relação direta ou positiva entre as variáveis $X$ e $Y$, tendência destacada pela declividade positiva da elipse tracejada.
+- Perceba também, que o gráfico foi dividido em quatro "quadrantes".
+- A grande maioria dos pontos está situada no primeiro e terceiro quadrantes.
+- Nesses quadrantes as coordenadas dos pontos têm o mesmo sinal, e, portanto, o produto delas será sempre positivo.
+- Somando-se o produto das coordenadas dos pontos, o resultado será um número positivo, pois existem mais produtos positivos do que negativos.
+
+\framebreak
+
+- De forma análoga, o gráfico de dispersão da direita mostra uma relação inversa ou negativa, tendência também destacada pela declividade negativa da elipse tracejada, e procedendo-se como anteriormente, a soma dos produtos das coordenadas será negativa. 
+
+\framebreak
+
+\footnotesize
+
+- A gráfico a seguir apresenta um exemplo de __ausência de associação__ entre as variáveis.
+- A soma dos produtos das coordenadas será zero, pois cada resultado positivo tem um resultado negativo simétrico, anulando-se na soma^[Note que a soma dos produtos das coordenadas depende, e muito, do número de pontos.
+Além disso, a unidade de medida também pode influenciar. E é por isso, que logo em seguida, vamos considerar uma medida de correlação __padronizada__.].
+
+```{r cor_nula, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', out.height="60%", out.width="60%"}
+
+rho <- cbind(c(1, 0), c(0, 1))
+x <- as.data.frame(mvrnorm(n = 1000, mu = c(0,0), Sigma = rho))
+names(x) <- c("X", "Y")
+
+p <- ggplot(data = x, mapping = aes(x = X, y = Y)) +
+  geom_point(alpha = 0.5) +
+  geom_vline(xintercept = 0, linetype = "dashed", col = "blue") +
+  geom_hline(yintercept = 0, linetype = "dashed", col = "blue") +
+  stat_ellipse(type = "norm", col = "red") +
+  labs(title = "Ausência de relação") +
+  theme_bw()
+p
+
+```
+
+\normalsize
+
+## Tipos de relação {.allowframebreaks}
+
+- A "força" da relação se refere à proximidade dos pontos na nuvem.
+- Se pudéssemos traçar uma curva ou uma reta subjacente, teríamos a força da relação associada a proximidade dos pontos com respeito a esta curva.
+
+\framebreak
+
+```{r linear, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width="100%"}
+
+library(MASS)
+set.seed(1000)
+
+rho <- cbind(c(1, .9), c(.9, 1))
+x <- as.data.frame(mvrnorm(n = 1000, mu = c(0,0), Sigma = rho))
+names(x) <- c("X", "Y")
+
+p1 <- ggplot(data = x, mapping = aes(x = X, y = Y)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(caption = "Relação linear positiva forte") +
+  theme_bw()
+
+rho <- cbind(c(1, .5), c(.5, 1))
+x <- as.data.frame(mvrnorm(n = 1000, mu = c(0,0), Sigma = rho))
+names(x) <- c("X", "Y")
+
+p2 <- ggplot(data = x, mapping = aes(x = X, y = Y)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(caption = "Relação linear positiva fraca") +
+  theme_bw()
+
+x <- data.frame(X = runif(n = 1000, min = 0.1, max = 2))
+x$Y <- 1/x$X^2 + rnorm(1000, sd = 1)
+
+p3 <- ggplot(data = x, mapping = aes(x = X, y = Y)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "lm", formula = y ~ I(1/x^2), se = FALSE, color = "red") +
+  labs(caption = "Relação não-linear negativa forte") +
+  theme_bw()
+
+plot_grid(p1, p2, p3, labels = c('', '', ''), label_size = 1, ncol = 3)
+```
+
+# Coeficiente de correlação linear {.allowframebreaks}
+
+- A __força__ de uma associação entre duas variáveis quantitativas pode ser medida por um __coeficiente de correlação__.
+- O __coeficiente de correlação produto-momento__ é uma medida da intensidade de __associação linear__ existente entre duas variáveis quantitativas.
+- Também é conhecido como __coeficiente de correlação de Pearson__, pois sua fórmula de cálculo foi proposta por Karl Pearson em 1896.
+- O coeficiente de correlação de Pearson é denominado por $\rho$ na população e $r$ na amostra.
+
+## Definição {.allowframebreaks}
+
+- Dados $n$ pares __(na amostra)__ de valores \alert{$(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)$}, chamaremos de coeficiente de correlação entre as duas variáveis $X$ e $Y$ a
+
+$$
+r = \frac{1}{n-1}\sum_{i=1}^n{\left(\frac{x_i - \bar{x}}{s_x}\right)\left(\frac{y_i - \bar{y}}{s_y}\right)},
+$$
+em que $\bar{x}$ e $\bar{y}$ são as médias de $X$ e $Y$, e $s_x$ e $s_y$ são os desvios padrões de $X$ e $Y$. Ou seja, o coeficiente de correlação é __a média dos produtos dos valores padronizados das variáveis__.
+
+## Propriedades {.allowframebreaks}
+
+- O coeficiente de correlação pode variar entre $-1$ e $1$.
+- Valores negativos de $r$ indicam uma correlação do tipo inversa (_negativa_): 
+    + Quando $x$ aumenta, $y$ em média diminui (ou vice-versa).
+- Valores positivos para $r$ ocorrem quando a correlação é direta (_positiva_):
+    + $x$ e $y$ variam no mesmo sentido.
+
+\framebreak
+
+- O valor máximo (tanto $r = 1$ como $r = -1$) é obtido quando todos os pontos do diagrama de dispersão estão em uma linha reta inclinada (__correlação perfeita__).
+- Quando não existe correlação ($r = 0$) entre $x$ e $y$, os pontos se distribuem em nuvens circulares.
+- Quando os pontos formam uma nuvem cujo eixo principal é uma curva (relação não-linear), o valor de $r$ __não mede corretamente a associação__ entre as variáveis.
+
+\framebreak
+
+- Da definição do coeficiente de correlação obtemos a seguinte formulação alternativa^[E dependendo da situação, mais prática.]:
+
+$$
+r = \frac{1}{n - 1}\sum_{i=1}^n{\left(\frac{x_i - \bar{x}}{s_x}\right)\left(\frac{y_i - \bar{y}}{s_y}\right)} = \frac{\sum_{i=1}^n{x_iy_i} - n\bar{x}\bar{y}}{\sqrt{\left(\sum_{i=1}^n{x_i^2 - n\bar{x}^2}\right)\left(\sum_{i=1}^n{y_i^2 - n\bar{y}^2}\right)}}.
+$$
+- O numerador da expressão acima, que mede o total da concentração dos pontos pelos quatro quadrantes, dá origem a uma medida bastante usada e que definimos a seguir.
+
+\framebreak
+
+Dados $n$ pares (na amostra) de valores \alert{$(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)$}, chamaremos de __covariância__ entre as duas variáveis $X$ e $Y$ a
+
+$$
+cov_{xy} = \frac{\sum_{i=1}^n{(x_i-\bar{x})(y_i-\bar{y})}}{n-1},
+$$
+ou seja, a média ("estimada") dos produtos dos valores centrados das variáveis.
+
+- Com essa definição, obtemos a seguinte relação
+
+$$
+r = \frac{cov_{xy}}{s_x\times s_y}.
+$$
+
+## Exemplos {.allowframebreaks}
+
+```{r exemplos, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', out.height="80%", out.width="80%"}
+
+library(MASS)
+set.seed(1000)
+
+rho <- cbind(c(1, 0), c(0, 1))
+x <- as.data.frame(mvrnorm(n = 100, mu = c(0,0), Sigma = rho))
+names(x) <- c("X", "Y")
+
+p1 <- ggplot(data = x, mapping = aes(x = X, y = Y)) +
+  geom_point(alpha = 0.5) +
+  ylim(-3,3) + xlim(-3,3) +
+  labs(title = "r = 0") +
+  theme_bw()
+
+rho <- cbind(c(1, .5), c(.5, 1))
+x <- as.data.frame(mvrnorm(n = 100, mu = c(0,0), Sigma = rho))
+names(x) <- c("X", "Y")
+
+p2 <- ggplot(data = x, mapping = aes(x = X, y = Y)) +
+  geom_point(alpha = 0.5) +
+  ylim(-3,3) + xlim(-3,3) +
+  labs(title = "r = 0,5") +
+  theme_bw()
+
+rho <- cbind(c(1, .8), c(.8, 1))
+x <- as.data.frame(mvrnorm(n = 100, mu = c(0,0), Sigma = rho))
+names(x) <- c("X", "Y")
+
+p3 <- ggplot(data = x, mapping = aes(x = X, y = Y)) +
+  geom_point(alpha = 0.5) +
+  ylim(-3,3) + xlim(-3,3) +
+  labs(title = "r = 0,8") +
+  theme_bw()
+
+rho <- cbind(c(1, 1), c(1, 1))
+x <- as.data.frame(mvrnorm(n = 100, mu = c(0,0), Sigma = rho))
+names(x) <- c("X", "Y")
+
+p4 <- ggplot(data = x, mapping = aes(x = X, y = Y)) +
+  geom_point(alpha = 0.5) +
+  ylim(-3,3) + xlim(-3,3) +
+  labs(title = "r = 1") +
+  theme_bw()
+
+x <- data.frame(X = rnorm(n = 100))
+x$Y <- 0.5* x$X
+
+p5 <- ggplot(data = x, mapping = aes(x = X, y = Y)) +
+  geom_point(alpha = 0.5) +
+  ylim(-3,3) + xlim(-3,3) +
+  labs(title = "r = 1") +
+  theme_bw()
+
+x <- data.frame(X = rnorm(n = 100))
+x$Y <- 2* x$X
+
+p6 <- ggplot(data = x, mapping = aes(x = X, y = Y)) +
+  geom_point(alpha = 0.5) +
+  ylim(-3,3) + xlim(-3,3) +
+  labs(title = "r = 1") +
+  theme_bw()
+
+rho <- cbind(c(1, -1), c(-1, 1))
+x <- as.data.frame(mvrnorm(n = 100, mu = c(0,0), Sigma = rho))
+names(x) <- c("X", "Y")
+
+p7 <- ggplot(data = x, mapping = aes(x = X, y = Y)) +
+  geom_point(alpha = 0.5) +
+  ylim(-3,3) + xlim(-3,3) +
+  labs(title = "r = -1") +
+  theme_bw()
+
+rho <- cbind(c(1, -.7), c(-.7, 1))
+x <- as.data.frame(mvrnorm(n = 100, mu = c(0,0), Sigma = rho))
+names(x) <- c("X", "Y")
+
+p8 <- ggplot(data = x, mapping = aes(x = X, y = Y)) +
+  geom_point(alpha = 0.5) +
+  ylim(-3,3) + xlim(-3,3) +
+  labs(title = "r = -0,7") +
+  theme_bw()
+
+rho <- cbind(c(1, -.3), c(-.3, 1))
+x <- as.data.frame(mvrnorm(n = 100, mu = c(0,0), Sigma = rho))
+names(x) <- c("X", "Y")
+
+p9 <- ggplot(data = x, mapping = aes(x = X, y = Y)) +
+  geom_point(alpha = 0.5) +
+  ylim(-3,3) + xlim(-3,3) +
+  labs(title = "r = -0,3") +
+  theme_bw()
+
+plot_grid(p1, p2, p3, p4, p5, p6, p7, p8, p9,
+          labels = rep('', 9),
+          label_size = 5, ncol = 3)
+```
+
+\framebreak
+
+- Retomando o exemplo da pressão intraocular (PIO) e idade de 25 pacientes atendidos em uma clínica oftalmológica, podemos organizar a seguinte tabela para calcularmos o coeficiente de correlação entre estas duas variáveis.
+
+\scriptsize
+
+```{r pio_coef, echo=FALSE, warning=FALSE, message=FALSE}
+
+idade <- c(35, 40, 41, 44, 45, 48, 50, 50, 50, 52, 
+           54, 55, 55, 55, 57, 58, 59, 60, 60, 61,
+           63, 65, 67, 71, 77)
+
+pio <- c(15, 17, 16, 18, 15, 19, 19, 18, 17, 16, 
+         19, 18, 21, 20, 19, 20, 19, 23, 19, 22,
+         23, 24, 23, 24, 22)
+
+pio_df <- data.frame(id = 1:length(pio), idade, pio)
+pio_df$idade_centrada <- pio_df$idade - mean(pio_df$idade)
+pio_df$pio_centrada <- pio_df$pio - mean(pio_df$pio)
+pio_df$idade_z <- (pio_df$idade - mean(pio_df$idade))/sd(pio_df$idade)
+pio_df$pio_z <- (pio_df$pio - mean(pio_df$pio))/sd(pio_df$pio)
+pio_df$zi_zp <- pio_df$idade_z * pio_df$pio_z
+
+aux <- colSums(pio_df)
+pio_df <- rbind(pio_df, aux)
+
+aux <- c(rep(NA, 25), "Soma")
+pio_df <- cbind(aux, pio_df)
+
+pio_df$idade_z[26] <- NA
+pio_df$pio_z[26] <- NA
+
+options(knitr.kable.NA = '')
+
+kable(x = pio_df, 
+      escape = FALSE,
+      caption = "Cálculo do coeficiente de correlação.",
+      col.names = c(" " ,"ID", "Idade ($x$)", "PIO ($y$)", "$x- \\bar{x}$", "$y- \\bar{y}$", "$\\frac{x- \\bar{x}}{s_x} = z_x$", "$\\frac{y- \\bar{y}}{s_y} = z_y$", "$z_x\\cdot z_y$"),
+      align = 'c', digits = c(0, 0, 0, 0, 2, 2, 2, 2, 2),
+      format.args = list(decimal.mark = ","), format = "pandoc")
+
+```
+
+\framebreak
+
+\normalsize
+
+E assim, temos que:
+
+- $\bar{x} = 1372/25 = 54,88$ anos e $s_x = 9,87$ anos.
+- $\bar{y} = 486/25 = 19,44$ mmHg e $s_y = 2,73$ mmHg.
+- O coeficiente de correlação é $r = 20,28/25 = 0,81$, uma relação direta (positiva) e relativamente forte^[Maior a idade $\Rightarrow$ Maior a pressão intraocular.].
+
+## Próxima aula
+
+- Distribuições bivariadas: uma variável qualitativa e uma variável quantitativa.
+- Complementa`R`.
+
+## Por hoje é só!
+
+\begin{center}
+{\bf Bons estudos!}
+\end{center}
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='50%', out.height='50%', paged.print=FALSE, purl=FALSE}
+
+knitr::include_graphics(here::here('images', 'Statistically-Insignificant-final03.jpg'))
+
+```
+

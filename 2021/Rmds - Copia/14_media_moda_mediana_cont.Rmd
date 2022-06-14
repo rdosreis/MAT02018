@@ -1,0 +1,373 @@
+---
+title: "MAT02018 - Estatística Descritiva"
+subtitle: "Medidas de tendência central (continuação)"
+fontsize: 10pt
+author: |
+  | Rodrigo Citton P. dos Reis
+  | `citton.padilha@ufrgs.br`
+institute: |
+  | \textsc{Universidade Federal do Rio Grande do Sul}
+  | \textsc{Instituto de Matemática e Estatística}
+  | \textsc{Departamento de Estatística}
+date: |
+  | Porto Alegre, 2021
+bibliography: estatistica-descritiva.bib
+csl: associacao-brasileira-de-normas-tecnicas-ufrgs-initials.csl
+link-citations: yes
+header-includes:
+  - \titlegraphic{\hfill\includegraphics[height=1.5cm]{logos/Logo-40-anos-estatistica.png}}
+---
+
+```{r setup, include=FALSE, purl=FALSE}
+options(knitr.kable.NA = '-')
+library(dplyr)
+library(knitr)
+```
+
+# Mediana
+
+## Mediana {.allowframebreaks}
+
+- A \structure{mediana}, geralmente representada por \structure{$md$}, é o valor de \structure{$x$}, em uma \structure{série ordenada de dados}, que divide a série em dois subgrupos de igual tamanho.
+- Considere que observamos as notas de cinco alunos:
+    - André: nota 5,0;
+    - Carla: nota 5,5;
+    - Eliana: nota 8,5;
+    - Júlio: nota 7,0;
+    - Pedro: nota 8,0.
+
+\framebreak
+
+- Para obter a mediana desde conjunto de dados, primeiro ordenamos de maneira crescente as notas observadas:
+
+$$
+5,0; 5,5; \textcolor{blue}{7,0}; 8,0; 8,5
+$$
+
+- A mediana é o valor que está no centro, ou seja, \structure{$7,0$}^[A mediana é também definida por alguns autores como o __valor que ocupa a posição central__ de um __conjunto de dados ordenados__.].
+- Como interpretação, temos que metade das notas da turma estão abaixo de 7, e metade estão acima de 7.
+
+## Mediana {.allowframebreaks}
+
+- Uma característica importante da mediana é a de que ela \structure{não é afetada} pelos extremos da série.
+- No exemplo anterior, se observássemos a nota $3,5$ para o aluno André e $9,0$ para a aluna Eliana, a mediana continuaria sendo o valor $7,0$:
+
+$$
+3,5; 5,5; \textcolor{blue}{7,0}; 8,0; 9,0
+$$
+
+\framebreak
+
+- Para calcular a mediana, \structure{ordenamos os dados} para que se possa identificar em que posição ela se localiza.
+
+```{r fig.align='center', echo=FALSE, out.width="70%", purl=FALSE}
+
+knitr::include_graphics(here::here('images', 'median_w5vxxo.jpg'))
+
+```
+
+\framebreak
+
+- Em grandes conjuntos de dados, a \structure{posição da mediana}, ou seja, a posição central na versão ordenada deste conjunto, é encontrada facilmente por intermédio do seguinte cálculo:
+
+$$
+\frac{n + 1}{2}.
+$$
+
+- \structure{Exemplo:} em uma amostra de 35 medidas de estatura ($n = 35$), a mediana é o o valor que encontra-se no (35+1)/2 = 18 da __série dos dados ordenados__^[Lembre: para encontrarmos a mediana de uma distribuição é necessário ordenarmos os dados do conjunto observado.].
+
+## Mediana
+
+- Quando o conjunto contiver um __número par__ de elementos, a __mediana é a média dos dois valores centrais__ (do cojunto ordenado).
+    + Assim, se observamos os seguintes valores para uma certa variável:
+
+$$
+1, 3, 7, 98
+$$
+
+- A mediana está na posição 2,5^[De maneira mais formal, a mediana está entre as posições 2 e 3 da série de dados ordenados.], e portanto, a mediana é a média dos valores centrais $md = (3+7)/2 = 5$^[__Sua vez!__ Calcule a mediana de altura da sua casa.].
+
+## Mediana em tabelas de frequências com agrupamento simples {.allowframebreaks}
+
+- Considere mais uma vez o exemplo do __número de carburadores__ em um conjunto de 32 modelos de automóveis.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE}
+
+mtcars_pe <- mtcars[,-3]
+freq_table_carb <- as.data.frame(table(mtcars_pe$carb))
+freq_table_carb[,1] <- as.character(freq_table_carb[,1])
+aux <- data.frame(Var1 = as.character("Total"), Freq = sum(freq_table_carb$Freq))
+freq_table_carb <- rbind(freq_table_carb, aux)
+names(freq_table_carb) <- c("Número de carburadores $(x_i)$", "$n_i$")
+
+freq_table_carb %>%
+  kable(align =  c('l','c'), digits = c(0,0),
+        format.args = list(decimal.mark = ","))
+
+```
+
+\framebreak
+
+- Note que os valores já estão ordenados.
+- Como o conjunto possui \structure{32} elementos, e portanto \structure{$n$ é par}, a fórmula \structure{$(n + 1)/2 = (32 + 1)/2$} nos diz que a mediana está entre as posições \structure{$16$} e \structure{$17$}.
+    - A mediana será a média dos valores destas duas posições.
+- A frequência acumulada (\structure{$n_{ac}$}) pode nos ajudar.
+
+\framebreak
+\footnotesize
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE}
+
+freq_table_carb$"$n_{ac}$" <- cumsum(freq_table_carb$"$n_i$")
+freq_table_carb$"$n_{ac}$"[length(freq_table_carb$"$n_{ac}$")] <- NA
+
+freq_table_carb %>%
+  kable(align =  c('l','c', 'c'), digits = c(0,0,0),
+        format.args = list(decimal.mark = ","))
+
+```
+
+\normalsize
+
+- Percebemos que ambas as posições assumem o valor 2, e assim, $md = (2 + 2)/2 = 2$.
+
+\framebreak
+
+- Uma forma alternativa para se obter a mediana quando os dados estão agrupados é usar a frequência acumulada relativa (\structure{$f_{ac}$}).
+- O valor de \structure{$x$} para o qual \structure{$f_{ac} = 0,5$} é a mediana, pois metade dos valores é igual ou menor \structure{$f_{ac}^{-1}(x)$}.
+
+\footnotesize
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE}
+
+freq_table_carb$"$f_i$" <- freq_table_carb$`$n_i$`/sum(freq_table_carb$`$n_i$`[-length(freq_table_carb$"$n_{ac}$")])
+
+freq_table_carb$"$f_{ac}$" <- cumsum(freq_table_carb$"$f_i$")
+freq_table_carb$"$f_{ac}$"[length(freq_table_carb$"$n_{ac}$")] <- NA
+
+freq_table_carb %>%
+  kable(align =  c('l','c', 'c', 'c', 'c'), digits = c(0,0,0,2,2),
+        format.args = list(decimal.mark = ","))
+
+```
+
+\normalsize
+
+- Na tabela acima, `r round(freq_table_carb$"$f_{ac}$"[1]*100)`% são iguais ou menores que 1 e `r round(freq_table_carb$"$f_{ac}$"[2]*100)`% são iguais ou menores do que 2; logo, a mediana é 2.
+
+## Mediana em tabelas de frequências com dados agrupados por intervalos {.allowframebreaks}
+
+Quando os dados estiverem organizados em intervalos de classe, os valores individuais não podem ser identificados.
+
+Nesse caso, pode-se \structure{estimar} a mediana usando a seguinte expressão:
+
+$$
+md = LIR_{md} +h\left(\frac{n/2 - n_{ac}^{(ant)}}{n_{md}}\right),
+$$
+em que
+
+- $LIR_{md}$: limite inferior real do intervalo que contém a mediana;
+- $h$: amplitude do intervalo;
+- $n$: tamanho da amostra;
+- $n_{ac}^{(ant)}$: frequência absoluta acumulada no intervalo anterior ao que contém a mediana;
+- $n_{md}$: frequência absoluta simples no intervalo que contém a mediana.
+
+\framebreak
+
+- Assim, como nos casos anteriores, o primeiro passo é encontrar a posição do valor central do conjunto de dados ordenados pela fórmula $(n + 1)/2$, e em seguida, encontrar a classe em que a mediana se encontra utilizando a frequência acumulada.
+- Como exemplo, utilizaremos os dados de idades de 30 crianças de uma escola.
+
+\footnotesize
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE}
+
+
+idade <- c("5,5 $\\vdash$ 6,5",
+           "6,5 $\\vdash$ 7,5", 
+           "7,5 $\\vdash$ 8,5",
+           "8,5 $\\vdash$ 9,5",
+           "Total")
+f <- c(1, 20, 7, 2, 30)
+n <- c(1, 21, 28, 30, NA)
+
+df <- data.frame(idade, f, n)
+
+kable(x = df, col.names = c("Idade (anos)", "$n_i$", "$n_{ac}$"),
+      align =  c('l','c', 'c'), digits = c(0,0,0))
+```
+
+\framebreak
+\normalsize
+
+- Neste exemplo, a mediana está entre as posições \structure{15} e \structure{16}, pois \structure{$(30 + 1)/2 = 15,5$}.
+- Esse valor encontra-se no intervalo \structure{$6,5 \vdash 7,5$}, porque ali estão desde o 2º até o 20º valor deste conjunto de dados (ordenados).
+- Então, estima-se a idade mediana como:
+
+$$
+md = 6,5 + 1,0\times \left(\frac{30/2 - 1}{20}\right) = 7,2.
+$$
+
+- Este resultado nos informa que metade das crianças desta escola, que coletamos informação, tem idade superior a 7,2 anos.
+
+- __Sua vez!__ Calcule a mediana do __Teste de Desempenho Escolar__ (TDE; exercício da aula passada).
+
+# Moda
+## Moda {.allowframebreaks}
+
+- A \structure{moda} é o \structure{valor mais frequente} (que apresenta a maior frequência) de uma série de valores^[Note que esta medida de tendência central se aplica a dados qualitativos, pois se refere às frequências da distribuição. Já a média se aplica apenas para dados quantitativos. Pense por um minuto na média da variável _cor dos olhos_. Faz algum sentido?].
+
+- \structure{Exemplo:} considere que em uma certa quadra da cidade observamos as cores das faixadas das casas:
+
+\footnotesize
+
+$$
+\color{yellow}{amarela}, \color{orange}{laranja}, \color{orange}{laranja}, \color{yellow}{amarela}, \color{green}{verde}, \color{yellow}{amarela}, \color{orange}{laranja}, \color{green}{verde}, \color{orange}{laranja}, \color{orange}{laranja}
+$$
+
+\normalsize
+
+- A cor laranja é a __moda__ nesta quadra, pois apresenta a maior frequência (5).
+
+## Moda {.allowframebreaks}
+
+- \structure{Exemplo:} considere novamente o exemplo do número de carburadores.
+    + Temos que 10 carros apresentam dois carburadores e 10 carros apresentam quatro carburadores.
+    + Assim, temos \structure{duas modas}, ou dizemos que a distribuições do __número de carburadores__ é \structure{bimodal}, com uma moda em \structure{2} e outra em \structure{4}.
+
+\framebreak
+
+- Quando os dados estão apresentados em intervalos de classe, costuma-se indicar um \structure{intervalo modal}.
+- No exemplo de __milhas por galão__ a classe \structure{$14,3 \vdash 18,2$} é o intervalo modal, pois apresenta maior frequência (10).
+
+- __Sua vez!__ Encontre o intervalo modal do exemplo do __Teste de Desempenho Escolar__ (TDE; exercício da aula passada).
+
+# Complementa`R`
+
+## Complementa`R` {.allowframebreaks}
+
+```{r fig.align='right', message=FALSE, echo=FALSE, out.width="15%", purl=FALSE, warning=FALSE}
+
+knitr::include_graphics(here::here('images', 'teclado.png'))
+
+```
+
+###
+
+Esta seção é complementar. São apresentadas algumas poucas funções em `R` relacionadas a discussão da aula. Para tal, vamos utilizar o exemplo original de [@bussab_estatistica_2017] sobre os dados dos empregados da seção de orçamentos da Companhia MB. A planilha eletrônica correspondente encontra-se no arquivo `companhia_mb.xlsx`. Vamos começar carregando os dados para o `R`. Existem várias formas de se carregar __arquivos de dados__ em diferentes  no `R`. Como arquivo de interesse encontra-se no formato do Excel (xlsx), vamos utilizar a função `read_excel` do pacote `readxl`^[Caso você não tenha o pacote, instale-o:`install.packages("readxl")`.].
+
+## Complementa`R` {.allowframebreaks}
+
+\footnotesize
+
+```{r carrega-dados0, echo=TRUE, eval=FALSE, warning=FALSE, message=FALSE}
+# install.packages("readxl")
+library(readxl)
+
+dados <- read_excel(path = "companhia_mb.xlsx")
+```
+
+```{r carrega-dados1, echo=FALSE, warning=FALSE, message=FALSE, purl=FALSE}
+# install.packages("readxl")
+library(readxl)
+
+dados <- read_excel(path = here::here("data", "companhia_mb.xlsx"))
+```
+
+```{r carrega-dados2, warning=FALSE, message=FALSE}
+class(dados) # classe do objeto dados
+dim(dados) # dimensão do objeto dados
+```
+
+\normalsize
+
+- Note que o objeto `dados` é uma tabela de dados bruto.
+
+\footnotesize
+
+```{r carrega-dados3, warning=FALSE, message=FALSE}
+head(dados) # apresenta as primeiras linhas do objeto dados
+```
+
+\normalsize
+
+- A função `mean` calcula a média aritmética de um conjunto de dados.
+
+\footnotesize
+
+```{r medias, warning=FALSE, message=FALSE}
+mean(dados$Idade)
+mean(dados$`Salario (x Sal Min)`)
+```
+
+\normalsize
+
+- No caso em que a variável possui __dados ausentes__, como é o caso da variável _número de filhos_, precisamos utilizar o argumento `na.rm = TRUE` para remover os dados ausentes do conjunto antes de calcular a média.
+
+\footnotesize
+
+```{r medias2, warning=FALSE, message=FALSE}
+mean(dados$`N de Filhos`, na.rm = TRUE)
+```
+
+\normalsize
+
+- A mediana de um conjunto de dados pode ser obtida utilizando a função `median`.
+
+\footnotesize
+
+```{r medianas, warning=FALSE, message=FALSE}
+
+median(dados$Idade)
+median(dados$`Salario (x Sal Min)`)
+median(dados$`N de Filhos`, na.rm = TRUE)
+
+```
+
+\normalsize
+
+- A moda pode ser obtida observando-se a maior frequência em uma tabela de frequências.
+
+\footnotesize
+
+```{r freqs, warning=FALSE, message=FALSE}
+
+table(dados$`Estado Civil`)
+
+```
+
+\normalsize
+
+- Casado é a moda na seção de orçamentos da Companhia MB. Outra possibilidade é recuperar a maior frequência do vetor de frequências utilizando a função `which.max`.
+
+\footnotesize
+
+```{r modas, warning=FALSE, message=FALSE}
+
+which.max(table(dados$`Região de Procedência`))
+which.max(table(dados$`N de Filhos`))
+
+```
+
+\normalsize
+
+## Para casa
+
+1. Resolver os exercícios 1 a 3 do Capítulo 8.5 do livro __Fundamentos de Estatística__\footnote{Vieira, S. {\bf Fundamentos de Estatística}, Atlas, 2019, p. 135-136.} (disponível no Sabi+).
+2. Para o seu levantamento estatístico, calcule médias, modas e medianas, de acordo com a classificação das variáveis. Compartilhe no Fórum Geral do Moodle.
+
+## Próxima aula 
+
+- Médias ponderada, geométrica e harmônica.
+
+## Por hoje é só!
+
+\begin{center}
+{\bf Bons estudos!}
+\end{center}
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='50%', out.height='50%', paged.print=FALSE, purl=FALSE}
+
+knitr::include_graphics(here::here('images', 'Statistically-Insignificant-barras04.jpg'))
+
+```
+

@@ -1,0 +1,258 @@
+---
+title: "MAT02018 - Estatística Descritiva"
+subtitle: "Números índices"
+fontsize: 10pt
+author: |
+  | Rodrigo Citton P. dos Reis
+  | `citton.padilha@ufrgs.br`
+institute: |
+  | \textsc{Universidade Federal do Rio Grande do Sul}
+  | \textsc{Instituto de Matemática e Estatística}
+  | \textsc{Departamento de Estatística}
+date: |
+  | Porto Alegre, 2021
+bibliography: estatistica-descritiva.bib
+csl: associacao-brasileira-de-normas-tecnicas-ufrgs-initials.csl
+link-citations: yes
+header-includes:
+  - \titlegraphic{\hfill\includegraphics[height=1.5cm]{logos/Logo-40-anos-estatistica.png}}
+---
+
+```{r setup, include=FALSE, purl=FALSE}
+
+options(knitr.kable.NA = '-')
+library(dplyr)
+library(knitr)
+
+```
+
+# Apresentação
+
+- Neste conjunto de notas de aulas, faremos uma breve introdução ao tema de __números índices__, geralmente utilizados para descrever a situação econômica ao longo do tempo.
+- Veremos que a construção dos números índices está fortemente ligada a conceitos de estatística descritiva já apresentados neste curso.
+
+# Introdução {.allowframebreaks}
+
+- No sentido mais simples do termo, podemos dizer que um __número índice__ é um quociente que expressa uma dada quantidade em comparação a uma __quantidade base__.
+- Em outras palavras, são __valores relativos__.
+- No entanto devemos considerar dois casos:
+    1. Quando o objetivo de comparação refere-se a __um único__ produto ou serviço \structure{(índice simples/elementar)}.
+    2. Quando se refere a um __conjunto__ de produtos e de serviços \structure{(índice agregativo/geral)}.
+
+\framebreak
+
+- No primeiro caso não temos propriamente um problema de números índices, já que não envolve a questão da agregação de bens e serviços.
+    - Trata-se somente de uma forma alternativa de se fazer comparações em termos relativos.
+
+\framebreak
+
+- __Exemplo (único produto):__ a evolução das compras mensais de arroz (em kg), bem como do preço pago por kg, por parte de um supermercado, é apresentada na tabela a seguir.
+
+\footnotesize
+
+```{r serie_arroz, echo=FALSE, warning=FALSE, message=FALSE}
+library(dplyr)
+library(lubridate)
+library(readxl)
+library(knitr)
+library(kableExtra)
+
+arroz_df <- read_excel(path = here::here("data", "CEPEA_20201116161703.xls"), 
+                                   skip = 3)
+arroz_df$Data <- dmy(arroz_df$Data)
+
+arroz_res <- arroz_df %>% 
+  group_by(year(Data), month(Data)) %>% 
+  summarize(preco = mean(`À vista R$`)) %>% 
+  rename(Ano = `year(Data)`, Mes = `month(Data)`, Preco = preco) %>% 
+  filter(Ano %in% c(2020) & Mes %in% 3:6) %>% 
+  transform(Preco_kg = Preco/50, Quantidade = c(800, 1000, 900, 1050), Mes = paste("Mês", 0:3)) %>% 
+  transform(Valor_total = Quantidade * Preco_kg) %>% 
+  select(Mes, Quantidade, Preco_kg, Valor_total)
+
+arroz_res %>% 
+  kable(escape = F,
+        format = "pandoc",
+        align = 'c',
+        digits = c(0, 0, 2, 2),
+        caption = "Evolução das compras mensais de arroz",
+        col.names = c("Período ($t$)", "Quantidade ($kg$)", "Preço ($u.m./kg$)", "Valor total ($u.m.$)"),
+        format.args = list(decimal.mark = ",")) %>% 
+   footnote(general = "u.m. = unidade monetária.",
+           general_title = "Nota: ", 
+           footnote_as_chunk = T,
+           title_format = c("italic"))
+
+```
+
+\normalsize
+
+\framebreak
+
+- Se desejarmos saber qual a evolução da quantidade, do preço e do valor total gasto em arroz com base de comparação o mês 0, basta tomarmos como divisor os respectivos valores do mês zero.
+
+::: {.block}
+
+### Relativos (notação)
+
+- Utilizaremos a notação \structure{$p_t$ ($q_t$, $v_t$)} para indicar o \structure{preço (quantidade, valor)} no período \structure{$t$}.
+    + Assim, o __relativo__ do preço __(quantidade, valor)__ pode ser definido como \structure{$p_t/p_0$ ($q_t/q_0$, $v_t/v_0$)} quando o período base for o período \structure{$t = 0$}.
+- Por convenção, os resultados são multiplicados por 100.
+
+:::
+
+\framebreak
+
+\footnotesize
+
+```{r serie_relativos, echo=FALSE, warning=FALSE, message=FALSE}
+
+arroz_res %>%
+  transform(Quantidade = Quantidade / Quantidade[1] * 100,
+            Preco_kg = Preco_kg / Preco_kg[1] * 100,
+            Valor_total = Valor_total / Valor_total[1] * 100) %>%
+  kable(escape = F,
+        format = "pandoc",
+        align = 'c',
+        digits = c(0, 1, 2, 2),
+        format.args = list(decimal.mark = ","),
+        caption = "Evolução das compras mensais de arroz (relativos ao mês 0)",
+        col.names = c("Período ($t$)", "Quantidade", "Preço", "Valor total"))
+```
+
+\normalsize
+
+\framebreak
+
+- A interpretação dos números apresentados na tabela acima é direta.
+- Assim, se considerarmos a coluna referente a quantidade:
+    + o número 125 significa que houve 25% de aumento (1,25 - 1,00 = 0,25) na compra de arroz no mês 1 relativamente ao mês 0;
+    + no mês 2 verificamos 12,5% de aumento com relação ao mês 0, e assim por diante
+    + __sua vez:__ qual a variação percentual do mês 3 em relação ao mês 0?
+
+\framebreak
+
+- __Exemplo (conjunto de produtos):__ considere cinco produtos usualmente consumidos por uma pessoa.
+    + Os preços vigentes em dois períodos distintos de tempo estão apresentados na tabela a seguir.
+
+\footnotesize
+
+```{r cinco_produtos, echo=FALSE, warning=FALSE, message=FALSE}
+
+prod <- c("Arroz (kg)", "Leite (L)", "Pão francês (u)", "Cigarro (maço)", "Cerveja (garrafa)")
+mes0 <- c(1.98, 1.99, 0.9, 7, 5.99)
+mes1 <- c(2.1, 2.08, 0.95, 7.50, 6.99)
+
+cinco_df <- data.frame(prod, mes0, mes1)
+
+cinco_df %>%
+  kable(escape = F,
+        format = "pandoc",
+        align = 'c',
+        digits = c(0, 2, 2),
+        format.args = list(decimal.mark = ","),
+        caption = "Preços vigentes de cinco produtos",
+        col.names = c("Produtos", "Mês 0 ($u.m.$)", "Mês 1 ($u.m.$)"))
+```
+
+\normalsize
+
+- Se desejamos saber qual foi a __variação de preços__ de um período com relação ao outro, duas soluções são possíveis e serão apresentadas nas próximas duas seções.
+
+# Índice agregativo simples {.allowframebreaks}
+
+- Representando por \structure{$p_0^i$} e \structure{$p_1^i$} os preços do produto \structure{$i$ ($i = 1, 2, \ldots, n$)}, respectivamente, no __período 0 (período-base)__ e __1 (período atual)__^[Se o produto 1 representa o arroz, então $p_0^1 = 0,87$ e $p_0^1 = 1,02$; se o produto 2 é o leite, então $p_0^2 = 0,62$ e $p_0^2 = 0,65$; e assim respectivamente para os demais produtos.], a expressão formal do __índice agregativo simples__ (também conhecido como \structure{Índice de Dutot}) é:
+
+$$
+I_{01}^{as} = \frac{\sum_{i=1}^n{p_1^i}}{\sum_{i=1}^n{p_0^i}},
+$$
+ou seja, somamos os preços dos produtos, sem ponderações, tanto para o período-base como para o período atual, e dividimos um pelo outro^[Note que $I_{01}^{as}$ é o __relativo das médias__ de preços do mês 1 com respeito ao mês 0.].
+
+## Índice agregativo simples {.allowframebreaks}
+
+- Aplicando a fórmula do $I^{as}$ aos valores dos preços dos cinco produtos, temos que $\sum_{i=1}^5{p_0^i} = 17,86$ e $\sum_{i=1}^5{p_1^i} = 19,62$, e o portanto, o índice agregativo simples é:
+
+$$
+I_{01}^{as} = \frac{17,86}{19,62} = 1,10,
+$$
+isto é, os preços do conjunto de cinco produtos apresentados no último exemplo acusaram 10% de aumento no mês atual com relação ao mês-base.
+
+\framebreak
+
+- Note que o $I^{as}$ é influenciado pela unidade de medida que estão expressos os preços.
+- Se substituirmos apenas o preço da cerveja em u.m. por meia garrafa, teremos 2,99 u.m. para o mês 0 e 3,49 u.m. para o mês 1.
+- Mantendo os mesmos preços para os demais produtos, o $I^{as}$ é:
+
+$$
+I_{01}^{as} = \frac{14,87}{16,13} = 1,08.
+$$
+
+- Notamos que o aumento apurado é 8% no mês atual com relação ao mês-base.
+
+# Índice de preços de Sauerbeck {.allowframebreaks}
+
+- A influência pela unidade de medida expressa no preço no índice agregativo simples é sanada pelo __índice de preços de Sauerbeck__.
+- Este nada mais que a __média (aritmética simples) dos relativos__ de preços. Portanto temos:
+
+$$
+I_{01}^S = \frac{1}{n}\sum_{i=1}^n{\left(\frac{p_1^i}{p_0^i}\right)}.
+$$
+
+\framebreak
+
+- Na tabela a seguir calculamos os relativos dos preços do mês 1 em relação ao mês 0 para cada um dos cinco produtos do exemplo apresentado anteriormente.
+
+\footnotesize
+
+```{r cinco_relativos, echo=FALSE, warning=FALSE, message=FALSE}
+
+cinco_df <- cinco_df %>% 
+  transform(rel = mes1/mes0)
+
+cinco_df %>% 
+  kable(escape = F,
+        format = "pandoc",
+        align = 'c',
+        digits = c(0, 2, 2, 3),
+        format.args = list(decimal.mark = ","),
+        caption = "Relativos de preços (cinco produtos)",
+        col.names = c("Produtos", "Mês 0 ($u.m.$)", "Mês 1 ($u.m.$)", "$p_1^i/p_0^i$"))
+```
+
+\normalsize
+
+\framebreak
+
+- Aplicando a fórmula do Índice de preços de Sauerbeck aos relativos de preços da última coluna da tabela acima, obtemos:
+
+$$
+I_{01}^S = \frac{5,4}{5} = 1,08,
+$$
+isto é, o aumento médio dos preços dos cinco produtos foi da ordem de 8% no mês atual relativamente ao mês-base.
+
+\framebreak
+
+### Observações
+
+- O índice de preços de Sauerbeck não é afetado pelas unidades de medidas em que estão expressos os preços
+    + __Sua vez:__ recalcule o $I^S_{01}$ utilizando o preço referente a meia garrafa de cerveja.
+- Todos os produtos têm a mesma importância relativa dentro do conjunto de bens e serviços no cálculo do $I^S_{01}$.
+- Poderemos obter diferentes resultados se utilizarmos outros conceitos de média.
+    + __Sua vez:__ calcule a média harmônica ($H_{01}$) e a média geométrica ($G_{01}$) dos relativos de preços dos cinco produtos do exemplo. Utilize quatro casas decimais para concluir que $H_{01} \leq G_{01} \leq I^S_{01}$.
+    
+## Próxima aula
+
+- Principais fórmulas de cálculo de números índices.
+
+## Por hoje é só!
+
+\begin{center}
+{\bf Bons estudos!}
+\end{center}
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='50%', out.height='50%', paged.print=FALSE, purl=FALSE}
+
+knitr::include_graphics(here::here('images', 'Statistically-Insignificant-final05.jpg'))
+
+```
+
