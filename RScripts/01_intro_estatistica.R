@@ -6,6 +6,7 @@ library(jpeg)
 library(grid)
 library(gapminder)
 library(dplyr)
+library(ggplot2)
 
 gapminder <- gapminder %>%
   mutate(pop_m = pop/1e6)

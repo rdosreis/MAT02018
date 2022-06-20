@@ -10,12 +10,16 @@ institute: |
   | \textsc{Instituto de Matemática e Estatística}
   | \textsc{Departamento de Estatística}
 date: |
-  | Porto Alegre, 2021
-header-includes:
-  - \titlegraphic{\hfill\includegraphics[height=1.5cm]{logos/Logo-40-anos-estatistica.png}}
+  | Porto Alegre, 2022
 ---
 
 # Introdução
+
+## Dados $\leadsto$ Conhecimento
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'dicing_with_death.jpg'))
+```
 
 ## Dados $\leadsto$ Conhecimento
 
@@ -43,21 +47,58 @@ header-includes:
 <!-- knitr::include_graphics(here::here('images', 'Data-Wisdom.jpg')) -->
 <!-- ``` -->
 
-## O Método Científico
+## O Método Científico {.allowframebreaks}
 
 - De modo bem geral, podemos dizer que a essência da Ciência é a __observação__ e que seu objetivo básico é a __inferência__.
+    - Os cientistas (sociais ou físicos) geralmente fazem uso do \structure{método científico} nas suas tentativas de compreender o mundo.
 
-```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='70%', out.height='70%',  paged.print=FALSE, purl=FALSE}
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='60%', out.height='60%',  paged.print=FALSE, purl=FALSE}
 knitr::include_graphics(here::here('images', 'metodo.png'))
 ```
 
-## O Método Científico
+\framebreak
 
-- De modo bem geral, podemos dizer que a essência do Aprendizado (da Evolução).
+Suponha que estamos interessados em descrever e explicar o __padrão dos casos de câncer__ em uma área metropolitana.
 
-```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='50%', out.height='70%', paged.print=FALSE, purl=FALSE}
-knitr::include_graphics(here::here('images', 'metodo_cientifico_bebes.png'))
+1. Observação/registro dos casos;
+2. Descrição do padrão por meio da apresentação dos casos em um mapa.
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='50%',  paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'mapa_casos.jpg'))
 ```
+
+\framebreak
+
+3. O que explica o resultado observado?
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='50%',  paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'mapa_clusters.jpg'))
+```
+
+4. Formulação de hipóteses/modelos explicativos.
+
+\framebreak
+
+(Exemplo) *Hipótese:* o padrão de casos de câncer está relacionado à distância das usinas de energia locais.
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='50%',  paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'cancer_distancia.png'))
+```
+
+5. Os dados fornecem evidências para avaliarmos as hipóteses formuladas.
+6. A partir desta avaliação, modelos e hipóteses podem ser reconsiderados, ou conclusões teóricas podem ser elaboradas.
+
+\framebreak
+
+- Os métodos estatísticos ocupam um papel central no método científico, como visto no exemplo dos casos de câncer, pois nos permitem __sugerir__ e __testar__ hipóteses.
+
+<!-- ## O Método Científico -->
+
+<!-- - De modo bem geral, podemos dizer que a essência do Aprendizado (da Evolução). -->
+
+<!-- ```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='50%', out.height='70%', paged.print=FALSE, purl=FALSE} -->
+<!-- knitr::include_graphics(here::here('images', 'metodo_cientifico_bebes.png')) -->
+<!-- ``` -->
 
 
 # A Estatística
@@ -162,6 +203,8 @@ knitr::include_graphics(here::here('images', 'livros-hist.jpg'))
 knitr::include_graphics(here::here('images', 'Descritiva_Inferencia.png'))
 ```
 
+# A Estatística Descritiva
+
 ## O que é a estatística descritiva?
 
 - A __Estatística Descritiva__ corresponde aos procedimentos relacionados com a \structure{coleta}, \structure{elaboração}, \structure{tabulação}, \structure{análise}, \structure{interpretação} e \structure{apresentação} dos \structure{dados}.
@@ -202,6 +245,7 @@ library(jpeg)
 library(grid)
 library(gapminder)
 library(dplyr)
+library(ggplot2)
 
 gapminder <- gapminder %>%
   mutate(pop_m = pop/1e6)
@@ -242,6 +286,8 @@ p <- ggplot(data = gapminder07,
 p
 ```
 
+# Conceitos básicos: introdução aos delineamentos de estudos
+
 ## Unidades experimentais e observacionais
 
 - __Unidade experimental__ ou __unidade de observação__ é a menor unidade a fornecer informação.
@@ -274,9 +320,10 @@ knitr::include_graphics(here::here('images', 'smokingAndLungCancer2.jpg'))
 
 ## Para casa
 
-1. Elabore uma questão de pesquisa de seu interesse (como você imagine ser possível de responder através da coleta/organização/análise de dados).
-2. Apresente a sua questão no Fórum Geral do Moodle.
-3. Discuta a respeito da sua questão de pesquisa com os colegas. Discuta as questões apresentadas pelos colegas.
+- Ler o capítulo 1 do livro _"Uma Senhora Toma Chá"_ \structure{(Moodle)}.
+<!-- 1. Elabore uma questão de pesquisa de seu interesse (como você imagine ser possível de responder através da coleta/organização/análise de dados). -->
+<!-- 2. Apresente a sua questão no Fórum Geral do Moodle. -->
+<!-- 3. Discuta a respeito da sua questão de pesquisa com os colegas. Discuta as questões apresentadas pelos colegas. -->
 
 ## Próxima aula
 

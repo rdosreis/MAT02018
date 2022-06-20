@@ -51,7 +51,7 @@ knitr::include_graphics(here::here('images', 'hi_my_name_is.png'))
 
 - __Disciplina:__ Estatística Descritiva
 - __Turma:__ U
-- __Modalidade:__ Ensino remoto emergencial \structure{(Moodle)}
+- __Modalidade:__ Ensino presencial
 - __Professor:__ Rodrigo Citton Padilha dos Reis
     + e-mail: `citton.padilha@ufrgs.br` ou `rodrigocpdosreis@gmail.com` 
     + Sala: B215 do Instituto de Matemática e Estatística

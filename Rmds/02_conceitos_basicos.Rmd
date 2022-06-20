@@ -10,9 +10,7 @@ institute: |
   | \textsc{Instituto de Matemática e Estatística}
   | \textsc{Departamento de Estatística}
 date: |
-  | Porto Alegre, 2021
-header-includes:
-  - \titlegraphic{\hfill\includegraphics[height=1.5cm]{logos/Logo-40-anos-estatistica.png}}
+  | Porto Alegre, 2022
 ---
 
 # Conceitos básicos
@@ -193,13 +191,13 @@ Para uma consideração mais completa ver Vargas (2000)\footnote{Vargas, J. B. \
 - Como sua finalidade é representar a população, deseja-se que a amostra escolhida apresente as mesmas características da população de origem, isto é, que seja uma amostra __"representativa"__  ou __"não-tendenciosa"__.
 - Tanto o número de indivíduos selecionados para a amostra quanto a técnica de seleção são extremamente importantes para que os resultados obtidos no estudo sejam generalizados para a população.
 
-<!-- ## Amostra representativa -->
+## Amostra representativa
 
-<!-- ```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='65%', paged.print=FALSE, purl=FALSE} -->
-<!-- knitr::include_graphics(here::here('images', 'Gato_caindo.jpg')) -->
-<!-- ``` -->
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='65%', paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'Gato_caindo.jpg'))
+```
 
-<!-- - Ver a discussão sobre __representatividade da amostra__ na [apresentação](https://www.youtube.com/watch?v=TGGGDpb04Yc&t=592s) do __Prof. Chris Fonnesbeck__. -->
+- Ver a discussão sobre __representatividade da amostra__ na [apresentação](https://www.youtube.com/watch?v=TGGGDpb04Yc&t=592s) do __Prof. Chris Fonnesbeck__.
 
 ## Amostragem
 
@@ -278,16 +276,18 @@ knitr::include_graphics(here::here('images', 'SystematicSampling.jpg'))
 
 ## Para casa
 
-1. Com base na \structure{questão de pesquisa} elaborada no "para casa" anterior:
-    - Liste as variáveis que você teria interesse em coletar e analisar para responder a sua questão de pesquisa.
-    - Classifique as variáveis de acordo com a classificação discutida na aula de hoje.
-    - Discuta a respeito das suas variáveis com os colegas \structure{(no Fórum Geral do Moodle)}.
-2. Leia o \structure{Capítulo 3 - ``Fases do levantamento estatístico''} do livro \structure{Estatística descritiva I}\footnote{Fernandez, D. W. X. {\bf Estatística descritiva I}, Cadernos de matemática e estatística. Série B, 1994.}.
-3. Assistir o vídeo: \structure{Statistical Thinking for Data Science} (https://youtu.be/TGGGDpb04Yc; você pode configurar o vídeo para apresentar legendas traduzidas para o português).
 
+<!-- 1. Com base na \structure{questão de pesquisa} elaborada no "para casa" anterior: -->
+<!--     - Liste as variáveis que você teria interesse em coletar e analisar para responder a sua questão de pesquisa. -->
+<!--     - Classifique as variáveis de acordo com a classificação discutida na aula de hoje. -->
+<!--     - Discuta a respeito das suas variáveis com os colegas \structure{(no Fórum Geral do Moodle)}. -->
+<!-- 2. Leia o \structure{Capítulo 3 - ``Fases do levantamento estatístico''} do livro \structure{Estatística descritiva I}\footnote{Fernandez, D. W. X. {\bf Estatística descritiva I}, Cadernos de matemática e estatística. Série B, 1994.}. -->
+- Assistir o vídeo: \structure{Statistical Thinking for Data Science} (no Moodle ou em <https://youtu.be/TGGGDpb04Yc>; você pode configurar o vídeo para apresentar legendas traduzidas para o português).
+    + Leia a notícia sobre **quedas de gatos** na íntegra (Moodle).
+    
 ## Próxima aula 
 
-- Organização dos dados.
+- Fases do levantamento estatístico.
 
 ## Por hoje é só!
 
