@@ -1,0 +1,182 @@
+---
+title: "MAT02018 - Estatística Descritiva"
+subtitle: "Organização dos dados"
+fontsize: 10pt
+author: |
+  | Rodrigo Citton P. dos Reis
+  | `citton.padilha@ufrgs.br`
+institute: |
+  | \textsc{Universidade Federal do Rio Grande do Sul}
+  | \textsc{Instituto de Matemática e Estatística}
+  | \textsc{Departamento de Estatística}
+date: |
+  | Porto Alegre, 2022
+---
+
+# Introdução
+
+## Introdução
+
+- Agora que já discutimos alguns __conceitos básicos__ de estatística e as etapas gerais de um __levantamento estatístico__, vamos apresentar como é feito o __registro__ e a __organização de dados__ referentes a uma certa coleta de dados.
+- Começaremos com a __planilha__ para o registro dos dados e a __tabela de dados brutos__ resultante.
+- Logo em seguida, discutiremos como fazer a __apuração dos dados__. 
+
+# Coleta de dados
+
+## Coleta de dados {.allowframebreaks}
+
+::: {.block}
+### Lembrando
+
+A __estatística__ é a ciência que tem por objetivo orientar a _coleta_, o _resumo_, a _apresentação_, a _análise_ e a _interpretação_ de dados.
+:::
+
+- Para __coletar dados__, o pesquisador necessitará armazenar os dados coletados em algum lugar. 
+- Assim, se faz necessário organizar uma \structure{planilha}.
+
+## Coleta de dados {.allowframebreaks}
+
+- Com o advento da computação, grande parte dos profissionais da área de estatística registram dados em uma __planilha eletrônica__\footnote{Softwares como \emph{Calc} (OpenOffice), \emph{Microsoft Excel} (Office) e \emph{Google Sheets} (Google) são exemplos de \emph{softwares} que trabalham com planilhas eletrônicas.}.
+- No entanto, os dados também podem ser registrados em meio físico como, por exemplo, fichas, cadernos ou cadernetas, ou seja, a chamada __planilha física__.
+
+## Coleta de dados {.allowframebreaks}
+
+- As planilhas eletrônicas podem ser construídas a partir de planilhas físicas ou serem alimentadas por algum __instrumento de coleta__ em meio eletrônico (formulário ou questionário)\footnote{O \emph{Google Forms}, por exemplo, cria e alimenta uma planilha eletrônica a partir do formulário de coleta.}.
+- Vamos apresentar como se desenha uma planilha física para registro dos dados.
+- \structure{Se você tiver possibilidade, pode experimentar como organizar os dados em uma planilha eletrônica.}
+
+## Planilha {.allowframebreaks}
+
+- __Planilha__ é o documento que armazena os dados coletados, distribuindo-os em linhas e colunas (ou seja, planilhas são "matrizes de dados").
+- Em planilhas eletrônicas, geralmente, as linhas são numeradas e as colunas são indicadas por letras maiúsculas.
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='50%', out.height='50%',  paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'planilha_eletro.png'))
+```
+
+## Planilha {.allowframebreaks}
+
+__Exemplo:__ Um pesquisador está interessado em fazer um levantamento sobre alguns aspectos socioeconômicos dos empregados da seção de orçamentos da Companhia MB, um grupo de 15 pessoas\footnote{Morettin, P. A. e Bussab, W. O. {\bf Estatística Básica}, Saraiva, 2010.}.
+
+- Temos a seguinte planilha para registrar os dados do grupo.
+
+## Planilha {.allowframebreaks}
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='70%', out.height='70%',  paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'planilha_fisica.png'))
+```
+
+## Tabela de dados brutos {.allowframebreaks}
+
+- __Dados brutos__ são os dados na forma em que foram coletados, sem qualquer tipo de tratamento.
+- Após a coleta de dados, o pesquisador tem em sua planilha o registro dos dados brutos.
+
+\framebreak
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='70%', out.height='70%',  paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'dados_brutos.png'))
+```
+
+\framebreak
+
+- O que podemos falar sobre as variáveis coletadas?
+- Qual a informação podemos apresentar sobre os dados coletados?
+
+Para responder tais perguntadas, precisaremos __resumir__ os dados de alguma forma.
+
+# Apuração dos dados
+
+## Apuração dos dados {.allowframebreaks}
+
+- __Apuração__ é o processo de retirar os dados da planilha e organizá-los, para apresentação.
+
+No exemplo apresentado anteriormente, foram coletadas as seguintes variáveis: estado civil, grau de instrução, número de filhos, salário, idade e região de procedência. Note que estas são variáveis de diferentes tipos.
+
+- __Exercício:__ classifique cada uma destas variáveis em __qualitativa nominal__, __qualitativa ordinal__, __quantitativa discreta__ e __quantitativa contínua__.
+
+## Apuração de dados nominais {.allowframebreaks}
+
+- Se quisermos saber quantos solteiros e quantos casados trabalham na seção de orçamentos da Companhia MB devemos escrever os valores possíveis da variável __estado civil__\footnote{{\bf Pergunta:} a ordem de escrita dos valores possíveis da variável {\bf estado civil} importa? Por que?}.
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='70%',  paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'apura_0.png'))
+```
+
+## Apuração de dados nominais {.allowframebreaks}
+
+- Logo após, precisamos inspecionar cada registro da tabela de dados brutos e marcar um traço ao lado de __solteiro__, para cada indivíduo solteiro inspecionado, e um traço ao lado de __casado__ para cada indivíduo casado inspecionado.
+- A cada quatro traços, corta-se com um traço, e este conjunto representa uma contagem de cinco indivíduos\footnote{No inglês, \emph{tally marks} (marcas de registro).}.
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='70%', paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'apura_1.png'))
+```
+
+## Apuração de dados nominais {.allowframebreaks}
+
+- Desta forma, verificamos que na seção de orçamentos da Companhia MB trabalham oito solteiros e sete casados.
+- Duas outras formas alternativas de se fazer a apuração dos dados são apresentadas a seguir.
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='70%', paged.print=FALSE, purl=FALSE}
+library(cowplot)
+library(ggplot2)
+
+p1 <- ggdraw() + draw_image(here::here('images', 'apura_2.png'), scale = 0.9)
+p2 <- ggdraw() + draw_image(here::here('images', 'apura_3.png'), scale = 0.9)
+plot_grid(p1, p2)
+```
+
+\framebreak
+
+### Comentário
+
+É fácil apurar uma pequena massa de dados, como no caso do exemplo. Já uma grande massa de dados tornará a tarefa difícil e entediante. Além disso, com um grande volume de dados, a __probabilidade__ de incorrermos em erros aumenta! Necessitaremos do auxílio de __pacotes estatísticos__!
+
+## Apuração de dados ordinais {.allowframebreaks}
+
+- Para apurar dados de grau de instrução (variável qualitativa ordinal), o procedimento é similar ao adotado para apurar dados nominais.
+- A diferença é que, para dados ordinais, __impõe-se uma ordem__.
+    + Contudo, a apuração se faz por contagem.
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='70%',  paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'apura_4.png'))
+```
+
+## Apuração de dados discretos {.allowframebreaks}
+
+- Para apurar o número de filhos (variável quantitativa discreta), também devemos fazer uma contagem.
+- Escrevemos os resultados respeitando a ordem numérica.
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='70%',  paged.print=FALSE, purl=FALSE}
+knitr::include_graphics(here::here('images', 'apura_5.png'))
+```
+
+## Apuração de dados contínuos {.allowframebreaks}
+
+- Em geral, os dados contínuos são apresentados na forma como foram coletados, porque assumem valores diferentes, mesmo em amostras pequenas.
+- É o caso da variável idade no exemplo considerado: os empregados da seção de orçamentos da Companhia MB tinham idades diferentes.
+- No entanto, é possível organizar as idades por __faixas__, como veremos nas aulas seguintes. 
+
+## Para casa
+
+1. Construa a planilha para o registro do levantamento dos dados planejado nas aulas anteriores.
+2. Faça uma pequena coleta de dados incluindo pelo menos uma variável de cada tipo (_qualitativa nominal_, _qualitativa ordinal_, _quantitativa discreta_ e _quantitativa contínua_).
+    1. Organize uma planilha (física ou eletrônica) para o registro dos dados coletados.
+    2. Faça a coleta e preencha a planilha para obter os dados brutos.
+    3. Faça a apuração dos dados e comente brevemente sobre os resultados encontrados.
+
+## Próxima aula 
+
+- Introdução ao `R`.
+
+## Por hoje é só!
+
+\begin{center}
+{\bf Bons estudos!}
+\end{center}
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='50%', out.height='50%', paged.print=FALSE}
+
+knitr::include_graphics(here::here('images', 'Statistically-Insignificant-bolha.jpg'))
+
+```
+
