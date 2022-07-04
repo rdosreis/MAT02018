@@ -1,0 +1,311 @@
+---
+title: "MAT02018 - Estatística Descritiva"
+subtitle: "Distribuição de Frequências: `R`, construção de tabelas e um minuto de história"
+fontsize: 10pt
+author: |
+  | Rodrigo Citton P. dos Reis
+  | `citton.padilha@ufrgs.br`
+institute: |
+  | \textsc{Universidade Federal do Rio Grande do Sul}
+  | \textsc{Instituto de Matemática e Estatística}
+  | \textsc{Departamento de Estatística}
+date: |
+  | Porto Alegre, 2022
+---
+
+# Complementa`R`
+
+## Complementa`R` {.allowframebreaks}
+
+- Nesta aula são apresentadas algumas poucas funções em `R` relacionadas a discussão das nossas aulas de \structure{Distribuição de Frequências}.
+- Para tal, vamos utilizar o exemplo original de __Bussab e Moretin (2010)__\footnote{Bussab, W. O e Morettin, P. A. {\bf Estatística Básica}, Saraiva, 2010.} sobre os dados dos empregados da seção de orçamentos da Companhia MB. 
+
+## Complementa`R` {.allowframebreaks}
+
+- A planilha eletrônica correspondente encontra-se no arquivo `companhia_mb.xlsx` \structure{(no Moodle)}.
+- Vamos começar __carregando os dados__ para o `R`.
+    + Existem __várias formas__ de se carregar diferentes __arquivos de dados__ no `R`.
+    + Como arquivo de interesse encontra-se no formato do __Excel (xlsx)__, vamos utilizar a função `read_excel` do pacote `readxl`.
+    + Caso você não tenha o pacote, instale-o: `install.packages("readxl")`.
+
+## Complementa`R` {.allowframebreaks}
+
+```{r carrega-dados0, echo=TRUE, eval=FALSE, warning=FALSE, message=FALSE}
+# install.packages("readxl")
+library(readxl)
+
+dados <- read_excel(path = "companhia_mb.xlsx")
+```
+
+```{r carrega-dados1, echo=FALSE, warning=FALSE, message=FALSE, purl=FALSE}
+# install.packages("readxl")
+library(readxl)
+
+dados <- read_excel(path = here::here("data", "companhia_mb.xlsx"))
+```
+
+```{r carrega-dados2, warning=FALSE, message=FALSE}
+class(dados) # classe do objeto dados
+dim(dados) # dimensão do objeto dados
+```
+
+\framebreak
+
+- Note que o objeto `dados` é uma tabela de dados bruto.
+
+\footnotesize
+
+```{r carrega-dados3, warning=FALSE, message=FALSE}
+head(dados) # apresenta as primeiras linhas do objeto dados
+```
+
+\framebreak
+
+\normalsize
+
+- A função `table` retorna contagens dos valores de cada variável, e portanto, podemos utilizar esta função para a apuração dos dados, bem como para computar as frequências.
+
+\footnotesize
+
+```{r freqs, warning=FALSE, message=FALSE}
+table(dados$`Estado Civil`)
+table(dados$`Grau de Instrução`)
+table(dados$`N de Filhos`)
+```
+
+\framebreak
+
+\normalsize
+
+- A função `cut` pode ser utilizada para criar uma nova variável que expressa a antiga variável em classes.
+
+```{r freqs2, warning=FALSE, message=FALSE}
+dados$Idade.classes <- cut(x = dados$Idade,
+                           breaks = c(20, 29, 39, 49),
+                           include.lowest = TRUE,
+                           right = FALSE)
+
+table(dados$Idade.classes)
+```
+
+- Para casa: especifique de diferentes formas os argumentos `breaks`, `include.lowest`, `right` da função `table` e a avalie os seus resultados.
+
+\framebreak
+
+- Uma forma de calcular as frequência relativas é dividindo o __vetor__ de frequências pelo tamanho da amostra (ou conjunto de dados). 
+
+```{r freqs3, warning=FALSE, message=FALSE}
+table(dados$`Estado Civil`) / 36
+table(
+  dados$`Grau de Instrução`)/length(dados$`Grau de Instrução`
+                                    )
+```
+
+\framebreak
+
+- Uma outra forma de se obter as frequências relativas é utilizando a função `prop.table`.
+
+```{r freqs4, warning=FALSE, message=FALSE}
+prop.table(x = table(dados$`N de Filhos`))
+```
+
+\framebreak
+
+- Para obter as porcentagens, basta multiplicar as frequências relativas por 100.
+
+```{r porcentagem, warning=FALSE, message=FALSE}
+prop.table(x = table(dados$Idade.classes)) * 100
+```
+
+- Se você quiser, pode arredondar os resultados com a função `round`.
+
+```{r porcentagem2, warning=FALSE, message=FALSE}
+round(x = prop.table(x = table(dados$Idade.classes)) * 100,
+      digits = 2)
+```
+
+\framebreak
+
+- As frequências acumuladas podem ser obtidas com uma função de somas cumulativas, a função `cumsum`.
+
+```{r freqcum, warning=FALSE, message=FALSE}
+cumsum(x = table(dados$`Grau de Instrução`))
+cumsum(x = prop.table(x = table(dados$`Grau de Instrução`)))
+```
+
+\framebreak
+
+```{r freqcum2, warning=FALSE, message=FALSE}
+cumsum(x = prop.table(x = table(dados$`N de Filhos`)) * 100)
+cumsum(
+  round(
+  prop.table(x = table(dados$Idade.classes)) * 100,
+  digits = 2))
+```
+
+\framebreak
+
+- Você pode juntar as frequências absolutas, relativas, acumuladas e porcentagens em um `data.frame` para apresentar em forma de tabela.
+
+\footnotesize
+
+```{r freqtab, warning=FALSE, message=FALSE}
+df.freq <- data.frame(
+  Idade = unique(dados$Idade.classes),
+  Freq = as.numeric(table(dados$Idade.classes)),
+  FreqRel = as.numeric(prop.table(table(dados$Idade.classes))),
+  Porcentagem = as.numeric(prop.table(table(dados$Idade.classes)) * 100),
+  FreqAcumulada = as.numeric(cumsum(table(dados$Idade.classes))),
+  FreqRelAcumulada = as.numeric(cumsum(prop.table(table(dados$Idade.classes)))))
+```
+
+\framebreak
+
+\footnotesize
+
+```{r freqtabprint, warning=FALSE, message=FALSE}
+df.freq
+```
+
+\framebreak
+
+\normalsize
+
+- Existem outras formas de construir uma tabela de frequências.
+- Uma delas é utilizando a função `freq` do pacote `summarytools`.
+
+\scriptsize
+
+```{r freqtab2, warning=FALSE, message=FALSE}
+# install.packages("summarytools")
+
+summarytools::freq(dados$`Grau de Instrução`)
+
+```
+
+# Construção de tabelas
+
+## Construção de tabelas
+
+- Nesta seção são apresentadas as normas que devem ser seguidas na elaboração de tabelas.
+- Tais normas devem ser empregadas em relatórios, documentos acadêmicos, científicos, etc.
+- Estas normas são apresentadas na publicação \structure{Normas de apresentação tabular (IBGE, 1993)}, que encontra-se no Moodle.
+
+## Tabelas
+
+- __Tabela__ é uma forma não discursiva de apresentar informações, das quais o dado numérico se destaca como informação central.
+
+```{r fig-tabela, fig.align='center',cache=TRUE, message=FALSE, echo=FALSE, out.width="85%", purl=FALSE}
+knitr::include_graphics(here::here('images', 'tabelas_construcao', 'tabs_construcao_1.png'))
+```
+
+## Principais elementos das tabelas {.allowframebreaks}
+
+- __Número__ é o identificador numérico da tabela, em um conjunto de tabelas.
+    + Deve ser dado em algarismos arábicos e deve suceder a palavra __Tabela__.
+- __Título__ explica o tipo de dado que a tabela contém.
+    + Deve ser colocado acima dos dados, sem ponto final.
+- __Cabeçalho__ especifica o conteúdo de cada coluna.
+- __Indicador de linha__ especifica o conteúdo de cada linha.
+- __Dado numérico__ é a quantificação do fato observado.
+- __Moldura__ é o conjunto de traços que dão estrutura aos dados numéricos e aos termos necessários à sua compreensão.
+
+\framebreak
+
++ Tabelas devem ser delimitadas, no alto e embaixo, por traços horizontais.
++ Tabelas __não__ devem ser delimitadas, à direita e à esquerda, por traços verticais.
++ O cabeçalho deve ser delimitado por traços horizontais.
++ Para maior clareza, podem ser feitos traços verticais no interior da tabela separando as colunas.
++ Podem ser feitos traços verticais no interior do cabeçalho para separar o que as colunas contém.
+    
+\framebreak
+
+```{r fig-moldura, fig.align='center', cache=TRUE, message=FALSE, echo=FALSE, out.width="100%", purl=FALSE}
+
+knitr::include_graphics(here::here('images', 'tabelas_construcao', 'tabs_construcao_3.png'))
+
+```
+
+\framebreak
+
+- __Célula__ é o espaço na tabela resultante do cruzamento de uma linha com uma coluna.
+    + Nenhuma célula deveria ficar em branco. Quando, por algum motivo, a célula não apresenta um dado numérico, esta não deve ficar em branco. Neste caso, são recomendados os sinais convencionais propostos pelo IBGE, tais como:
+        - ".." Nãos se aplica dado numérico.
+        - "..." Dado numérico não disponível.
+        - "x" Dado omitido a fim de evitar a individualização da informação.
+        - "0"; "0,0"; "0,00" Dado numérico igual a zero resultante de arredondamento de um dado numérico originalmente positivo.
+
+\framebreak
+
+```{r fig-elementos_tab, fig.align='center', cache=TRUE, echo=FALSE, out.width="100%", purl=FALSE}
+
+knitr::include_graphics(here::here('images', 'tabelas_construcao', 'tabs_construcao_2.png'))
+
+```
+
+## Elementos eventuais {.allowframebreaks}
+
+- __Fonte__ identifica a pessoa física ou jurídica responsável pelos dados.
+    - A fonte deve ser colocada na primeira linha do rodapé da tabela, precedida da palavra __Fonte__.
+    - __Não__ se indica a fonte nos casos em que os dados foram obtidos pelo pesquisador, ou pelo grupo de pesquisadores, ou pela instituição que apresenta a tabela.
+- __Notas__ são informações de natureza geral que servem para esclarecer o conteúdo das tabelas ou para explicar o método utilizado no levantamento dos dados.
+    - As notas devem ser colocadas no rodapé da tabela, logo após a fonte e numeradas, se for o caso.
+
+\framebreak
+
+```{r fig-elementos_tab2, fig.align='center', cache=TRUE, echo=FALSE, out.width="100%", purl=FALSE}
+
+knitr::include_graphics(here::here('images', 'tabelas_construcao', 'tabs_construcao_4.png'))
+
+```
+
+# Um minuto de história {.allowframebreaks}
+
+- No livro __"The Seven Pillars of Statistical Wisdom"__, Stephen M. Stigler apresenta __sete ideias básicas de estatística__ que foram revolucionárias quando introduzidas, e que permanecem como um avanço conceitual importante e profundo.
+    + Segundo o autor, estas ideias básicas articulam o __núcleo intelectual central do raciocínio estatístico__. 
+- A primeira das sete ideias básicas apresentada no livro é a __agregação__, ou seja, a __compactação__/__redução__ dos dados para gerar informação. O que o autor nos mostra é que este princípio (o resumo estatístico) é tão antigo quanto a escrita.
+
+\framebreak
+
+- A seguir são apresentadas uma __tabuleta de argila suméria datada de cerca de 3000 aC__, uma reconstrução de uma destas tabuletas com números modernos.
+    + A tabuleta apresenta contagens (frequências) de dois tipos de mercadoria, possivelmente o rendimento de duas safras em três anos.
+
+\framebreak
+
+```{r fig-sumerian, fig.align='center', cache=TRUE, echo=FALSE, out.width="100%", purl=FALSE}
+
+knitr::include_graphics(here::here('images', 'tabelas_construcao', 'Sumerian_tablet.png'))
+
+```
+
+\framebreak
+
+- Versão moderna da tabuleta de argila suméria.
+
+```{r fig-sumerian2, fig.align='center', cache=TRUE, message=FALSE, echo=FALSE, out.width="100%", purl=FALSE}
+
+knitr::include_graphics(here::here('images', 'tabelas_construcao', 'sumerian_tablet_2.png'))
+
+```
+
+## Para casa
+
+1. Resolver os exercícios do Capítulo 4.6 do livro __Fundamentos de Estatística__\footnote{Vieira, S. {\bf Fundamentos de Estatística}, Atlas, 2019, pg. 39-40.} (disponível no Sabi+).
+2. Para o seu levantamento estatístico, monte um pequeno relatório de pesquisa apresentando tabelas de resultados. Utilize os passos de construção de tabelas apresentados nesta aula. Compartilhe no Fórum Geral do Moodle.
+
+## Próxima aula 
+
+- Avaliação I.
+
+## Por hoje é só!
+
+\begin{center}
+{\bf Bons estudos!}
+\end{center}
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='50%', out.height='50%', paged.print=FALSE}
+
+knitr::include_graphics(here::here('images', 'Statistically-Insignificant-mickey.jpg'))
+
+```
+
