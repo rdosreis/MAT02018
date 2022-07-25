@@ -10,12 +10,10 @@ institute: |
   | \textsc{Instituto de Matemática e Estatística}
   | \textsc{Departamento de Estatística}
 date: |
-  | Porto Alegre, 2021
+  | Porto Alegre, 2022
 bibliography: estatistica-descritiva.bib
 csl: associacao-brasileira-de-normas-tecnicas-ufrgs-initials.csl
 link-citations: yes
-header-includes:
-  - \titlegraphic{\hfill\includegraphics[height=1.5cm]{logos/Logo-40-anos-estatistica.png}}
 ---
 
 # Introdução
@@ -48,7 +46,7 @@ Os gráficos estatísticos devem ter:
 
 ## Gráfico de barras {.allowframebreaks}
 
-- Podemos construir um \structure{gráficos de barras}\footnote{Algumas referências fazem a distinção entre {\bf gráfico de barra} e {\bf gráfico de colunas}, em que o gráfico de barras refere-se a posição horizontal das barras e gráfico de colunas refere-se ao gráfico com barras verticais. Aqui trataremos os ``dois'' gráficos como {\bf gráfico de barras}.} para apresentar \structure{dados qualitativos} que estão em uma \structure{tabela de distribuição de frequências}. 
+- Podemos construir um \structure{gráfico de barras}\footnote{Algumas referências fazem a distinção entre {\bf gráfico de barra} e {\bf gráfico de colunas}, em que o gráfico de barras refere-se a posição horizontal das barras e gráfico de colunas refere-se ao gráfico com barras verticais. Aqui trataremos os ``dois'' gráficos como {\bf gráfico de barras}.} para apresentar \structure{dados qualitativos} que estão em uma \structure{tabela de distribuição de frequências}. 
 - Cada categoria da variável é representada na forma de uma \structure{barra} __(um retângulo)__.
 
 ## Gráfico de barras {.allowframebreaks}
@@ -118,7 +116,7 @@ knitr::include_graphics(here::here('images', 'plano-cartesiano.jpg'))
 5. Desenhe as barras (retângulos) com bases nas abscissas e alturas dadas pelas frequências de cada categoria da variável Grau de Instrução.
 6. Coloque legendas nos eixos, título no gráfico e fonte, quando houver.
 
-- É possível desenhar linhas auxiliares (grades) no interior do gráfico para facilitar a leitura das alturas das barras.
+- É possível desenhar linhas auxiliares __(grades)__ no interior do gráfico para facilitar a leitura das alturas das barras.
 
 ## Gráfico de barras {.allowframebreaks}
 
@@ -132,7 +130,7 @@ knitr::include_graphics(here::here('images', 'quadro_preto.jpg'))
 
 \framebreak
 
-- O gráfico de barras também pode ser utilizado para apresentar as frequências relativas (ou porcentagens) de um conjunto de dados referentes a uma variável.
+- O gráfico de barras também pode ser utilizado para apresentar as __frequências relativas__ (ou __porcentagens__) de um conjunto de dados referentes a uma variável.
 
 ```{r fig-barras2, echo=FALSE, warning=FALSE, message=FALSE, out.width="80%", fig.align='center'}
 
@@ -154,7 +152,7 @@ p.barras
 
 \framebreak
 
-- Uma forma de auxiliar o leitor na identificação das frequências é apresentar os valores destas no topo das barras\footnote{Em alguns casos, os valores das frequências são apresentados dentro das barras.}.
+- Uma forma de auxiliar o leitor na identificação das frequências é __apresentar os valores__ destas no topo das barras\footnote{Em alguns casos, os valores das frequências são apresentados dentro das barras.}.
 
 ```{r fig-barras3, echo=FALSE, warning=FALSE, message=FALSE, out.width="80%", fig.align='center'}
 
@@ -179,7 +177,7 @@ p.barras
 
 ## Gráfico de barras {.allowframebreaks}
 
-- Quando as categorias da variável tiverem nomes extensos, ou a variável apresentar muitas categorias, é conveniente apresentar o gráfico de barras na posição horizontal.
+- Quando as categorias da variável tiverem __nomes extensos__, ou a variável apresentar __muitas categorias__, é conveniente apresentar o \structure{gráfico de barras na posição horizontal}.
 
 ```{r fig-barras4, echo=FALSE, warning=FALSE, message=FALSE, out.width="65%", out.height='65%', fig.align='center'}
 
@@ -204,7 +202,7 @@ p.barras
 
 \framebreak
 
-Os passos para a construção do gráfico de barras na posição horizontal são semelhantes aos da construção do gráfico de barras na vertical:
+Os __passos para a construção do gráfico de barras na posição horizontal__ são semelhantes aos da construção do gráfico de barras na vertical:
 
 1. Trace o sistema de eixos cartesianos.
 2. Represente as categorias da variável em estudo na ordenada (eixo vertical).
@@ -212,7 +210,7 @@ Os passos para a construção do gráfico de barras na posição horizontal são
 4. Construa as barras: as bases ficam no eixo das ordenadas e os comprimentos devem ser iguais às frequências das categorias que elas representam.
 5. Escreva legendas, título e a fonte, se houver.
 
-- Outra possibilidade é representar as frequências por bastões (segmentos de reta), ou ainda por outras formas. Uma forma bastante utilizada é conhecida com \structure{gráfico pirulito}.
+- Outra possibilidade é representar as frequências por __bastões__ (segmentos de reta), ou ainda por outras formas. Uma forma bastante utilizada é conhecida com \structure{gráfico pirulito}.
 
 \framebreak
 

@@ -1,4 +1,4 @@
-## ----carrega-dados1, echo=FALSE, warning=FALSE, message=FALSE-------------------------------------------------------------
+## ----carrega-dados1, echo=FALSE, warning=FALSE, message=FALSE------------------------------------------------------------
 
 # install.packages("readxl")
 library(readxl)
@@ -23,7 +23,7 @@ dados$`Grau de Instrução` <- factor(dados$`Grau de Instrução`,
 
 
 
-## ----fig-barras1, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width='75%'---------------------------
+## ----fig-barras1, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width='75%'--------------------------
 
 library(ggplot2)
 
@@ -44,7 +44,7 @@ p.barras
 
 
 
-## ----fig-barras2, echo=FALSE, warning=FALSE, message=FALSE, out.width="80%", fig.align='center'---------------------------
+## ----fig-barras2, echo=FALSE, warning=FALSE, message=FALSE, out.width="80%", fig.align='center'--------------------------
 
 p.barras <- ggplot(data = dados, mapping = aes(x = `Grau de Instrução`)) +
   geom_bar(stat = "count",
@@ -62,7 +62,7 @@ p.barras
 
 
 
-## ----fig-barras3, echo=FALSE, warning=FALSE, message=FALSE, out.width="80%", fig.align='center'---------------------------
+## ----fig-barras3, echo=FALSE, warning=FALSE, message=FALSE, out.width="80%", fig.align='center'--------------------------
 
 p.barras <- ggplot(data = dados, mapping = aes(x = `Grau de Instrução`)) +
   geom_bar(stat = "count",
@@ -83,7 +83,7 @@ p.barras
 
 
 
-## ----fig-barras4, echo=FALSE, warning=FALSE, message=FALSE, out.width="65%", out.height='65%', fig.align='center'---------
+## ----fig-barras4, echo=FALSE, warning=FALSE, message=FALSE, out.width="65%", out.height='65%', fig.align='center'--------
 
 p.barras <- ggplot(data = dados, mapping = aes(x = `Grau de Instrução`)) +
   geom_bar(stat = "count",
@@ -104,7 +104,7 @@ p.barras
 
 
 
-## ----fig-barras5, echo=FALSE, warning=FALSE, message=FALSE, out.width="100%", fig.align='center'--------------------------
+## ----fig-barras5, echo=FALSE, warning=FALSE, message=FALSE, out.width="100%", fig.align='center'-------------------------
 
 library(dplyr)
 
@@ -130,7 +130,7 @@ p.barras
 
 
 
-## ---- echo=FALSE, message=FALSE, warning=FALSE----------------------------------------------------------------------------
+## ---- echo=FALSE, message=FALSE, warning=FALSE---------------------------------------------------------------------------
 
 library(janitor)
 
@@ -151,7 +151,7 @@ knitr::kable(df_regiao,
 
 
 
-## ----fig-variacoes-setores, echo=FALSE, warning=FALSE, message=FALSE, out.width="90%", fig.align='center'-----------------
+## ----fig-variacoes-setores, echo=FALSE, warning=FALSE, message=FALSE, out.width="90%", fig.align='center'----------------
 # 
 # p.setores <- ggplot(data = df_regiao, aes(x = "", y = freq, fill = `Região de Procedência`)) +
 #   geom_bar(stat = "identity", width = 1) +
