@@ -10,12 +10,10 @@ institute: |
   | \textsc{Instituto de Matemática e Estatística}
   | \textsc{Departamento de Estatística}
 date: |
-  | Porto Alegre, 2021
+  | Porto Alegre, 2022
 bibliography: estatistica-descritiva.bib
 csl: associacao-brasileira-de-normas-tecnicas-ufrgs-initials.csl
 link-citations: yes
-header-includes:
-  - \titlegraphic{\hfill\includegraphics[height=1.5cm]{logos/Logo-40-anos-estatistica.png}}
 ---
 
 # Apresentação gráfica de dados quantitativos
@@ -24,6 +22,34 @@ header-includes:
 
 - O \structure{diagrama de pontos} é usado para comparar as frequências de dados discretos, desde que \structure{em pequeno número}\footnote{Também pode ser usado para comparar frequências de categorias de dados qualitativos.}.
 - Utilizaremos os dados da variável \structure{``Número de filhos''} dos 36 empregados da seção de orçamentos da Companhia MB para exemplificarmos a construção do diagrama de pontos. A tabela de frequências é apresentada a seguir.
+
+```{r carrega-dados1, echo=FALSE, warning=FALSE, message=FALSE}
+
+# install.packages("readxl")
+library(readxl)
+library(stringr)
+library(janitor)
+library(dplyr)
+library(ggplot2)
+
+dados <- read_excel(path = here::here("data", "companhia_mb.xlsx"))
+
+set.seed(123)
+
+dados$`Grau de Instrução`[dados$`Grau de Instrução` == "ensino fundamental"] <- sample(x = c("fundamental incompleto", "fundamental completo"), size = length(dados$`Grau de Instrução`[dados$`Grau de Instrução` == "ensino fundamental"]), replace = T)
+
+dados$`Grau de Instrução`[dados$`Grau de Instrução` == "ensino médio"] <- sample(x = c("médio incompleto", "médio completo"), size = length(dados$`Grau de Instrução`[dados$`Grau de Instrução` == "ensino médio"]), replace = T)
+
+dados$`Grau de Instrução`[dados$`Grau de Instrução` == "superior"] <- sample(x = c("superior incompleto", "superior completo"), size = length(dados$`Grau de Instrução`[dados$`Grau de Instrução` == "superior"]), replace = T)
+
+dados$`Estado Civil` <- str_to_title(dados$`Estado Civil`)
+dados$`Grau de Instrução` <- str_to_title(dados$`Grau de Instrução`)
+dados$`Região de Procedência` <- str_to_title(dados$`Região de Procedência`)
+
+dados$`Grau de Instrução` <- factor(dados$`Grau de Instrução`,
+                                    levels = c("Fundamental Incompleto", "Fundamental Completo", "Médio Incompleto", "Médio Completo", "Superior Incompleto", "Superior Completo"))
+
+```
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE}
 
