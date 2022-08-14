@@ -82,7 +82,7 @@ knitr::include_graphics(here::here('images', 'media_centro_gravidade.png'))
 
 - Agora vamos definir a média aritmética.
 - Seja \structure{$x$} uma variável de interesse e \structure{$x_1, x_2, \ldots, x_n$} observações de \structure{$x$} em um conjunto de dados (amostra ou população) de tamanho \structure{$n$}.
-- A média amostral é denotada por \structure{$\overline{x}$}, enquanto que a média populacional\footnote{Na população, o número de elementos é presentado por $N$.} é, geralmente, denotada por \structure{$\mu$}.
+- A média amostral é denotada por \structure{$\overline{x}$}, enquanto que a média populacional é, geralmente, denotada por \structure{$\mu$}\footnote{Na população, o número de elementos é presentado por $N$.}.
 - Para dados que __não estão__ agrupados, a média é simplesmente a soma de todos os valores observados da variável dividido pelo número de observações\footnote{A letra grega $\Sigma$ (sigma) é usada como símbolo para indicar uma soma. Assim, $\sum_{i=1}^n{x_i}$ indica o ``somatório de $x$ índice $i$, $i$ variando de $1$ a $n$''. Ou seja, estamos somando os $n$ elementos do conjunto $\{x_i; i = 1,\ldots, n\}$. Cada $x_i$ representa o valor da variável $x$ com respeito ao $i$-ésimo indivíduo. Por exemplo, se ``Harry'' apresentou o valor 19 anos para a variável idade (representada por $x$), e Harry foi o entrevistado de número 48 em um certo inquérito, temos que $x_{48} = 19$.}
 
 $$
@@ -143,7 +143,8 @@ kable(x = matrix(petal.width.sample, ncol = 5, byrow = T),
 
 ## Média para dados em agrupamento simples {.allowframebreaks}
 
-- Para dados que são apresentados em agrupamentos simples\footnote{Imagine que você não possui acesso a planilha de dados brutos, logo você não tem a informação a nível da observação. Mas, digamos que você tenha acesso a uma tabela de frequências (uma forma já resumida/agregada) da variável de interesse.}, calcula-se a média do seguinte modo:
+- Para dados que são apresentados em agrupamentos simples\footnote{Imagine que você não possui acesso a planilha de dados brutos, logo você não tem a informação a nível da observação. Mas, digamos que você tenha acesso a uma tabela de frequências (uma forma já resumida/agregada) da variável de interesse.},
+- calcula-se a média do seguinte modo:
 
 $$
 \overline{x} = \frac{\sum_i{n_ix_i}}{\sum_i{n_i}},
@@ -180,8 +181,6 @@ kable(freq_table_carb, align = c('l','c'))
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, purl=FALSE}
 
-library(magrittr)
-
 freq_table_carb$"$n_ix_i$" <- c(as.numeric(freq_table_carb[-length(freq_table_carb[,1]),1]) * freq_table_carb[-length(freq_table_carb[,1]),2], sum(as.numeric(freq_table_carb[-length(freq_table_carb[,1]),1]) * freq_table_carb[-length(freq_table_carb[,1]),2]))
 
 freq_table_carb %>%
@@ -207,7 +206,7 @@ $$
 \overline{x} = \frac{1}{\sum_{i=1}{n_i}}\sum_{i=1}{n_ix_i}= \sum_{i=1}{x_i\frac{n_i}{\sum_{i=1}{n_i}}}.
 $$
 
-- Como $\sum_i{n_i} = n$, o cálculo da média é expresso em função dos seus valores e suas frequências relativas ($f_i$)\footnote{Salve o caso em temos dados ausentes. Neste caso $n$ é o número de elementos com dados observados.}
+- Como $\sum_i{n_i} = n$\footnote{Salve o caso em temos dados ausentes. Neste caso $n$ é o número de elementos com dados observados.} o cálculo da média é expresso em função dos seus valores e suas frequências relativas ($f_i$)
 
 $$
 \overline{x} = \frac{1}{\sum_{i=1}{n_i}}\sum_{i=1}{n_ix_i}= \sum_{i=1}{x_i\frac{n_i}{\sum_{i=1}{n_i}}} = \sum_{i=1}{x_i\frac{n_i}{n}} = \sum_{i=1}{x_if_i}.
@@ -237,7 +236,7 @@ freq_table_carb %>%
 ## Média para dados em agrupamento por intervalo de classe
 
 - Quando os dados estão organizados em uma \structure{tabela com intervalos de classe}, é preciso haver um valor que represente cada intervalo.
-- Este valor é o \structure{ponto médio}\footnote{Lembre que já utilizamos o ponto médio (ou ponto central) do intervalo de classe na construção do {\bf polígono de frequências}.} do intervalo de classe, denotado por \structure{$M$}.
+- Este valor é o \structure{ponto médio} do intervalo de classe, denotado por \structure{$M$}\footnote{Lembre que já utilizamos o ponto médio (ou ponto central) do intervalo de classe na construção do {\bf polígono de frequências}.}.
 - __Relembrando:__ o ponto médio é a média aritmética dos dois extremos de classe
 
 $$
@@ -334,7 +333,7 @@ knitr::kable(tde.tab, col.names = c("Classe TDE", "Frequência ($n_i$)"))
 ## Próxima aula 
 
 - Mediana e moda.
-<!-- - Médias ponderada, geométrica e harmônica. -->
+- Médias ponderada, geométrica e harmônica.
 - Complementa`R`.
 
 ## Por hoje é só!

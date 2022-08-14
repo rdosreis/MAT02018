@@ -10,12 +10,10 @@ institute: |
   | \textsc{Instituto de Matemática e Estatística}
   | \textsc{Departamento de Estatística}
 date: |
-  | Porto Alegre, 2021
+  | Porto Alegre, 2022
 bibliography: estatistica-descritiva.bib
 csl: associacao-brasileira-de-normas-tecnicas-ufrgs-initials.csl
 link-citations: yes
-header-includes:
-  - \titlegraphic{\hfill\includegraphics[height=1.5cm]{logos/Logo-40-anos-estatistica.png}}
 ---
 
 ```{r setup, include=FALSE, purl=FALSE}
@@ -354,10 +352,11 @@ which.max(table(dados$`N de Filhos`))
 
 1. Resolver os exercícios 1 a 3 do Capítulo 8.5 do livro __Fundamentos de Estatística__\footnote{Vieira, S. {\bf Fundamentos de Estatística}, Atlas, 2019, p. 135-136.} (disponível no Sabi+).
 2. Para o seu levantamento estatístico, calcule médias, modas e medianas, de acordo com a classificação das variáveis. Compartilhe no Fórum Geral do Moodle.
+3. Ler os slides sobre "Médias ponderada, geométrica e harmônica".
 
 ## Próxima aula 
 
-- Médias ponderada, geométrica e harmônica.
+- Medidas de variabilidade.
 
 ## Por hoje é só!
 
