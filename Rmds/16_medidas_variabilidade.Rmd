@@ -10,12 +10,10 @@ institute: |
   | \textsc{Instituto de Matemática e Estatística}
   | \textsc{Departamento de Estatística}
 date: |
-  | Porto Alegre, 2021
+  | Porto Alegre, 2022
 bibliography: estatistica-descritiva.bib
 csl: associacao-brasileira-de-normas-tecnicas-ufrgs-initials.csl
 link-citations: yes
-header-includes:
-  - \titlegraphic{\hfill\includegraphics[height=1.5cm]{logos/Logo-40-anos-estatistica.png}}
 ---
 
 ```{r setup, include=FALSE, purl=FALSE}
@@ -29,10 +27,10 @@ library(knitr)
 ## Introdução {.allowframebreaks}
 
 - As medidas de tendência central são insuficientes para representar adequadamente conjuntos de dados, pois nada revelam sobre sua \structure{variabilidade}.
-- Tome como exemplo as notas de 5 avaliações realizadas por 2 alunos.
-    + \structure{Aluno A:} 6, 6, 6, 6, 6.
+- Tome como exemplo as notas de 5 avaliações realizadas por 2 alun@s.
+    + \structure{Alun@ A:} 6, 6, 6, 6, 6.
         - __Total de pontos:__ 30; __Média:__ 6.
-    + \alert{Aluno B:} 7, 5, 6, 4, 8.
+    + \alert{Alun@ B:} 7, 5, 6, 4, 8.
         - __Total de pontos:__ 30; __Média:__ 6.
 
 \framebreak
@@ -46,7 +44,10 @@ library(knitr)
 
 - A medida mais simples de dispersão é a \structure{amplitude de variação ($a$)}, que é a diferença entre os valores extremos do conjunto de dados.
 
-+ \structure{$a = Max(x) - Min(x)$}, em que \structure{$Min(x)$} e \structure{$Max(x)$} representam os valores de \structure{mínimo} e \structure{máximo} de um conjunto de dados, respectivamente.
+$$
+a = Max(x) - Min(x),
+$$
+em que $Min(x)$ e $Max(x)$ representam os valores de \structure{mínimo} e \structure{máximo} de um conjunto de dados, respectivamente.
 
 \framebreak
 
@@ -73,10 +74,10 @@ knitr::kable(matrix(petal.width.sample,
 
 ### Comentário
 
-- Os valores de mínimo e máximo de um conjunto de dados podem ser utilizados para a verificação de inconsistências nos dados com respeito a variável de interesse. 
+- Os valores de mínimo e máximo de um conjunto de dados podem ser utilizados para a __verificação de inconsistências nos dados__ com respeito a variável de interesse. 
     - \alert{Exemplos:}
-        + $Max({\rm idade}) = 170$ (anos).
-        + $Min({\rm temperatura}) = -20^{\circ}$ (na série histórica de temperaturas na cidade de Porto Alegre).
+        + $Max(\mbox{idade}) = 170$ (anos).
+        + $Min(\mbox{temperatura}) = -20^{\circ}$ (na série histórica de temperaturas na cidade de Porto Alegre).
 
 :::
 
@@ -96,8 +97,8 @@ knitr::kable(matrix(petal.width.sample,
 
 ## Variância {.allowframebreaks}
 
-- As principais medidas de dispersão envolvem os \structure{desvios em relação a média}, \structure{$x_1 - \bar{x}, x_2 - \bar{x}, \ldots, x_n - \bar{x}$}.
-- Ou seja, os desvios da média são obtidos pela subtração de \structure{$\bar{x}$} de cada uma das \structure{$n$} observações da amostra, conforme mostra a figura a seguir.
+- As principais medidas de dispersão envolvem os \structure{desvios em relação a média:} $x_1 - \bar{x}, x_2 - \bar{x}, \ldots, x_n - \bar{x}$.
+- Ou seja, os desvios da média são obtidos pela subtração de $\bar{x}$ de cada uma das $n$ observações da amostra, conforme mostra a figura a seguir.
 
 ```{r fig.align='center', cache=TRUE, echo=FALSE, out.width="60%", purl=FALSE}
 
@@ -108,8 +109,8 @@ knitr::include_graphics(here::here('images', 'media_centro_gravidade.png'))
 \framebreak
 
 - Um desvio será positivo se a observação for maior que a média (à direita da média no eixo das medidas) e negativo se a observação for menor que a média.
-- Se todos os desvios forem pequenos em magnitude, todos os \structure{$x_i$} estarão próximos à média e haverá pouca dispersão.
-- Por outro lado, se alguns desvios forem grandes, alguns \structure{$x_i$} estarão distantes de \structure{$\bar{x}$}, indicando maior dispersão.
+- Se todos os desvios forem pequenos em magnitude, todos os $x_i$ estarão próximos à média e haverá pouca dispersão.
+- Por outro lado, se alguns desvios forem grandes, alguns $x_i$ estarão distantes de $\bar{x}$, indicando maior dispersão.
 
 \framebreak
 
@@ -125,18 +126,19 @@ knitr::include_graphics(here::here('images', 'media_centro_gravidade.png'))
 \framebreak
 
 - Como podemos evitar desvios negativos e positivos ao neutralizar um ao outro quando eles são combinados?
-- Uma possibilidade é trabalhar com os \alert{valores absolutos} e calcular o \structure{desvio médio absoluto $\frac{1}{n}\sum_{i=1}^n{|x_i - \bar{x}|}$}.
-    - Porém, a operação em valor absoluto conduz a dificuldades teóricas, e uma alternativa é considerar o \structure{quadrado dos desvios $(x_i - \bar{x})^2$} (também conhecidos como desvios quadráticos).
+- Uma possibilidade é trabalhar com os \alert{valores absolutos} e calcular o \structure{desvio médio absoluto $\frac{1}{n}\sum_{i=1}^n{|x_i - \bar{x}|}$.
+    - Porém, a operação em valor absoluto conduz a dificuldades teóricas, e uma alternativa é considerar o \structure{quadrado dos desvios $(x_i - \bar{x})^2$ (também conhecidos como desvios quadráticos).
     - E dessa forma temos a definição da \structure{variância}.
 
 \framebreak
 
 - A \structure{variância} é a média dos desvios quadráticos com respeito a média.
-- É representada pelo símbolo \structure{$\sigma^2$} __na população__ e por \structure{$s^2$} __na amostra__.
+- É representada pelo símbolo $\sigma^2$ __na população__ e por $s^2$ __na amostra__.
 
 ::: {.block}
 
-###
+### Observação
+
 Note que, por definição \alert{(a média de dos quadrados dos desvios)}, \structure{a variância é uma medida não negativa}.
 
 :::
@@ -146,7 +148,7 @@ Note que, por definição \alert{(a média de dos quadrados dos desvios)}, \stru
 - Na população calculamos a variância da seguinte forma:
 
 $$
-\sigma^2 = \frac{\sum_{i=1}^n{(x_i - \mu)^2}}{n}.
+\sigma^2 = \frac{\sum_{i=1}^N{(x_i - \mu)^2}}{N}.
 $$
 
 - Na amostra, calculamos a variância da seguinte forma:
@@ -186,9 +188,9 @@ s^2 &=& \frac{(1.3 - 1.15)^2 + (1.3 - 1.15)^2 + (0.2 - 1.15)^2 + (1.8 - 1.15)^2}
 
 1. Note que unidade de medida da variável em questão fica expressa ao quadrado na variância.
 2. A variância é uma medida de variabilidade em torno da média.
-    + Se todas as observações são iguais, não há variabilidade nos dados e \structure{$s^2 = 0$}.
-    + Se os dados são muito dispersos com respeito a média, então a variabilidade é grande e \structure{$s^2$} assume um valor alto.
-    + Se os dados são pouco dispersos em torno da média, então a variabilidade é pequena e \structure{$s^2$} assume um valor baixo.
+    + Se todas as observações são iguais, não há variabilidade nos dados e $s^2 = 0$.
+    + Se os dados são muito dispersos com respeito a média, então a variabilidade é grande e $s^2$ assume um valor alto.
+    + Se os dados são pouco dispersos em torno da média, então a variabilidade é pequena e $s^2$ assume um valor baixo.
 
 :::
 
@@ -268,12 +270,12 @@ $$
 
 + Amostra 1 apresenta desvio padrão igual 1,29mm;
 + Amostra 2 apresenta desvio padrão igual 0,51mm;
-    - logo a Amostra 2 apresenta uma menor variabilidade da espessura das sementes em relação a Amostra 1.
+    - Logo a Amostra 2 apresenta uma menor variabilidade da espessura das sementes em relação a Amostra 1.
 :::
 
 \framebreak
 
-- No entanto, o mesmo não pode ser feito em se tratando de variáveis diferentes (mensuradas em diferentes unidades).
+- No entanto, o mesmo não pode ser feito em se tratando de variáveis que foram mensuradas em diferentes unidades de medida.
 - Se as sementes do exemplo anterior foram também pesadas, e o desvio padrão foi 0,009g para a Amostra 1, __não se pode afirmar__ que o peso das sementes é uma característica com __menor dispersão__ ("menos variável") do que a sua espessura.
 
 \framebreak

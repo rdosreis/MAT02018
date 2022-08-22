@@ -10,12 +10,10 @@ institute: |
   | \textsc{Instituto de Matemática e Estatística}
   | \textsc{Departamento de Estatística}
 date: |
-  | Porto Alegre, 2021
+  | Porto Alegre, 2022
 bibliography: estatistica-descritiva.bib
 csl: associacao-brasileira-de-normas-tecnicas-ufrgs-initials.csl
 link-citations: yes
-header-includes:
-  - \titlegraphic{\hfill\includegraphics[height=1.5cm]{logos/Logo-40-anos-estatistica.png}}
 ---
 
 ```{r setup, include=FALSE, purl=FALSE}
@@ -36,17 +34,19 @@ library(knitr)
 ## Quartis {.allowframebreaks}
 
 - \structure{Quartis} são pontos que dividem um \structure{conjunto de dados ordenado} em \structure{quatro partes} iguais (quatro quartos).
-- Denotamos os quartis por \structure{$Q_1$}, \structure{$Q_2$} e \structure{$Q_3$}:
-    - \structure{$Q_1$} é o \structure{primeiro quartil}. É o valor que tem 25% dos dados iguais ou menores do que ele.
-    - \structure{$Q_2$} é o \structure{segundo quartil}. É o valor que tem 50% dos dados iguais ou menores do que ele^[Note que o segundo quartil é também a mediana de um conjunto de dados.].
-    - \structure{$Q_3$} é o \structure{terceiro quartil}. É o valor que tem 75% dos dados iguais ou menores do que ele.
+- Denotamos os quartis por $Q_1$, $Q_2$ e $Q_3$:
+    - $Q_1$ é o \structure{primeiro quartil}. É o valor que tem 25% dos dados iguais ou menores do que ele.
+    - $Q_2$ é o \structure{segundo quartil}. É o valor que tem 50% dos dados iguais ou menores do que ele^[Note que o segundo quartil é também a mediana de um conjunto de dados.].
+    - $Q_3$ é o \structure{terceiro quartil}. É o valor que tem 75% dos dados iguais ou menores do que ele.
 
 ## Quartis {.allowframebreaks}
 
-- Uma forma de encontrar as posições de \structure{$Q_1$} e \structure{$Q_3$}^[Já aprendemos a encontrar a posição de $Q_2$, a mediana.] na __série ordenada de dados__, como foi visto para o caso da mediana (\structure{$Q_2$}).
-    + posição de $Q_1$: \structure{$\frac{n+1}{4}$}
-    + posição de $Q_3$: \structure{$\frac{3(n+1)}{4}$}
-- No caso do conjunto de dados conter um número par de elementos, $Q_1$ e $Q_3$ são obtidos tomando-se a média dos valores vizinhos as suas posições.
+Uma forma de encontrar as posições de $Q_1$ e $Q_3$^[Já aprendemos a encontrar a posição de $Q_2$, a mediana.] na __série ordenada de dados__, como foi visto para o caso da mediana ($Q_2$).
+
++ posição de $Q_1$: $\frac{n+1}{4}$
++ posição de $Q_3$: $\frac{3(n+1)}{4}$
+
+No caso do conjunto de dados conter um número par de elementos, $Q_1$ e $Q_3$ são obtidos tomando-se a média dos valores vizinhos as suas posições.
 
 ## Separatrizes {.allowframebreaks}
 
@@ -75,7 +75,7 @@ $$
 DIQ = Q_3 - Q_1.
 $$
 
-- Note que entre \structure{$Q_1$} e \structure{$Q_3$} estão 50% dos valores mais centrais da distribuição.
+- Note que entre $Q_1$ e $Q_3$ estão 50% dos valores mais centrais da distribuição.
 
 \framebreak
 
@@ -87,7 +87,7 @@ knitr::include_graphics(here::here('images', 'quartis.png'))
 
 ```
 
-- Temos que \structure{$Q_1 = 4,9$}, \structure{$Q_3 = 5,25$}, e portanto, a amplitude entre quartis é
+- Temos que $Q_1 = 4,9$, $Q_3 = 5,25$, e portanto, a amplitude entre quartis é
 
 $$
 Q_3 - Q_1 = 5,25 - 4,9 = 0,35.
