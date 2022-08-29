@@ -126,7 +126,7 @@ text(1.6, 12, "Média")
 
 
 
-## ----echo=FALSE, message=FALSE, warning=FALSE---------------------------------------------------
+## ----echo=FALSE, message=FALSE, warning=FALSE-------------------------------------------------
 
 library(SemiPar)
 library(knitr)
@@ -222,7 +222,7 @@ legend("topright",
 
 
 
-## ----carrega-dados0, echo=TRUE, eval=FALSE, warning=FALSE, message=FALSE------------------------
+## ----carrega-dados0, echo=TRUE, eval=FALSE, warning=FALSE, message=FALSE----------------------
 ## # install.packages("readxl")
 ## library(readxl)
 ## 
@@ -231,16 +231,16 @@ legend("topright",
 
 
 
-## ----carrega-dados2, warning=FALSE, message=FALSE-----------------------------------------------
+## ----carrega-dados2, warning=FALSE, message=FALSE---------------------------------------------
 class(dados) # classe do objeto dados
 dim(dados) # dimensão do objeto dados
 
 
-## ----carrega-dados3, warning=FALSE, message=FALSE-----------------------------------------------
+## ----carrega-dados3, warning=FALSE, message=FALSE---------------------------------------------
 head(dados) # apresenta as primeiras linhas do objeto dados
 
 
-## ----exetremos, warning=FALSE, message=FALSE----------------------------------------------------
+## ----exetremos, warning=FALSE, message=FALSE--------------------------------------------------
 # install.packages("e1071")
 library(e1071)
 
