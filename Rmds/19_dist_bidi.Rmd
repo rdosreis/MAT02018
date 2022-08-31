@@ -10,12 +10,10 @@ institute: |
   | \textsc{Instituto de Matemática e Estatística}
   | \textsc{Departamento de Estatística}
 date: |
-  | Porto Alegre, 2021
+  | Porto Alegre, 2022
 bibliography: estatistica-descritiva.bib
 csl: associacao-brasileira-de-normas-tecnicas-ufrgs-initials.csl
 link-citations: yes
-header-includes:
-  - \titlegraphic{\hfill\includegraphics[height=1.5cm]{logos/Logo-40-anos-estatistica.png}}
 ---
 
 ```{r setup, include=FALSE, purl=FALSE}
@@ -28,16 +26,13 @@ library(knitr)
 
 # Apresentação {.allowframebreaks}
 
-- Até o presente momento vimos como organizar, resumir e apresentar informações referentes a uma única variável.
-- Muito do interesse em se coletar diversas variáveis em um levantamento estatístico está em analisar o __comportamento conjunto__ de duas ou mais variáveis.
+- Até o presente momento vimos como organizar, resumir e apresentar informações referentes a uma __única variável__.
+- Muito do interesse em se coletar diversas variáveis em um levantamento estatístico está em analisar o \structure{comportamento conjunto} de __duas ou mais variáveis__.
 - Algumas questões de pesquisa, relacionadas a este objetivo, que podem ser listadas:
-    - As variáveis estão relacionadas (associadas, correlacionadas)?
+    - As variáveis estão relacionadas \structure{(associadas, correlacionadas)}?
     - Como caraterizar esta realação?
     - Qual a força desta relação?
-
-\framebreak
-
-- Nestas breves notas de aula vamos apresentar formas de organização e apresentação de distribuições bidimensionais^[Distribuições de duas variáveis. Nestas notas de aula nos concentraremos no caso de duas variáveis, mas tais ideias podem ser generalizados para o caso de mais duas variáveis.] de frequências, assim como o cálculo e interpretação de medidas resumo.
+- Nestas breves notas de aula vamos apresentar formas de organização e apresentação de \structure{distribuições bidimensionais}^[Distribuições de duas variáveis. Nestas notas de aula nos concentraremos no caso de duas variáveis, mas tais ideias podem ser generalizados para o caso de mais que duas variáveis.] de frequências, assim como o cálculo e interpretação de medidas resumo.
 
 # Introdução {.allowframebreaks}
 
@@ -45,27 +40,36 @@ library(knitr)
     - As duas variáveis são qualitativas;
     - As duas variáveis são quantitativas;
     - Uma variável é qualitativa e outra é quantitativa.
-
-## Introdução {.allowframebreaks}
-
 - As técnicas de análise de dados nas três situações são diferentes.
-- Quando as variáveis são qualitativas, os dados são resumidos e apresentados em __tabelas de dupla entrada__^[Também conhecidas como __tabelas de contingência__.].
-- Quando as duas variáveis são quantitativas __gráficos de dispersão__ são apropriados.
-- Quando temos uma variável qualitativa e outra quantitativa, em geral, analisamos o que acontece com a variável quantitativa agrupadas em classes^[Ou seja, a variável qualitativa é interpretada como uma variável de grupo de observações.].
 
 ## Introdução {.allowframebreaks}
 
-- Contudo, em todas as situações, o objetivo é encontrar as possíveis relações (associações) entre as duas variáveis.
+- Quando as variáveis são qualitativas, os dados são resumidos e apresentados em __tabelas de dupla entrada__^[Também conhecidas como __tabelas de contingência__.].
+- Quando as duas variáveis são quantitativas, __gráficos de dispersão__ são apropriados.
+- Quando temos uma variável qualitativa e outra quantitativa, em geral, analisamos o que acontece com a variável quantitativa agrupada em classes^[Ou seja, a variável qualitativa é interpretada como uma variável de grupo de observações.].
+
+## Introdução {.allowframebreaks}
+
+- Contudo, em todas as situações, o objetivo é encontrar as possíveis relações __(associações)__ entre as duas variáveis.
 - Essas relações podem ser detectadas por meio de métodos gráficos e medidas resumo.
-- Interpretaremos a existência de associação como uma "_mudança_" de opinião sobre o comportamento de uma variável na presença de informação sobre a segunda variável.
-- Exemplificando, os clientes de um serviço de __Streaming__ têm a __comédia__ como gênero preferido de filme.
-    + Se estratificamos os clientes entre _jovens_ e _idosos_, esta preferência se mantém a mesma nos dois grupos?
-    + Se a preferência por gênero de filme muda entre as faixas etárias, então temos uma associação entre as variáveis idade e gênero de filme.
-    + Tal informação pode ser utilizada para a definição de campanhas de _marketing_ específicas para cada faixa etária, com sugestões "mais precisas".
+- Interpretaremos a existência de associação como uma \structure{``mudança''} de opinião sobre o comportamento de uma variável na presença de informação sobre a segunda variável.
+
+\framebreak
+
+:::{.block}
+
+### Exemplificando
+
+Os clientes de um serviço de __Streaming__ têm a __comédia__ como gênero preferido de filme. Se estratificamos os clientes entre _jovens_ e _idosos_, esta preferência se mantém a mesma nos dois grupos?
+
++ Se a preferência por gênero de filme muda entre as faixas etárias, então temos uma __associação__ entre as variáveis __idade__ e __preferência por gênero de filme__.
+
+Tal informação pode ser utilizada para a definição de campanhas de _marketing_ específicas para cada faixa etária, com sugestões "mais precisas".
+:::
 
 # Variáveis qualitativas {.allowframebreaks}
 
-- Considere como exemplo o conjunto de dados coletados de empregados da seção de orçamentos da Companhia MB [@bussab_estatistica_2017]. Suponha que queiramos analisar o comportamento conjunto das variáveis _grau de instrução_ e _região de procedência_.
+- Considere como exemplo o conjunto de dados coletados de empregados da seção de orçamentos da Companhia MB [@bussab_estatistica_2017]. Suponha que queiramos analisar o comportamento conjunto das variáveis __grau de instrução__ e __região de procedência__.
 
 \footnotesize
 
@@ -103,7 +107,8 @@ tab <- mb_df %>%
 row.names(tab)[4] <- "Total"
 colnames(tab)[4] <- "Total"
 
-kable(tab, caption = "Distribuição conjunta das frequências das variáveis grau de instrução e região de procedência.") %>% 
+kable(tab,
+      caption = "Distribuição conjunta das frequências das variáveis grau de instrução e região de procedência.", align = "cccc", format = "latex") %>% 
   add_header_above(c("Região de Procedência", "Grau de Instrução" = 3, " "))
 
 ```
@@ -112,20 +117,37 @@ kable(tab, caption = "Distribuição conjunta das frequências das variáveis gr
 
 \framebreak
 
-- Note que cada elemento do corpo da tabela fornece a frequência observada das realizações simultâneas de _Região de Procedência_ ($V$) e _Grau de Instrução_ ($Y$).
+Note que cada elemento do corpo da tabela fornece a frequência observada das __realizações simultâneas__ de __Região de Procedência__ ($X$) e __Grau de Instrução__ ($Y$).
+
 - Assim, observamos quatro indivíduos da capital com ensino fundamental, sete do interior com ensino médio, etc.
-- A linha dos totais fornece a distribuição (unidimensional) da variável _Grau de Instrução_, ao passo que a coluna dos totais fornece a distribuição da variável _Região de Procedência_.
-- As distribuições assim obtidas são chamadas tecnicamente de __distribuições marginais__, enquanto a tabela acima constitui a __distribuição conjunta__ de $Y$ e $V$^[Podemos concluir que a partir da distribuição conjunta das variáveis é possível obter as distribuições marginais de cada uma das variáveis, somando os elementos da linha, ou da coluna. Por outro lado, não é possível obter a distribuição conjunta a partir das distribuições marginais.].
+- A __linha dos totais__ fornece a \structure{distribuição (unidimensional)} da variável __Grau de Instrução__, ao passo que a __coluna dos totais__ fornece a \structure{distribuição} da variável __Região de Procedência__.
+- As distribuições assim obtidas são chamadas tecnicamente de __distribuições marginais__, enquanto a tabela do slide anterior constitui a __distribuição conjunta__^[Podemos concluir que a partir da distribuição conjunta das variáveis ($n_{ij}$) é possível obter as distribuições marginais de cada uma das variáveis, somando os elementos da linha ($n_{i\cdot} = \sum_{j = 1}^J{n_{ij}},\ i = 1, \ldots, I$), ou da coluna ($n_{\cdot j} = \sum_{i = 1}^I{n_{ij}},\ j = 1, \ldots, J$). Por outro lado, não é possível obter a distribuição conjunta a partir das distribuições marginais.] de $X$ e $Y$.
 
 ## Variáveis qualitativas {.allowframebreaks}
 
-- Assim como no caso unidimensional, podemos ter interesse não só em frequências absolutas, mas também em frequências relativas e porcentagens.
+- Assim como no caso unidimensional, podemos ter interesse não só em __frequências absolutas__, mas também em __frequências relativas__ e __porcentagens__.
 - Mas aqui existem três possibilidades de expressarmos a proporção de cada casela:
     - Em relação ao total geral;
     - Em relação ao total de cada linha;
     - Em relação ao total de cada coluna.
 
 - De acordo com o objetivo do problema em estudo, uma delas será a mais conveniente.
+
+\framebreak
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', purl=FALSE}
+
+knitr::include_graphics(here::here('images', 'percent_linha.jpg'))
+
+```
+
+\framebreak
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', purl=FALSE}
+
+knitr::include_graphics(here::here('images', 'percent_coluna.jpg'))
+
+```
 
 \framebreak
 
@@ -146,7 +168,10 @@ prop.tab <- mb_df %>%
 row.names(prop.tab)[4] <- "Total"
 colnames(prop.tab)[4] <- "Total"
 
-kable(prop.tab, digits = 0, caption = "Distribuição conjunta das frequências relativas (em porcentagem) em relação ao total geral das variáveis grau de instrução e região de procedência.") %>% 
+kable(prop.tab, digits = 0,
+      caption = "Distribuição conjunta das frequências relativas (em porcentagem) em relação ao total geral das variáveis grau de instrução e região de procedência.",
+      align = "cccc",
+      format = "latex") %>% 
   add_header_above(c("Região de Procedência", "Grau de Instrução" = 3, " "))
 
 ```
@@ -155,7 +180,7 @@ kable(prop.tab, digits = 0, caption = "Distribuição conjunta das frequências 
 
 \framebreak
 
-- Podemos, então, afirmar que 11% dos empregados vêm da capital e têm o ensino fundamental.
+- Podemos, então, afirmar que \structure{11\%} dos funcionários __vêm da capital e possuem o ensino fundamental__.
 - Os totais nas margens fornecem as distribuições unidimensionais de cada uma das variáveis.
     + Por exemplo, 31% dos indivíduos vêm da capital, 33% do interior e 36% de outras regiões.
 
@@ -177,7 +202,11 @@ prop.tab <- mb_df %>%
 row.names(prop.tab)[4] <- "Total"
 colnames(prop.tab)[4] <- "Total"
 
-kable(prop.tab, digits = 0, caption = "Distribuição conjunta das frequências relativas (em porcentagem) em relação aos totais de colunas das variáveis grau de instrução e região de procedência.") %>% 
+kable(prop.tab,
+      digits = 0,
+      caption = "Distribuição conjunta das frequências relativas (em porcentagem) em relação aos totais de colunas das variáveis grau de instrução e região de procedência.",
+      align = "cccc",
+      format = "latex") %>% 
   add_header_above(c("Região de Procedência", "Grau de Instrução" = 3, " "))
 
 ```
@@ -195,11 +224,11 @@ instrução.
 ## Variáveis qualitativas {.allowframebreaks}
 
 - Uma forma alternativa de apresentação da distribuição conjunta de duas variáveis qualitativas é feita por meio de gráficos.
-- Em geral, utiliza-se o gráfico de barras.
+- Em geral, utiliza-se o \structure{gráfico de barras}.
 
 \framebreak
 
-```{r barras, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width="100%"}
+```{r barras, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width="90%"}
 
 library(ggplot2)
 library(viridis)
@@ -208,14 +237,24 @@ library(reshape2)
 mb_gg <- mb_df %>% 
   select(`Região de Procedência`, `Grau de Instrução`) %>% 
   table() %>% 
-  prop.table(margin = 2) %>% melt()
+  prop.table(margin = 1) %>% melt()
 
-p <- ggplot(data = mb_gg, mapping = aes(x = `Grau de Instrução`, fill = `Região de Procedência`, y = value)) +
-  geom_bar(position = "fill", stat = "identity") +
+mb_gg <- mb_gg %>%
+  group_by(`Região de Procedência`) %>%
+  mutate(value_pos = cumsum(value) - (0.5 * value)) %>%
+  mutate(value_lab = round(value * 100, 1))
+
+p <- ggplot(data = mb_gg,
+            mapping = aes(x = `Região de Procedência`,
+                          y = value)) +
+  geom_bar(mapping = aes(fill = rev(`Grau de Instrução`)),
+           stat = "identity") +
+  geom_text(mapping = aes(y = value_pos, label = value_lab),
+            col = "white", vjust = 0) +
   scale_fill_viridis(discrete = T) +
   scale_y_continuous(labels = scales::percent) +
-  theme_bw() + ylab("Frequências relativas") +
-  theme(legend.position = "bottom")
+  labs(y = "Frequências relativas", fill = "Grau de Instrução") +
+  theme_bw() + theme(legend.position = "bottom")
 p
 
 ```
@@ -228,6 +267,15 @@ p
 - Em caso afirmativo, diremos que as variáveis são __associadas__, ou dependem uma da outra.
 - Caso contrário, diremos que as variáveis são __independentes__, e portanto, não há associação entre as variáveis.
 
+\framebreak
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='90%', purl=FALSE}
+
+knitr::include_graphics(here::here('images', 'associacao_mascara_covid.jpg'))
+
+```
+
+[Estudo da UFRGS mostra que uso de máscara reduz em 87% a chance de contrair covid-19](https://www.ufrgs.br/coronavirus/base/estudo-da-ufrgs-mostra-que-uso-de-mascara-reduz-em-87-a-chance-de-contrair-covid-19/)
 \framebreak
 
 - __Exemplo:__ em setembro de 2019, o jornalismo esportivo divulgava os resultados das partidas disputas pelo Grêmio.
@@ -248,7 +296,9 @@ row.names(prop.tab)[3] <- "Total"
 colnames(prop.tab)[4] <- "Total"
 
 kable(prop.tab, digits = 2,
-      caption = "Resultados dos jogos do Grêmio em 2019.")
+      caption = "Resultados dos jogos do Grêmio em 2019.",
+      align = "cccc",
+      format = "latex", format.args = list(decimal.mark = ","))
 
 ```
 
@@ -256,10 +306,13 @@ kable(prop.tab, digits = 2,
 
 \framebreak
 
-- Note que as frequências são com relação a linha.
+- Note que as frequências são relativas a linha.
 - Assim, observamos que sem considerar que Maicon jogou, o jogo resulta em vitória do Grêmio em aproximadamente 52% das vezes.
-- Mas, quando Maicon está em campo esta porcentagem muda para aproximadamente 59%.
-- Quando ele não está em campo, a porcentagem de vitórias cai para 43%.
+    - Mas, quando Maicon está em campo esta porcentagem muda para aproximadamente 59%.
+    - Quando ele não está em campo, a porcentagem de vitórias cai para 43%.
+
+\framebreak
+
 - Assim, poderíamos concluir que a presença de Maicon no jogo foi importante para o desempenho do time do Grêmio no ano de 2019.
 - Em outras palavras, as variáveis _resultado do jogo do Grêmio_ e _escalação do time do Grêmio_ são associadas (ou dependentes), pois a distribuição de frequências da variável _resultado do jogo do Grêmio_ muda conforme o nível (categoria) da variável _escalação do time do Grêmio_^[Um caminho natural a partir deste resultado seria quantificar o grau de dependência entre estas variáveis. A medida resumo mais utilizada é __coeficiente de contingência__, mais conhecido como o $\chi^2$ de Pearson. Não apresentaremos nestas notas o coeficiente de contingência, mas recomendamos a leitura complementar deste.].
 
