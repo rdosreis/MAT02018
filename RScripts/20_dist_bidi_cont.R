@@ -1,4 +1,4 @@
-## ----pio, echo=FALSE, warning=FALSE, message=FALSE------------------------------------------------------------------------
+## ----pio, echo=FALSE, warning=FALSE, message=FALSE--------------------------------------------
 
 idade <- c(35, 40, 41, 44, 45, 48, 50, 50, 50, 52, 
            54, 55, 55, 55, 57, 58, 59, 60, 60, 61,
@@ -17,7 +17,7 @@ kable(x = pio_df,
 
 
 
-## ----pontos, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width="80%"--------------------------------
+## ----pontos, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width="80%"----
 
 p <- ggplot(data = pio_df,
             mapping = aes(x = idade, y = pio)) +
@@ -28,7 +28,7 @@ p
 
 
 
-## ----pos_neg, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width="80%"-------------------------------
+## ----pos_neg, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width="80%"----
 
 library(MASS)
 set.seed(1000)
@@ -63,7 +63,7 @@ plot_grid(p1, p2, labels = c('', ''), label_size = 5, ncol = 2)
 
 
 
-## ----cor_nula, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', out.height="60%", out.width="60%"------------
+## ----cor_nula, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', out.height="60%", out.width="60%"----
 
 rho <- cbind(c(1, 0), c(0, 1))
 x <- as.data.frame(mvrnorm(n = 1000, mu = c(0,0), Sigma = rho))
@@ -80,7 +80,7 @@ p
 
 
 
-## ----linear, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width="100%"-------------------------------
+## ----linear, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width="100%"----
 
 library(MASS)
 set.seed(1000)
@@ -117,7 +117,7 @@ p3 <- ggplot(data = x, mapping = aes(x = X, y = Y)) +
 plot_grid(p1, p2, p3, labels = c('', '', ''), label_size = 1, ncol = 3)
 
 
-## ----exemplos, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', out.height="80%", out.width="80%"------------
+## ----exemplos, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', out.height="80%", out.width="80%"----
 
 library(MASS)
 set.seed(1000)
@@ -215,7 +215,7 @@ plot_grid(p1, p2, p3, p4, p5, p6, p7, p8, p9,
           label_size = 5, ncol = 3)
 
 
-## ----pio_coef, echo=FALSE, warning=FALSE, message=FALSE-------------------------------------------------------------------
+## ----pio_coef, echo=FALSE, warning=FALSE, message=FALSE---------------------------------------
 
 idade <- c(35, 40, 41, 44, 45, 48, 50, 50, 50, 52, 
            54, 55, 55, 55, 57, 58, 59, 60, 60, 61,

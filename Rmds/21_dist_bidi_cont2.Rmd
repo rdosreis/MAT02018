@@ -10,12 +10,10 @@ institute: |
   | \textsc{Instituto de Matemática e Estatística}
   | \textsc{Departamento de Estatística}
 date: |
-  | Porto Alegre, 2021
+  | Porto Alegre, 2022
 bibliography: estatistica-descritiva.bib
 csl: associacao-brasileira-de-normas-tecnicas-ufrgs-initials.csl
 link-citations: yes
-header-includes:
-  - \titlegraphic{\hfill\includegraphics[height=1.5cm]{logos/Logo-40-anos-estatistica.png}}
 ---
 
 ```{r setup, include=FALSE, purl=FALSE}
@@ -29,8 +27,8 @@ library(knitr)
 # Uma variável qualitativa e uma variável quantitativa {.allowframebreaks}
 
 - Como mencionado anteriormente, é comum nessas situações analisar o que acontece com a variável quantitativa dentro de cada categoria da variável qualitativa.
-- Essa análise pode ser conduzida por meio de medidas-resumo, histogramas ou _boxplots_.
-- Consideremos novamente o exemplo dos empregados da seção de orçamentos da Companhia MB, mas agora com o interesse de avaliar a associação entre a variável _salário_ e _grau de instrução_.
+- Essa análise pode ser conduzida por meio de __medidas-resumo__, __histogramas__ ou __*boxplots*__.
+- Consideremos novamente o exemplo dos empregados da seção de orçamentos da Companhia MB, mas agora com o interesse de avaliar a associação entre a variável __salário__ e __grau de instrução__.
 
 \framebreak
 
@@ -79,14 +77,14 @@ mb_df_arrange[19:36,] %>%
 
 ```
 
-\framebreak
+## Tabela de medidas resumo {.allowframebreaks}
 
 \normalsize
 
 - Vamos começar organizando em uma tabela as principais medidas resumo da variável salário para cada um dos grupos de escolaridade.
-    - Ou seja, vamos calcular a média, o desvio padrão e demais medidas resumo considerando apenas os indivíduos com ensino superior.
-    - Logo em seguida, calcularemos as mesmas medidas considerando apenas os indivíduos com ensino médio.
-    - E por fim, calcularemos as mesmas medidas considerando apenas os indivíduos com ensino fundamental.
+    - Ou seja, vamos calcular a __média__, o __desvio padrão__ e demais medidas resumo considerando apenas os \colorbox{black}{\textcolor{lightyellow}{indivíduos com ensino superior}}.
+    - Logo em seguida, calcularemos as mesmas medidas considerando apenas os \textcolor{lightblue}{indivíduos com ensino médio}.
+    - E por fim, calcularemos as mesmas medidas considerando apenas os \textcolor{lightsalmon}{indivíduos com ensino fundamental}.
 
 \framebreak
 
@@ -136,16 +134,16 @@ kable(tab,
   row_spec(3, background = "lightyellow")
 ```
 
-\framebreak
+## Gráficos da distribuição {.allowframebreaks}
 
 \normalsize
 
 - Uma outra forma de apresentarmos a distribuição de salário por grupo de instrução é através do gráfico de _boxplot_.
-- Novamente devemos construir cada uma das caixas considerando os dados dos indivíduos de cada um dos grupos.
+- Novamente devemos construir cada uma das caixas considerando os dados dos indivíduos de cada um dos grupos^[Como se cada um dos grupos formasse um conjunto de dados.].
 
 \framebreak
 
-```{r sal_bp, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width="100%"}
+```{r sal_bp, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width="90%"}
 
 mb_df_arrange$cor <- NULL
 mb_df_arrange$cor <- ifelse(mb_df_arrange$`Grau de Instrução` == "ensino fundamental", "lightsalmon", ifelse(mb_df_arrange$`Grau de Instrução` == "ensino médio", "lightblue", "lightyellow"))
@@ -160,19 +158,20 @@ bp <- ggplot(data = mb_df_arrange,
 bp
 ```
 
-\framebreak
+## Associação entre variáveis {.allowframebreaks}
 
-- Estes resultados sugerem uma __dependência__ dos salários em relação ao grau de instrução: o salário aumenta conforme aumenta o nível de escolaridade do indivíduo.
-- O salário médio de um funcionário é 11,12 (salários mínimos), já para um funcionário com curso superior o salário médio passa a ser 16,48, enquanto funcionários com o ensino fundamental completo recebem, em média, 7,84.
+- Estes resultados sugerem uma __dependência__ dos salários em relação ao grau de instrução:
+    + o salário aumenta conforme aumenta o nível de escolaridade do indivíduo.
+- O salário médio de um funcionário é $11,12$ (salários mínimos), já para um funcionário com curso superior o salário médio passa a ser $16,48$, enquanto funcionários com o ensino fundamental completo recebem, em média, $7,84$.
 
 \framebreak
 
 - Como nos casos anteriores, é conveniente poder contar com uma medida que quantifique o __grau de dependência__ entre as variáveis.
-- Tal medida pode ser construída a partir das variâncias de grupo e a variância global.
+- Tal medida pode ser construída a partir das __variâncias de grupo__ e a __variância global__.
 - Sem usar a informação da variável categorizada^[Em nosso exemplo, a variável grau de instrução.], a variância calculada para a variável quantitativa^[Em nosso exemplo, a variável salário.] para todos os dados mede a dispersão dos dados globalmente.
 - __Se a variância dentro de cada categoria for pequena e menor do que a global__, significa que a variável qualitativa __melhora a capacidade de previsão__^[Ao saber o grau de instrução conseguimos falar de maneira mais "precisa" sobre o salário dos empregados da Companhia MB?] da quantitativa __e portanto existe uma relação entre as duas variáveis__.
 
-## Uma variável qualitativa e uma variável quantitativa {.allowframebreaks}
+## Associação entre variáveis {.allowframebreaks}
 
 - Observe que, para as variáveis salário (denotaremos por $Y$) e grau de instrução, as variâncias de $Y$ dentro das três categorias são menores do que a global^[Lembrando: para o grupo ensino fundamental, $s^2_Y = 8,74$; para o grupo ensino médio, $s^2_Y = 13,80$; para o grupo ensino superior, $s^2_Y = 20,27$; e por fim, para todo o grupo de empregados, $s^2_Y = 21,04$.]. 
 - Necessita-se, então, de uma medida resumo da variância entre as categorias da variável qualitativa.
@@ -183,7 +182,7 @@ $$
 $$
 em que $k$ é o número de categorias ($k = 3$ em nosso exemplo) e $s^2_j(Y)$ denota a variância de $Y$ dentro da categoria $j$, $j = 1, 2, \ldots, k$.
 
-## Uma variável qualitativa e uma variável quantitativa {.allowframebreaks}
+## Associação entre variáveis {.allowframebreaks}
 
 - Pode-se mostrar que a média das variâncias é menor ou igual a variância global^[$\bar{s^2}_Y \leq s^2_Y$.], de modo que podemos definir o __grau de associação__ entre as duas variáveis __como o ganho relativo na variância__, obtido pela introdução da variável qualitativa. Explicitamente,
 
@@ -191,7 +190,7 @@ $$
 R^2 = \frac{s^2_Y - \bar{s^2}_Y}{s^2_Y} = 1 - \frac{\bar{s^2}_Y}{s^2_Y}.
 $$
 
-\framebreak
+## Associação entre variáveis {.allowframebreaks}
 
 - Note que $0 \leq R^2 \leq 1$.
 - Quanto maior a capacidade preditiva da variável de grupo, menor será a média das variâncias ($\bar{s^2}_Y$) em relação a variância global, e portanto a razão $\frac{\bar{s^2}_Y}{s^2_Y}$ será próxima de zero, enquanto que $R^2$ tenderá a 1.
@@ -265,7 +264,7 @@ A partir dos seguintes exercícios, conclua a respeito da associação entre as 
 
 ## Próxima aula
 
-- Números índices.
+- Atividade de Avaliação III.
 
 ## Por hoje é só!
 

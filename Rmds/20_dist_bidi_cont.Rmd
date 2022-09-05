@@ -10,12 +10,10 @@ institute: |
   | \textsc{Instituto de Matemática e Estatística}
   | \textsc{Departamento de Estatística}
 date: |
-  | Porto Alegre, 2021
+  | Porto Alegre, 2022
 bibliography: estatistica-descritiva.bib
 csl: associacao-brasileira-de-normas-tecnicas-ufrgs-initials.csl
 link-citations: yes
-header-includes:
-  - \titlegraphic{\hfill\includegraphics[height=1.5cm]{logos/Logo-40-anos-estatistica.png}}
 ---
 
 ```{r setup, include=FALSE, purl=FALSE}
@@ -129,14 +127,14 @@ plot_grid(p1, p2, labels = c('', ''), label_size = 5, ncol = 2)
 \framebreak
 
 - O gráfico de dispersão da esquerda mostra uma relação direta ou positiva entre as variáveis $X$ e $Y$, tendência destacada pela declividade positiva da elipse tracejada.
-- Perceba também, que o gráfico foi dividido em quatro "quadrantes".
+- Perceba também, que o gráfico foi dividido em quatro __"quadrantes"__.
 - A grande maioria dos pontos está situada no primeiro e terceiro quadrantes.
-- Nesses quadrantes as coordenadas dos pontos têm o mesmo sinal, e, portanto, o produto delas será sempre positivo.
-- Somando-se o produto das coordenadas dos pontos, o resultado será um número positivo, pois existem mais produtos positivos do que negativos.
+- Nesses quadrantes as __coordenadas dos pontos têm o mesmo sinal__, e, portanto, o __produto__ delas será sempre __positivo__.
+- __Somando-se o produto das coordenadas dos pontos__, o resultado será um __número positivo__, pois existem mais produtos positivos do que negativos.
 
 \framebreak
 
-- De forma análoga, o gráfico de dispersão da direita mostra uma relação inversa ou negativa, tendência também destacada pela declividade negativa da elipse tracejada, e procedendo-se como anteriormente, a soma dos produtos das coordenadas será negativa. 
+- De forma análoga, o gráfico de dispersão da direita mostra uma relação inversa ou negativa, tendência também destacada pela declividade negativa da elipse tracejada, e procedendo-se como anteriormente, a __soma dos produtos das coordenadas__ será __negativa__. 
 
 \framebreak
 
@@ -167,7 +165,7 @@ p
 
 ## Tipos de relação {.allowframebreaks}
 
-- A "força" da relação se refere à proximidade dos pontos na nuvem.
+- A __"força" da relação__ se refere à proximidade dos pontos na nuvem.
 - Se pudéssemos traçar uma curva ou uma reta subjacente, teríamos a força da relação associada a proximidade dos pontos com respeito a esta curva.
 
 \framebreak
@@ -211,9 +209,9 @@ plot_grid(p1, p2, p3, labels = c('', '', ''), label_size = 1, ncol = 3)
 
 # Coeficiente de correlação linear {.allowframebreaks}
 
-- A __força__ de uma associação entre duas variáveis quantitativas pode ser medida por um __coeficiente de correlação__.
+- A __força de uma associação__ entre duas variáveis quantitativas pode ser medida por um __coeficiente de correlação__.
 - O __coeficiente de correlação produto-momento__ é uma medida da intensidade de __associação linear__ existente entre duas variáveis quantitativas.
-- Também é conhecido como __coeficiente de correlação de Pearson__, pois sua fórmula de cálculo foi proposta por Karl Pearson em 1896.
+- Também é conhecido como __coeficiente de correlação de Pearson__, pois sua fórmula de cálculo foi proposta por \structure{Karl Pearson} em \structure{1896}.
 - O coeficiente de correlação de Pearson é denominado por $\rho$ na população e $r$ na amostra.
 
 ## Definição {.allowframebreaks}
@@ -223,21 +221,23 @@ plot_grid(p1, p2, p3, labels = c('', '', ''), label_size = 1, ncol = 3)
 $$
 r = \frac{1}{n-1}\sum_{i=1}^n{\left(\frac{x_i - \bar{x}}{s_x}\right)\left(\frac{y_i - \bar{y}}{s_y}\right)},
 $$
-em que $\bar{x}$ e $\bar{y}$ são as médias de $X$ e $Y$, e $s_x$ e $s_y$ são os desvios padrões de $X$ e $Y$. Ou seja, o coeficiente de correlação é __a média dos produtos dos valores padronizados das variáveis__.
+em que $\bar{x}$ e $\bar{y}$ são as médias de $X$ e $Y$, e $s_x$ e $s_y$ são os desvios padrões de $X$ e $Y$. 
+
+- Ou seja, o coeficiente de correlação é __a média dos produtos dos valores padronizados das variáveis__.
 
 ## Propriedades {.allowframebreaks}
 
 - O coeficiente de correlação pode variar entre $-1$ e $1$.
-- Valores negativos de $r$ indicam uma correlação do tipo inversa (_negativa_): 
-    + Quando $x$ aumenta, $y$ em média diminui (ou vice-versa).
-- Valores positivos para $r$ ocorrem quando a correlação é direta (_positiva_):
-    + $x$ e $y$ variam no mesmo sentido.
+- __Valores negativos__ de $r$ indicam uma __correlação__ do tipo __inversa (_negativa_)__; 
+    + __Interpretação:__ quando $x$ aumenta, $y$ em média diminui (ou vice-versa).
+- __Valores positivos__ para $r$ ocorrem quando a __correlação__ é __direta (_positiva_)__;
+    + __Interpretação:__ $x$ e $y$ variam no mesmo sentido.
 
 \framebreak
 
 - O valor máximo (tanto $r = 1$ como $r = -1$) é obtido quando todos os pontos do diagrama de dispersão estão em uma linha reta inclinada (__correlação perfeita__).
 - Quando não existe correlação ($r = 0$) entre $x$ e $y$, os pontos se distribuem em nuvens circulares.
-- Quando os pontos formam uma nuvem cujo eixo principal é uma curva (relação não-linear), o valor de $r$ __não mede corretamente a associação__ entre as variáveis.
+- Quando os pontos formam uma nuvem cujo eixo principal é uma curva (__relação não-linear__), o valor de $r$ __não mede corretamente a associação__ entre as variáveis.
 
 \framebreak
 
@@ -246,11 +246,12 @@ em que $\bar{x}$ e $\bar{y}$ são as médias de $X$ e $Y$, e $s_x$ e $s_y$ são 
 $$
 r = \frac{1}{n - 1}\sum_{i=1}^n{\left(\frac{x_i - \bar{x}}{s_x}\right)\left(\frac{y_i - \bar{y}}{s_y}\right)} = \frac{\sum_{i=1}^n{x_iy_i} - n\bar{x}\bar{y}}{\sqrt{\left(\sum_{i=1}^n{x_i^2 - n\bar{x}^2}\right)\left(\sum_{i=1}^n{y_i^2 - n\bar{y}^2}\right)}}.
 $$
+
 - O numerador da expressão acima, que mede o total da concentração dos pontos pelos quatro quadrantes, dá origem a uma medida bastante usada e que definimos a seguir.
 
-\framebreak
+## Propriedades {.allowframebreaks}
 
-Dados $n$ pares (na amostra) de valores \alert{$(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)$}, chamaremos de __covariância__ entre as duas variáveis $X$ e $Y$ a
+Dado $n$ pares (na amostra) de valores \alert{$(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)$}, chamaremos de \structure{covariância} entre as duas variáveis $X$ e $Y$ a
 
 $$
 cov_{xy} = \frac{\sum_{i=1}^n{(x_i-\bar{x})(y_i-\bar{y})}}{n-1},
@@ -414,7 +415,7 @@ E assim, temos que:
 
 - $\bar{x} = 1372/25 = 54,88$ anos e $s_x = 9,87$ anos.
 - $\bar{y} = 486/25 = 19,44$ mmHg e $s_y = 2,73$ mmHg.
-- O coeficiente de correlação é $r = 20,28/25 = 0,81$, uma relação direta (positiva) e relativamente forte^[Maior a idade $\Rightarrow$ Maior a pressão intraocular.].
+- O __coeficiente de correlação__ é $r = 20,28/25 = 0,81$, uma __relação direta (positiva)__^[Maior a idade $\Rightarrow$ Maior a pressão intraocular.] e __relativamente forte__.
 
 ## Próxima aula
 

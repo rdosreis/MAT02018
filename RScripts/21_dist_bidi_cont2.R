@@ -1,4 +1,4 @@
-## ----mb, echo=FALSE, warning=FALSE, message=FALSE---------------------------------------------------------------
+## ----mb, echo=FALSE, warning=FALSE, message=FALSE---------------------------------------------
 library(dplyr)
 library(readxl)
 library(knitr)
@@ -8,7 +8,7 @@ library(ggplot2)
 mb_df <- read_excel(path = here::here("data", "companhia_mb.xlsx"))
 
 
-## ----sal_grupo, echo=FALSE, warning=FALSE, message=FALSE--------------------------------------------------------
+## ----sal_grupo, echo=FALSE, warning=FALSE, message=FALSE--------------------------------------
 
 mb_df_arrange <- mb_df %>% 
   dplyr::select("N" ,`Salario (x Sal Min)`, `Grau de Instrução`) %>% 
@@ -26,7 +26,7 @@ mb_df_arrange[1:18,] %>%
 
 
 
-## ----sal_grupo2, echo=FALSE, warning=FALSE, message=FALSE-------------------------------------------------------
+## ----sal_grupo2, echo=FALSE, warning=FALSE, message=FALSE-------------------------------------
 
 mb_df_arrange[19:36,] %>% 
   kable(#caption = "Tabela de dados brutos.",
@@ -39,7 +39,7 @@ mb_df_arrange[19:36,] %>%
 
 
 
-## ----sal_grupo_res, echo=FALSE, warning=FALSE, message=FALSE----------------------------------------------------
+## ----sal_grupo_res, echo=FALSE, warning=FALSE, message=FALSE----------------------------------
 
 tab <- mb_df_arrange %>% 
   group_by(`Grau de Instrução`) %>% 
@@ -81,7 +81,7 @@ kable(tab,
   row_spec(3, background = "lightyellow")
 
 
-## ----sal_bp, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width="100%"---------------------
+## ----sal_bp, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width="90%"----
 
 mb_df_arrange$cor <- NULL
 mb_df_arrange$cor <- ifelse(mb_df_arrange$`Grau de Instrução` == "ensino fundamental", "lightsalmon", ifelse(mb_df_arrange$`Grau de Instrução` == "ensino médio", "lightblue", "lightyellow"))
@@ -96,7 +96,7 @@ bp <- ggplot(data = mb_df_arrange,
 bp
 
 
-## ----iris, echo=FALSE, message=FALSE, warning=FALSE-------------------------------------------------------------
+## ----iris, echo=FALSE, message=FALSE, warning=FALSE-------------------------------------------
 
 set.seed(1000)
 
