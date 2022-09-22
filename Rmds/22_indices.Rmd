@@ -10,12 +10,10 @@ institute: |
   | \textsc{Instituto de Matemática e Estatística}
   | \textsc{Departamento de Estatística}
 date: |
-  | Porto Alegre, 2021
+  | Porto Alegre, 2022
 bibliography: estatistica-descritiva.bib
 csl: associacao-brasileira-de-normas-tecnicas-ufrgs-initials.csl
 link-citations: yes
-header-includes:
-  - \titlegraphic{\hfill\includegraphics[height=1.5cm]{logos/Logo-40-anos-estatistica.png}}
 ---
 
 ```{r setup, include=FALSE, purl=FALSE}
@@ -33,6 +31,15 @@ library(knitr)
 
 # Introdução {.allowframebreaks}
 
+- Por **índice**, às vezes, quer-se dizer coisas bem diferentes.
+- Em \structure{Estatística}, como em muitas outras áreas, é sinônimo de **variação relativa** na variável de interesse. 
+- Em \structure{Economia}, há índices de preços, quantidades e valor dos bens, de custo de vida, de (des)emprego, de bolsas de valores, de concentração dos mercados, de monopólio de empresas, de importação e exportação.
+- Em \structure{Administração}, índices de produção, de liquidez (corrente e seco), velocidade de vendas, lucratividade e endividamento possibilitam avaliar a saúde financeira das empresas.
+- Em \structure{Administração Pública}, diversos índices permitem avaliar a qualidade de vida, a permanência ou evasão escolar, o nível de criminalidade e o padrão de saúde das populações.
+- E há mais, bem mais, em \structure{Engenharia}, \structure{Física}, \structure{Medicina} (índices de fertilidade, natalidade, morbidez, mortalidade etc.), nas chamadas ciências do comportamento (\structure{Psicologia}, \structure{Sociologia} etc.) e em \structure{Educação} (quociente de inteligência, coeficiente de aprovação etc.). 
+
+\framebreak
+
 - No sentido mais simples do termo, podemos dizer que um __número índice__ é um quociente que expressa uma dada quantidade em comparação a uma __quantidade base__.
 - Em outras palavras, são __valores relativos__.
 - No entanto devemos considerar dois casos:
@@ -41,7 +48,7 @@ library(knitr)
 
 \framebreak
 
-- No primeiro caso não temos propriamente um problema de números índices, já que não envolve a questão da agregação de bens e serviços.
+- No primeiro caso não temos propriamente um problema de números índices, já que não envolve a **questão da agregação** de bens e serviços.
     - Trata-se somente de uma forma alternativa de se fazer comparações em termos relativos.
 
 \framebreak
@@ -124,11 +131,11 @@ arroz_res %>%
 
 \framebreak
 
-- A interpretação dos números apresentados na tabela acima é direta.
-- Assim, se considerarmos a coluna referente a quantidade:
-    + o número 125 significa que houve 25% de aumento (1,25 - 1,00 = 0,25) na compra de arroz no mês 1 relativamente ao mês 0;
-    + no mês 2 verificamos 12,5% de aumento com relação ao mês 0, e assim por diante
-    + __sua vez:__ qual a variação percentual do mês 3 em relação ao mês 0?
+A **interpretação** dos números apresentados na tabela acima é direta. Assim, se considerarmos a coluna referente a quantidade:
+
++ o número 125 significa que houve 25% de aumento (1,25 - 1,00 = 0,25) na compra de arroz no mês 1 relativamente ao mês 0;
++ no mês 2 verificamos 12,5% de aumento com relação ao mês 0, e assim por diante.
++ __sua vez:__ qual a variação percentual do mês 3 em relação ao mês 0?
 
 \framebreak
 
@@ -161,7 +168,7 @@ cinco_df %>%
 
 # Índice agregativo simples {.allowframebreaks}
 
-- Representando por \structure{$p_0^i$} e \structure{$p_1^i$} os preços do produto \structure{$i$ ($i = 1, 2, \ldots, n$)}, respectivamente, no __período 0 (período-base)__ e __1 (período atual)__^[Se o produto 1 representa o arroz, então $p_0^1 = 0,87$ e $p_0^1 = 1,02$; se o produto 2 é o leite, então $p_0^2 = 0,62$ e $p_0^2 = 0,65$; e assim respectivamente para os demais produtos.], a expressão formal do __índice agregativo simples__ (também conhecido como \structure{Índice de Dutot}) é:
+- Representando por \structure{$p_0^i$} e \structure{$p_1^i$} os preços do produto \structure{$i$ ($i = 1, 2, \ldots, n$)}, respectivamente, no __período 0 (período-base)__ e __1 (período atual)__^[Se o produto 1 representa o arroz, então $p_0^1 = 1,98$ e $p_1^1 = 2,1$; se o produto 2 é o leite, então $p_0^2 = 1,99$ e $p_1^2 = 2,08$; e assim respectivamente para os demais produtos.], a expressão formal do __índice agregativo simples__ (também conhecido como \structure{Índice de Dutot}) é:
 
 $$
 I_{01}^{as} = \frac{\sum_{i=1}^n{p_1^i}}{\sum_{i=1}^n{p_0^i}},

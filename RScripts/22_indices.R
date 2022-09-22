@@ -1,4 +1,4 @@
-## ----serie_arroz, echo=FALSE, warning=FALSE, message=FALSE--------------------------------------------
+## ----serie_arroz, echo=FALSE, warning=FALSE, message=FALSE------------------------------------
 library(dplyr)
 library(lubridate)
 library(readxl)
@@ -33,7 +33,7 @@ arroz_res %>%
 
 
 
-## ----serie_relativos, echo=FALSE, warning=FALSE, message=FALSE----------------------------------------
+## ----serie_relativos, echo=FALSE, warning=FALSE, message=FALSE--------------------------------
 
 arroz_res %>%
   transform(Quantidade = Quantidade / Quantidade[1] * 100,
@@ -48,7 +48,7 @@ arroz_res %>%
         col.names = c("Período ($t$)", "Quantidade", "Preço", "Valor total"))
 
 
-## ----cinco_produtos, echo=FALSE, warning=FALSE, message=FALSE-----------------------------------------
+## ----cinco_produtos, echo=FALSE, warning=FALSE, message=FALSE---------------------------------
 
 prod <- c("Arroz (kg)", "Leite (L)", "Pão francês (u)", "Cigarro (maço)", "Cerveja (garrafa)")
 mes0 <- c(1.98, 1.99, 0.9, 7, 5.99)
@@ -66,7 +66,7 @@ cinco_df %>%
         col.names = c("Produtos", "Mês 0 ($u.m.$)", "Mês 1 ($u.m.$)"))
 
 
-## ----cinco_relativos, echo=FALSE, warning=FALSE, message=FALSE----------------------------------------
+## ----cinco_relativos, echo=FALSE, warning=FALSE, message=FALSE--------------------------------
 
 cinco_df <- cinco_df %>% 
   transform(rel = mes1/mes0)
